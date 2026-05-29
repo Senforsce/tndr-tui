@@ -144,7 +144,7 @@ func parseParagraphOrSetext(lines []string, i int) (Block, int) {
 	j := i
 	for j < len(lines) {
 		l := lines[j]
-		if strings.TrimSpace(l) == "" || isFence(l) || isATXHeading(l) || isBlockquote(l) || isListLine(l) {
+		if strings.TrimSpace(l) == "" || isFence(l) || isATXHeading(l) || isBlockquote(l) || isListLine(l) || isTableStart(lines, j) {
 			break
 		}
 		parts = append(parts, strings.TrimSpace(l))

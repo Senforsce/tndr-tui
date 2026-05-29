@@ -126,3 +126,18 @@ func TestParse_FullDocument(t *testing.T) {
 		t.Errorf("blockquote children = %+v", bq.Children)
 	}
 }
+
+func TestParse_TableDirectlyAfterParagraph(t *testing.T) {
+	// A table immediately following a paragraph line (no blank line between)
+	// must parse as a paragraph + a table, not one swallowed paragraph.
+	blocks := Parse("intro text\n| A | B |\n| - | - |\n| 1 | 2 |")
+	if len(blocks) != 2 {
+		t.Fatalf("want 2 blocks (paragraph + table), got %d: %+v", len(blocks), blocks)
+	}
+	if blocks[0].Kind != KindParagraph || blocks[0].Inline[0].Text != "intro text" {
+		t.Errorf("block 0 = %+v, want paragraph \"intro text\"", blocks[0])
+	}
+	if blocks[1].Kind != KindTable || len(blocks[1].Rows) != 2 {
+		t.Errorf("block 1 = %+v, want table with header + 1 row", blocks[1])
+	}
+}
