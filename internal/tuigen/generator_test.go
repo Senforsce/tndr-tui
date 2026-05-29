@@ -892,6 +892,60 @@ templ (c *myComp) Render() {
 	}
 }
 
+func TestGenerator_MarkdownElement(t *testing.T) {
+	type tc struct {
+		input        string
+		wantContains []string
+	}
+
+	tests := map[string]tc{
+		"markdown source attr": {
+			input: `package x
+
+type myComp struct{}
+
+templ (c *myComp) Render() {
+	<markdown source={c.readme} width={80} />
+}`,
+			wantContains: []string{
+				"app.MountPersistent(",
+				"tui.NewMarkdown(",
+				"tui.WithMarkdownSource(c.readme)",
+				"tui.WithMarkdownWidth(80)",
+			},
+		},
+		"markdown state attr": {
+			input: `package x
+
+type myComp struct{}
+
+templ (c *myComp) Render() {
+	<markdown state={c.md} />
+}`,
+			wantContains: []string{
+				"tui.NewMarkdown(",
+				"tui.WithMarkdownState(c.md)",
+			},
+		},
+	}
+
+	for name, tt := range tests {
+		t.Run(name, func(t *testing.T) {
+			output, err := parseAndGenerateSkipImports("test.gsx", tt.input)
+			if err != nil {
+				t.Fatalf("generation failed: %v", err)
+			}
+
+			code := string(output)
+			for _, want := range tt.wantContains {
+				if !strings.Contains(code, want) {
+					t.Errorf("output missing %q.\nGot:\n%s", want, code)
+				}
+			}
+		})
+	}
+}
+
 func TestGenerator_InterfaceChecks(t *testing.T) {
 	type tc struct {
 		input           string
