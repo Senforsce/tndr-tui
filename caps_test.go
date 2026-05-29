@@ -393,14 +393,22 @@ func containsHelper(s, substr string) bool {
 }
 
 func TestDetectCapabilities_HyperlinksDefaultOn(t *testing.T) {
-	t.Setenv("TERM", "xterm-256color")
+	env := newTestEnvHelper()
+	defer env.Restore()
+	clearTermEnvVars(env)
+
+	env.Set("TERM", "xterm-256color")
 	if !DetectCapabilities().Hyperlinks {
 		t.Error("Hyperlinks should default on for a normal terminal")
 	}
 }
 
 func TestDetectCapabilities_HyperlinksOffForDumb(t *testing.T) {
-	t.Setenv("TERM", "dumb")
+	env := newTestEnvHelper()
+	defer env.Restore()
+	clearTermEnvVars(env)
+
+	env.Set("TERM", "dumb")
 	if DetectCapabilities().Hyperlinks {
 		t.Error("Hyperlinks should be off for TERM=dumb")
 	}
