@@ -189,7 +189,7 @@ func (m *Markdown) renderListItem(item markdown.Block, marker string, depth int)
 	itemCol := New(WithDirection(Column))
 
 	indent := strings.Repeat("  ", depth)
-	row := New(WithDirection(Row))
+	row := New(WithDisplay(DisplayFlex), WithDirection(Row))
 	row.AddChild(New(WithText(indent+marker), WithWrap(false)))
 	row.AddChild(New(WithRichText(m.inlineToSpans(item.Inline)...)))
 	itemCol.AddChild(row)
@@ -241,7 +241,7 @@ func (m *Markdown) renderBlockquote(b markdown.Block, contentWidth int) *Element
 		))
 	}
 
-	row := New(WithDirection(Row), WithGap(1))
+	row := New(WithDisplay(DisplayFlex), WithDirection(Row), WithGap(1))
 	row.AddChild(bar)
 	row.AddChild(content)
 	return row
