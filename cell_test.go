@@ -359,3 +359,28 @@ func TestCell_ZeroValue(t *testing.T) {
 		t.Error("zero value Cell should be empty")
 	}
 }
+
+func TestCell_EqualConsidersLink(t *testing.T) {
+	a := NewCell('x', NewStyle())
+	b := NewCell('x', NewStyle())
+	b.Link = "https://example.com"
+	if a.Equal(b) {
+		t.Error("cells differing only in Link should not be Equal")
+	}
+	b.Link = ""
+	if !a.Equal(b) {
+		t.Error("cells with identical fields (empty Link) should be Equal")
+	}
+}
+
+func TestBuffer_DiffDetectsLinkChange(t *testing.T) {
+	buf := NewBuffer(3, 1)
+	buf.Swap() // front == back, no diff
+	c := NewCell('a', NewStyle())
+	c.Link = "https://example.com"
+	buf.SetCell(0, 0, c)
+	changes := buf.Diff()
+	if len(changes) != 1 || changes[0].Cell.Link != "https://example.com" {
+		t.Fatalf("expected one change carrying the link, got %+v", changes)
+	}
+}

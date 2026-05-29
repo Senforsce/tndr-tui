@@ -6,9 +6,10 @@ import "unicode"
 // Wide characters (CJK, emoji) occupy multiple cells; the first cell holds
 // the rune, subsequent cells are marked as continuations.
 type Cell struct {
-	Rune  rune  // The character (0 for continuation cells)
-	Style Style // Visual styling
-	Width uint8 // Display width (1 or 2; 0 for continuation)
+	Rune  rune   // The character (0 for continuation cells)
+	Style Style  // Visual styling
+	Width uint8  // Display width (1 or 2; 0 for continuation)
+	Link  string // Optional OSC 8 hyperlink target ("" = none)
 }
 
 // NewCell creates a new Cell with automatic width detection.
@@ -38,7 +39,7 @@ func (c Cell) IsContinuation() bool {
 
 // Equal returns true if both cells are identical.
 func (c Cell) Equal(other Cell) bool {
-	return c.Rune == other.Rune && c.Style.Equal(other.Style) && c.Width == other.Width
+	return c.Rune == other.Rune && c.Style.Equal(other.Style) && c.Width == other.Width && c.Link == other.Link
 }
 
 // IsEmpty returns true if this cell represents an empty/blank cell.
