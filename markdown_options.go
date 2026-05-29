@@ -15,8 +15,11 @@ func WithMarkdownState(s *State[string]) MarkdownOption {
 	return func(m *Markdown) { m.state = s }
 }
 
-// WithMarkdownWidth fixes the render width in characters. 0 (the default) fills
-// the available width and wraps to it.
+// WithMarkdownWidth fixes the render width in characters. 0 (the default) lets
+// the component fill the width assigned by its parent; paragraphs and headings
+// wrap to that width, but list and blockquote content renders on a single line
+// (it is clipped, not wrapped). Set an explicit width to wrap list and
+// blockquote content for documents with long lines.
 func WithMarkdownWidth(w int) MarkdownOption {
 	return func(m *Markdown) { m.width = w }
 }
