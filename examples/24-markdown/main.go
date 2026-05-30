@@ -39,15 +39,41 @@ const sampleDoc = "# go-tui Markdown (ATX h1)\n" +
 	"Setext Level 2\n" +
 	"--------------\n" +
 	"\n" +
-	"## Code block\n" +
+	"## Code blocks\n" +
 	"\n" +
-	"Inline `fmt.Println` first, then a fenced block (blank lines preserved):\n" +
+	"Fenced blocks are syntax-highlighted for Go, JSON, Bash, and JS/TS. Inline " +
+	"`fmt.Println` stays styled too, and blank lines inside a fence are kept:\n" +
 	"\n" +
 	"```go\n" +
+	"// Go: keywords, strings, types, and comments\n" +
 	"func main() {\n" +
 	"    fmt.Println(\"hello\")\n" +
 	"\n" +
 	"    fmt.Println(\"the blank line above is kept\")\n" +
+	"}\n" +
+	"```\n" +
+	"\n" +
+	"```json\n" +
+	"{\n" +
+	"  \"name\": \"go-tui\",\n" +
+	"  \"version\": 2,\n" +
+	"  \"stable\": true,\n" +
+	"  \"tags\": [\"tui\", \"markdown\"]\n" +
+	"}\n" +
+	"```\n" +
+	"\n" +
+	"```bash\n" +
+	"# Bash: comments, strings, $VARS, and keywords\n" +
+	"for f in *.gsx; do\n" +
+	"  echo \"generating $f\"\n" +
+	"done\n" +
+	"```\n" +
+	"\n" +
+	"```ts\n" +
+	"// TypeScript: keywords, template strings, types\n" +
+	"async function load(url: string): Promise<Data> {\n" +
+	"  const res = await fetch(`${url}/data.json`)\n" +
+	"  return res.json()\n" +
 	"}\n" +
 	"```\n" +
 	"\n" +
