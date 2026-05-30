@@ -50,6 +50,8 @@ func lexerFor(lang string) func(string) []Token {
 		return lexJSON
 	case "bash":
 		return lexBash
+	case "js":
+		return lexJS
 	}
 	return nil
 }
