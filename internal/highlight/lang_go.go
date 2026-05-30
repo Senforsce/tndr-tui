@@ -86,7 +86,7 @@ func lexGo(code string) []Token {
 				kind = KindType
 			case nextNonSpaceIs(rs, j, '('):
 				kind = KindType
-			case unicode.IsUpper([]rune(word)[0]):
+			case unicode.IsUpper(rs[i]):
 				kind = KindType
 			}
 			expectName = word == "func" || word == "type"
