@@ -205,25 +205,11 @@ var knownAttributes = map[string]bool{
 	"theme":            true,
 }
 
-// stateNewStateRegex matches tui.NewState(...) declarations.
-// It captures the variable name and the initializer expression.
-var stateNewStateRegex = regexp.MustCompile(`(\w+)\s*:=\s*tui\.NewState\((.+)\)`)
-
-// eventsNewEventsRegex matches tui.NewEvents("topic") and
-// tui.NewEvents[T]("topic") declarations.
-// It captures the variable name.
-var eventsNewEventsRegex = regexp.MustCompile(`(\w+)\s*:=\s*tui\.NewEvents(?:\[.+\])?\([^)]*\)`)
-
 // stateGetRegex matches state.Get() calls to detect state usage in expressions.
 // This pattern handles:
 // - Simple: count.Get()
 // - Dereferenced pointer: (*count).Get()
 var stateGetRegex = regexp.MustCompile(`(?:\(\*(\w+)\)|(\w+))\.Get\(\)`)
-
-// stateParamRegex matches *tui.State[T] parameter types.
-// Uses greedy .+ but anchored to end of string with $, which works because
-// parameter type strings don't have trailing content after the closing bracket.
-var stateParamRegex = regexp.MustCompile(`\*tui\.State\[(.+)\]$`)
 
 // attributeSimilar maps common typos to correct attribute names.
 var attributeSimilar = map[string]string{

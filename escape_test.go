@@ -283,7 +283,6 @@ func TestEscBuilder_SetStyle_Attributes(t *testing.T) {
 		})
 	}
 }
-
 func TestEscBuilder_Hyperlink(t *testing.T) {
 	e := newEscBuilder(64)
 	e.OpenHyperlink("https://example.com")

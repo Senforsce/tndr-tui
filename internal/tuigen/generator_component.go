@@ -3,6 +3,7 @@ package tuigen
 import (
 	"fmt"
 	"regexp"
+	"slices"
 	"sort"
 	"strings"
 )
@@ -438,35 +439,26 @@ func (g *Generator) isTUIType(fieldType string, baseNames ...string) bool {
 	if idx := strings.Index(t, "["); idx != -1 {
 		t = t[:idx]
 	}
-	idx := strings.Index(t, ".")
-	if idx == -1 {
+	before, after, ok := strings.Cut(t, ".")
+	if !ok {
 		if g.tuiAlias == "." {
-			for _, name := range baseNames {
-				if t == name {
-					return true
-				}
+			if slices.Contains(baseNames, t) {
+				return true
 			}
 		}
 		if g.isTuiPackage {
-			for _, name := range baseNames {
-				if t == name {
-					return true
-				}
+			if slices.Contains(baseNames, t) {
+				return true
 			}
 		}
 		return false
 	}
-	prefix := t[:idx]
-	typeName := t[idx+1:]
+	prefix := before
+	typeName := after
 	if prefix != g.tuiAlias {
 		return false
 	}
-	for _, name := range baseNames {
-		if typeName == name {
-			return true
-		}
-	}
-	return false
+	return slices.Contains(baseNames, typeName)
 }
 
 // isInternalStateType returns true if the type is an internal state type
@@ -907,10 +899,8 @@ func (g *Generator) trackComponentExprField(expr string) {
 		return
 	}
 	// Avoid duplicates
-	for _, existing := range g.componentExprFields {
-		if existing == fieldName {
-			return
-		}
+	if slices.Contains(g.componentExprFields, fieldName) {
+		return
 	}
 	g.componentExprFields = append(g.componentExprFields, fieldName)
 }

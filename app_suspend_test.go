@@ -3,6 +3,7 @@
 package tui
 
 import (
+	"slices"
 	"sync/atomic"
 	"testing"
 )
@@ -253,13 +254,7 @@ func TestResumeSequence_InlineMode(t *testing.T) {
 	}
 
 	// Should call ResetStyle to invalidate stale style tracking
-	hasResetStyle := false
-	for _, call := range term.calls {
-		if call == "ResetStyle" {
-			hasResetStyle = true
-			break
-		}
-	}
+	hasResetStyle := slices.Contains(term.calls, "ResetStyle")
 	if !hasResetStyle {
 		t.Fatal("expected ResetStyle to be called in inline mode resume")
 	}

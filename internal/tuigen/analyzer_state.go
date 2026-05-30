@@ -361,7 +361,7 @@ func (a *Analyzer) parseExplicitDeps(attr *Attribute, stateNames map[string]bool
 
 	// Split by comma and validate each name
 	var deps []string
-	for _, part := range strings.Split(inner, ",") {
+	for part := range strings.SplitSeq(inner, ",") {
 		name := strings.TrimSpace(part)
 		if name == "" {
 			continue

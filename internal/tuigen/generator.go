@@ -388,7 +388,7 @@ func (g *Generator) write(s string) {
 }
 
 // writef writes a formatted string with indentation and tracks line numbers.
-func (g *Generator) writef(format string, args ...interface{}) {
+func (g *Generator) writef(format string, args ...any) {
 	g.writeIndent()
 	s := fmt.Sprintf(format, args...)
 	g.buf.WriteString(s)
