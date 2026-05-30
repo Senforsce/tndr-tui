@@ -19,8 +19,10 @@ type MarkdownTheme struct {
 	CodeBlockBorder BorderStyle // a real full-box border around the code element
 
 	// Tables reuse the existing table layout (a 1-char column gap, not grid lines).
+	// TableBorder draws an outline around the whole table (BorderNone = no outline).
 	// v1 styles the header and, optionally, a separator row under it.
 	TableHeader        Style
+	TableBorder        BorderStyle
 	TableSeparator     bool
 	TableSeparatorChar rune
 
@@ -36,15 +38,14 @@ type MarkdownTheme struct {
 // DefaultMarkdownTheme returns a glow-inspired theme that reads well on dark and
 // light terminals using only attributes and a couple of muted colors.
 func DefaultMarkdownTheme() MarkdownTheme {
-	heading := NewStyle().Bold()
 	return MarkdownTheme{
 		Heading: [6]Style{
-			NewStyle().Bold().Foreground(BrightCyan),
-			NewStyle().Bold().Foreground(Cyan),
-			heading,
-			heading,
-			heading,
-			heading,
+			NewStyle().Bold().Underline(), // h1: bold + underline
+			NewStyle().Bold(),             // h2: bold
+			NewStyle().Italic(),           // h3: italic
+			NewStyle().Bold(),             // h4
+			NewStyle().Bold(),             // h5
+			NewStyle().Bold(),             // h6
 		},
 		Paragraph: NewStyle(),
 		Bold:      NewStyle().Bold(),
@@ -57,12 +58,13 @@ func DefaultMarkdownTheme() MarkdownTheme {
 		CodeBlockBorder: BorderRounded,
 
 		TableHeader:        NewStyle().Bold(),
+		TableBorder:        BorderRounded,
 		TableSeparator:     false,
 		TableSeparatorChar: '-',
 
 		BlockquoteBar:      '│',
 		BlockquoteBarStyle: NewStyle().Foreground(BrightBlack),
-		BlockquoteText:     NewStyle().Foreground(BrightBlack),
+		BlockquoteText:     NewStyle().Italic().Foreground(BrightBlack),
 
 		BulletMarker: "• ",
 	}

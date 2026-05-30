@@ -34,3 +34,12 @@ The sample document in `main.go` exercises every supported construct:
 - `PageUp` / `PageDown`: scroll a page
 - mouse wheel: scroll
 - `q` / `Esc`: quit
+
+## Clicking links
+
+Links render as OSC 8 hyperlinks on capable terminals (Ghostty, iTerm2, kitty,
+WezTerm, and others). This example enables mouse reporting for wheel scrolling,
+which means the terminal forwards plain clicks to the app instead of opening the
+link itself. To follow a link while mouse reporting is active, hold the terminal's
+bypass modifier (Shift in most terminals, including Ghostty) and click. A build
+that does not call `tui.WithMouse()` makes links directly clickable.

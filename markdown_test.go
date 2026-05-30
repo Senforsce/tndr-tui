@@ -229,6 +229,30 @@ func TestMarkdown_FullDocument(t *testing.T) {
 	}
 }
 
+func TestMarkdown_TableHasBorderOutline(t *testing.T) {
+	src := "| A | B |\n| - | - |\n| 1 | 2 |\n"
+	m := NewMarkdown(WithMarkdownSource(src), WithMarkdownWidth(20))
+	buf := NewBuffer(20, 6)
+	m.Render(nil).Render(buf, 20, 6)
+	// DefaultMarkdownTheme outlines tables with a rounded border.
+	if buf.Cell(0, 0).Rune != '╭' {
+		t.Errorf("table should have a border corner at (0,0), got %q", buf.Cell(0, 0).Rune)
+	}
+}
+
+func TestMarkdown_BlockquoteTextIsItalic(t *testing.T) {
+	m := NewMarkdown(WithMarkdownSource("> hello world\n"), WithMarkdownWidth(20))
+	buf := NewBuffer(20, 4)
+	m.Render(nil).Render(buf, 20, 4)
+	r, c := findCell(buf, 'h') // first 'h' is "hello"
+	if r < 0 {
+		t.Fatal("blockquote text not found")
+	}
+	if buf.Cell(c, r).Style.Attrs&AttrItalic == 0 {
+		t.Errorf("blockquote text should be italic")
+	}
+}
+
 func TestMarkdown_BlockquoteWrapsLongContent(t *testing.T) {
 	long := "the quick brown fox jumps over the lazy dog repeatedly"
 	m := NewMarkdown(WithMarkdownSource("> "+long+"\n"), WithMarkdownWidth(24))

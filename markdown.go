@@ -91,7 +91,7 @@ func (m *Markdown) Render(app *App) *Element {
 	root := New(opts...)
 
 	for _, b := range m.cached {
-		if el := m.renderBlock(b, m.width); el != nil {
+		if el := m.renderBlock(b, m.width, m.theme.Paragraph); el != nil {
 			root.AddChild(el)
 		}
 	}
@@ -99,17 +99,19 @@ func (m *Markdown) Render(app *App) *Element {
 }
 
 // renderBlock dispatches one block to its renderer. contentWidth is the width
-// available to this block (0 = auto/unknown).
-func (m *Markdown) renderBlock(b markdown.Block, contentWidth int) *Element {
+// available to this block (0 = auto/unknown). textStyle is the base style for
+// paragraph and list-item text in this context (e.g. italic inside a blockquote);
+// headings, code, and tables use their own theme styles.
+func (m *Markdown) renderBlock(b markdown.Block, contentWidth int, textStyle Style) *Element {
 	switch b.Kind {
 	case markdown.KindHeading:
 		return m.renderHeading(b)
 	case markdown.KindParagraph:
-		return m.renderParagraph(b)
+		return m.renderParagraph(b, textStyle)
 	case markdown.KindCodeFence:
 		return m.renderCodeFence(b)
 	case markdown.KindList:
-		return m.renderList(b, 0, contentWidth)
+		return m.renderList(b, 0, contentWidth, textStyle)
 	case markdown.KindBlockquote:
 		return m.renderBlockquote(b, contentWidth)
 	case markdown.KindTable:
@@ -117,7 +119,7 @@ func (m *Markdown) renderBlock(b markdown.Block, contentWidth int) *Element {
 	default:
 		// Unknown leaf: render its inline text as a paragraph so nothing is
 		// silently dropped.
-		return m.renderParagraph(b)
+		return m.renderParagraph(b, textStyle)
 	}
 }
 
@@ -135,9 +137,9 @@ func (m *Markdown) renderHeading(b markdown.Block) *Element {
 	)
 }
 
-func (m *Markdown) renderParagraph(b markdown.Block) *Element {
+func (m *Markdown) renderParagraph(b markdown.Block, textStyle Style) *Element {
 	return New(
-		WithTextStyle(m.theme.Paragraph),
+		WithTextStyle(textStyle),
 		WithRichText(m.inlineToSpans(b.Inline)...),
 	)
 }
@@ -171,29 +173,30 @@ func (m *Markdown) renderCodeFence(b markdown.Block) *Element {
 }
 
 // renderList renders a list and its items at the given nesting depth.
-// contentWidth is the width available to the list (0 = auto/unknown).
-func (m *Markdown) renderList(list markdown.Block, depth, contentWidth int) *Element {
+// contentWidth is the width available to the list (0 = auto/unknown). textStyle is
+// the base style for item text (e.g. italic inside a blockquote).
+func (m *Markdown) renderList(list markdown.Block, depth, contentWidth int, textStyle Style) *Element {
 	col := New(WithDirection(Column))
 	for i, item := range list.Children {
 		marker := m.theme.BulletMarker
 		if list.Ordered {
 			marker = fmt.Sprintf("%d. ", i+1)
 		}
-		col.AddChild(m.renderListItem(item, marker, depth, contentWidth))
+		col.AddChild(m.renderListItem(item, marker, depth, contentWidth, textStyle))
 	}
 	return col
 }
 
 // renderListItem renders one item: an indented "marker + inline text" row,
 // followed by any nested list rendered at depth+1.
-func (m *Markdown) renderListItem(item markdown.Block, marker string, depth, contentWidth int) *Element {
+func (m *Markdown) renderListItem(item markdown.Block, marker string, depth, contentWidth int, textStyle Style) *Element {
 	itemCol := New(WithDirection(Column))
 
 	markerText := strings.Repeat("  ", depth) + marker
 	spans := m.inlineToSpans(item.Inline)
 
 	rowOpts := []Option{WithDisplay(DisplayFlex), WithDirection(Row)}
-	content := New(WithRichText(spans...))
+	content := New(WithTextStyle(textStyle), WithRichText(spans...))
 	if contentWidth > 0 {
 		// Constrain content width so it wraps, and size the row to the wrapped
 		// height: a Row sizes its height from children's intrinsic height, which
@@ -203,7 +206,7 @@ func (m *Markdown) renderListItem(item markdown.Block, marker string, depth, con
 			cw = 1
 		}
 		content = New(WithDirection(Column), WithWidth(cw))
-		content.AddChild(New(WithRichText(spans...)))
+		content.AddChild(New(WithTextStyle(textStyle), WithRichText(spans...)))
 		h := content.HeightForWidth(cw)
 		if h < 1 {
 			h = 1
@@ -212,13 +215,13 @@ func (m *Markdown) renderListItem(item markdown.Block, marker string, depth, con
 	}
 
 	row := New(rowOpts...)
-	row.AddChild(New(WithText(markerText), WithWrap(false)))
+	row.AddChild(New(WithTextStyle(textStyle), WithText(markerText), WithWrap(false)))
 	row.AddChild(content)
 	itemCol.AddChild(row)
 
 	for _, child := range item.Children {
 		if child.Kind == markdown.KindList {
-			itemCol.AddChild(m.renderList(child, depth+1, contentWidth))
+			itemCol.AddChild(m.renderList(child, depth+1, contentWidth, textStyle))
 		}
 	}
 	return itemCol
@@ -245,7 +248,7 @@ func (m *Markdown) renderBlockquote(b markdown.Block, contentWidth int) *Element
 	}
 	content := New(contentOpts...)
 	for _, child := range b.Children {
-		if el := m.renderBlock(child, childWidth); el != nil {
+		if el := m.renderBlock(child, childWidth, m.theme.BlockquoteText); el != nil {
 			content.AddChild(el)
 		}
 	}
@@ -279,7 +282,11 @@ func (m *Markdown) renderBlockquote(b markdown.Block, contentWidth int) *Element
 // element tree. Row 0 is the header. An optional separator row is drawn when the
 // theme requests it.
 func (m *Markdown) renderTable(b markdown.Block) *Element {
-	table := New(WithTag("table"), WithDisplay(DisplayFlex), WithDirection(Column))
+	tableOpts := []Option{WithTag("table"), WithDisplay(DisplayFlex), WithDirection(Column)}
+	if m.theme.TableBorder != BorderNone {
+		tableOpts = append(tableOpts, WithBorder(m.theme.TableBorder))
+	}
+	table := New(tableOpts...)
 	if len(b.Rows) == 0 {
 		return table
 	}
