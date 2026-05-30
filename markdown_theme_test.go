@@ -5,14 +5,14 @@ import "testing"
 func TestDefaultMarkdownTheme(t *testing.T) {
 	th := DefaultMarkdownTheme()
 
-	if th.Heading[0].Attrs&AttrBold == 0 || th.Heading[0].Attrs&AttrUnderline == 0 {
-		t.Errorf("h1 should be bold and underlined, attrs=%v", th.Heading[0].Attrs)
+	if a := th.Heading[0].Attrs; a&AttrBold == 0 || a&AttrUnderline == 0 || a&AttrItalic == 0 {
+		t.Errorf("h1 should be bold + underline + italic, attrs=%v", a)
 	}
-	if th.Heading[1].Attrs&AttrBold == 0 || th.Heading[1].Attrs&(AttrUnderline|AttrItalic) != 0 {
-		t.Errorf("h2 should be bold only, attrs=%v", th.Heading[1].Attrs)
+	if a := th.Heading[1].Attrs; a&AttrBold == 0 || a&AttrItalic == 0 || a&AttrUnderline != 0 {
+		t.Errorf("h2 should be bold + italic (no underline), attrs=%v", a)
 	}
-	if th.Heading[2].Attrs&AttrItalic == 0 || th.Heading[2].Attrs&AttrBold != 0 {
-		t.Errorf("h3 should be italic only, attrs=%v", th.Heading[2].Attrs)
+	if a := th.Heading[2].Attrs; a&AttrItalic == 0 || a&AttrBold != 0 {
+		t.Errorf("h3 should be italic only, attrs=%v", a)
 	}
 	if th.BlockquoteText.Attrs&AttrItalic == 0 {
 		t.Errorf("blockquote text should be italic, attrs=%v", th.BlockquoteText.Attrs)

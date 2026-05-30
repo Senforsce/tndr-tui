@@ -89,13 +89,23 @@ func (m *Markdown) Render(app *App) *Element {
 		opts = append(opts, WithWidth(m.width))
 	}
 	root := New(opts...)
+	m.appendBlocks(root, m.cached, m.width, m.theme.Paragraph)
+	return root
+}
 
-	for _, b := range m.cached {
-		if el := m.renderBlock(b, m.width, m.theme.Paragraph); el != nil {
-			root.AddChild(el)
+// appendBlocks renders blocks into parent, inserting one blank-line spacer
+// between two blocks when either is a heading. This gives headings a blank line
+// before and after, while adjacent headings get exactly one line between them
+// (no duplication). Spacers are real rows, so they count in height everywhere.
+func (m *Markdown) appendBlocks(parent *Element, blocks []markdown.Block, contentWidth int, textStyle Style) {
+	for i, b := range blocks {
+		if i > 0 && (b.Kind == markdown.KindHeading || blocks[i-1].Kind == markdown.KindHeading) {
+			parent.AddChild(New(WithHeight(1)))
+		}
+		if el := m.renderBlock(b, contentWidth, textStyle); el != nil {
+			parent.AddChild(el)
 		}
 	}
-	return root
 }
 
 // renderBlock dispatches one block to its renderer. contentWidth is the width
@@ -131,17 +141,10 @@ func (m *Markdown) renderHeading(b markdown.Block) *Element {
 	if level > 6 {
 		level = 6
 	}
-	// A heading plus a real one-row spacer below it, so the blank line after the
-	// heading is counted in the parent's height (a bottom margin is applied to
-	// positioning but not to a container's auto height, which breaks scroll
-	// extents). The spacer is a child element, so it counts everywhere.
-	col := New(WithDirection(Column))
-	col.AddChild(New(
+	return New(
 		WithTextStyle(m.theme.Heading[level-1]),
 		WithRichText(m.inlineToSpans(b.Inline)...),
-	))
-	col.AddChild(New(WithHeight(1)))
-	return col
+	)
 }
 
 func (m *Markdown) renderParagraph(b markdown.Block, textStyle Style) *Element {
@@ -151,31 +154,45 @@ func (m *Markdown) renderParagraph(b markdown.Block, textStyle Style) *Element {
 	)
 }
 
-// renderCodeFence renders a fenced code block as a bordered/background column
-// with one child element per source line. A single multiline WithText would
-// collapse to one line under no-wrap and measure as height 1, so each line is
-// its own element; blank lines render a space to keep height 1.
+// renderCodeFence renders a fenced code block. The lines live in an inner
+// horizontally-scrollable column (no scrollbar) so long lines stay on one line
+// and clip at the box edge rather than wrapping. The inner element is scrollable,
+// so the outer box (with the border/background) carries an explicit height and
+// reports a correct intrinsic size — a scrollable element reports size zero.
 func (m *Markdown) renderCodeFence(b markdown.Block) *Element {
-	opts := []Option{WithDirection(Column)}
-	if m.theme.CodeBlockBorder != BorderNone {
-		opts = append(opts, WithBorder(m.theme.CodeBlockBorder))
-	}
-	if !m.theme.CodeBlockBg.IsDefault() {
-		opts = append(opts, WithBackground(NewStyle().Background(m.theme.CodeBlockBg)))
-	}
-	box := New(opts...)
-
+	inner := New(
+		WithDirection(Column),
+		WithScrollable(ScrollHorizontal),
+		WithScrollbarHidden(true),
+		WithFlexGrow(1),
+	)
 	for _, line := range b.Lines {
 		text := line
 		if text == "" {
 			text = " " // keep blank lines from collapsing to height 0
 		}
-		box.AddChild(New(
+		inner.AddChild(New(
 			WithText(text),
 			WithWrap(false),
 			WithTextStyle(m.theme.CodeBlockText),
 		))
 	}
+
+	height := len(b.Lines)
+	if height < 1 {
+		height = 1
+	}
+	opts := []Option{WithDirection(Column)}
+	if m.theme.CodeBlockBorder != BorderNone {
+		opts = append(opts, WithBorder(m.theme.CodeBlockBorder))
+		height += 2
+	}
+	if !m.theme.CodeBlockBg.IsDefault() {
+		opts = append(opts, WithBackground(NewStyle().Background(m.theme.CodeBlockBg)))
+	}
+	opts = append(opts, WithHeight(height))
+	box := New(opts...)
+	box.AddChild(inner)
 	return box
 }
 
@@ -254,11 +271,7 @@ func (m *Markdown) renderBlockquote(b markdown.Block, contentWidth int) *Element
 		contentOpts = append(contentOpts, WithWidth(childWidth))
 	}
 	content := New(contentOpts...)
-	for _, child := range b.Children {
-		if el := m.renderBlock(child, childWidth, m.theme.BlockquoteText); el != nil {
-			content.AddChild(el)
-		}
-	}
+	m.appendBlocks(content, b.Children, childWidth, m.theme.BlockquoteText)
 
 	// Measure content height to size the bar.
 	height := 0

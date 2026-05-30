@@ -38,12 +38,12 @@ type MarkdownTheme struct {
 func DefaultMarkdownTheme() MarkdownTheme {
 	return MarkdownTheme{
 		Heading: [6]Style{
-			NewStyle().Bold().Underline(), // h1: bold + underline
-			NewStyle().Bold(),             // h2: bold
-			NewStyle().Italic(),           // h3: italic
-			NewStyle().Bold(),             // h4
-			NewStyle().Bold(),             // h5
-			NewStyle().Bold(),             // h6
+			NewStyle().Bold().Underline().Italic(), // h1: bold + underline + italic
+			NewStyle().Bold().Italic(),             // h2: bold + italic
+			NewStyle().Italic(),                    // h3: italic
+			NewStyle().Bold(),                      // h4
+			NewStyle().Bold(),                      // h5
+			NewStyle().Bold(),                      // h6
 		},
 		Paragraph: NewStyle(),
 		Bold:      NewStyle().Bold(),

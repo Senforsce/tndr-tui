@@ -275,6 +275,43 @@ func TestMarkdown_HeadingSpacingCountsInHeight(t *testing.T) {
 	}
 }
 
+func TestMarkdown_HeadingSpacingBeforeAndAfterDeduped(t *testing.T) {
+	// Adjacent headings get exactly one blank line between them (no duplication);
+	// a heading followed by a paragraph gets one blank line too.
+	m := NewMarkdown(WithMarkdownSource("# A\n\n## B\n\nbody"), WithMarkdownWidth(20))
+	buf := NewBuffer(20, 8)
+	m.Render(nil).Render(buf, 20, 8)
+	rune0 := func(y int) rune { return buf.Cell(0, y).Rune }
+	if rune0(0) != 'A' {
+		t.Fatalf("row 0 should be 'A', got %q", rune0(0))
+	}
+	if r := rune0(1); r != 0 && r != ' ' {
+		t.Errorf("row 1 should be blank between the two headings, got %q", r)
+	}
+	if rune0(2) != 'B' {
+		t.Errorf("row 2 should be 'B' (one blank between headings), got %q", rune0(2))
+	}
+	if r := rune0(3); r != 0 && r != ' ' {
+		t.Errorf("row 3 should be blank after the heading, got %q", r)
+	}
+	if rune0(4) != 'b' {
+		t.Errorf("row 4 should be 'body', got %q", rune0(4))
+	}
+}
+
+func TestMarkdown_CodeFenceDoesNotWrapLongLines(t *testing.T) {
+	// A long code line must not wrap: the block height stays lines + border
+	// regardless of line length (it scrolls/clips horizontally instead).
+	long := "x := veryLongIdentifierThatFarExceedsTheNarrowRenderWidthHere()"
+	m := NewMarkdown(WithMarkdownSource("```go\n"+long+"\nshort\n```"), WithMarkdownWidth(20))
+	root := m.Render(nil)
+	_, h := root.IntrinsicSize()
+	// 2 code lines + 2 border rows = 4, no extra rows from wrapping.
+	if h != 4 {
+		t.Errorf("code fence with a long line should be height 4 (no wrap), got %d", h)
+	}
+}
+
 func TestMarkdown_TableFullGrid(t *testing.T) {
 	src := "| A | B |\n| - | - |\n| 1 | 2 |\n"
 	m := NewMarkdown(WithMarkdownSource(src), WithMarkdownWidth(20))
