@@ -278,24 +278,16 @@ drain:
 
 func TestPostRenderHook(t *testing.T) {
 	type tc struct {
-		name   string
-		setup  func(a *App)
 		render func(a *App)
 	}
 
-	tests := []tc{
-		{
-			name: "fires after renderFrame (covers all 3 paths)",
-			render: func(a *App) { a.renderFrame() },
-		},
-		{
-			name: "fires after RenderFull",
-			render: func(a *App) { a.RenderFull() },
-		},
+	tests := map[string]tc{
+		"fires after renderFrame": {render: func(a *App) { a.renderFrame() }},
+		"fires after RenderFull":  {render: func(a *App) { a.RenderFull() }},
 	}
 
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
+	for name, tt := range tests {
+		t.Run(name, func(t *testing.T) {
 			called := 0
 			a := &App{
 				terminal:   NewMockTerminal(80, 24),

@@ -50,19 +50,20 @@ func TestTextArea_MoveRight_UsesRuneLength(t *testing.T) {
 }
 
 func TestTextArea_HideVirtualCursor(t *testing.T) {
-	tests := []struct {
-		name    string
+	type tc struct {
 		text    string
 		cursor  int
-		wantLen int // expected line length (0 = same as text)
-	}{
-		{name: "returns line unchanged", text: "hello", cursor: 3, wantLen: 5},
-		{name: "returns space on empty line", text: "", cursor: 0, wantLen: 1},
-		{name: "line width matches wrapped text", text: "hello world", cursor: 5, wantLen: 11},
+		wantLen int
 	}
 
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
+	tests := map[string]tc{
+		"returns line unchanged":            {text: "hello", cursor: 3, wantLen: 5},
+		"returns space on empty line":       {text: "", cursor: 0, wantLen: 1},
+		"line width matches wrapped text":   {text: "hello world", cursor: 5, wantLen: 11},
+	}
+
+	for name, tt := range tests {
+		t.Run(name, func(t *testing.T) {
 			ta := NewTextArea(
 				WithTextAreaVirtualCursor(false),
 			)
