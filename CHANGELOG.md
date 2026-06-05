@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.15.1](https://github.com/grindlemire/go-tui/compare/v0.15.0...v0.15.1) (2026-06-05)
+
+
+### Bug Fixes
+
+* preserve EraseToEOL in inline renderer coordinate translation ([5b79a4f](https://github.com/grindlemire/go-tui/commit/5b79a4f4f32d4f9bdce68019c8803027a933fc81))
+* preserve EraseToEOL in inline renderer coordinate translation ([49e2fd0](https://github.com/grindlemire/go-tui/commit/49e2fd03233f6042475cf18300577e5286b08fb0))
+
 ## [0.15.0](https://github.com/grindlemire/go-tui/compare/v0.14.0...v0.15.0) (2026-06-03)
 
 
