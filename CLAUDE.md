@@ -469,6 +469,7 @@ func helper(s string) string {
 |-----------|------|-------------|
 | `border` | `tui.BorderStyle` | Border style |
 | `borderStyle` | `string` | Border style name |
+| `borderTitle` | `string` | Title text centered in the top border |
 | `background` | `tui.Color` | Background color |
 | `text` | `string` | Text content |
 | `textStyle` | `tui.Style` | Text styling |

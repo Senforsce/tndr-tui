@@ -353,6 +353,7 @@ Available on: `div`, `ul`, `li`, `table`, `span`, `p`, `button`.
 |-----------|------|------------------|
 | `border` | `tui.BorderStyle` | `tui.WithBorder(b)` |
 | `borderStyle` | `tui.Style` | `tui.WithBorderStyle(s)` |
+| `borderTitle` | string | `tui.WithBorderTitle(s)` |
 | `background` | `tui.Style` | `tui.WithBackground(s)` |
 
 Available on: `div`, `ul`, `li`, `table`, `span`, `p`, `button`.

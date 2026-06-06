@@ -277,7 +277,7 @@ Here's the full set of supported attributes, grouped by purpose:
 
 **Spacing**: `padding`, `margin`
 
-**Visual**: `border`, `borderStyle`, `background`, `text`, `textStyle`, `textAlign`
+**Visual**: `border`, `borderStyle`, `borderTitle`, `background`, `text`, `textStyle`, `textAlign`
 
 **Focus**: `focusable`, `onFocus`, `onBlur`
 

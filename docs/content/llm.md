@@ -248,6 +248,7 @@ tui.WithPrintWidth(w int)  // Explicit width; default: auto-detect, fallback 80
 | `textStyle` | `tui.Style` | Text styling |
 | `textAlign` | `string` | `"left"`, `"center"`, `"right"` |
 | `borderStyle` | `tui.Style` | Border line styling |
+| `borderTitle` | `string` | Title text centered in the top border |
 
 ### Identity & Behavior
 
