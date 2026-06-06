@@ -448,14 +448,16 @@ chars := tui.BorderRounded.Chars()
 
 ```go
 func WithBorder(style BorderStyle) Option
+func WithBorderTitle(title string) Option
 ```
 
-Sets the border style on an element:
+`WithBorder` sets the border shape. `WithBorderTitle` draws a label centered in the top border line, styled to match the border and truncated when wider than the top edge:
 
 ```go
 el := tui.New(
     tui.WithBorder(tui.BorderRounded),
     tui.WithBorderStyle(tui.NewStyle().Foreground(tui.ANSIColor(tui.Cyan))),
+    tui.WithBorderTitle(" Status "),
     tui.WithText("Bordered content"),
 )
 ```

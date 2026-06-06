@@ -146,6 +146,7 @@ tui.New(
 |----------|-------------|
 | `WithBorder(style BorderStyle)` | Border shape: `BorderNone`, `BorderSingle`, `BorderDouble`, `BorderRounded`, `BorderThick` |
 | `WithBorderStyle(style Style)` | Color and attributes for the border lines |
+| `WithBorderTitle(title string)` | Title text centered in the top border line |
 | `WithBackground(style Style)` | Background fill style |
 | `WithText(content string)` | Text content for this element |
 | `WithTextStyle(style Style)` | Text color and attributes. Setting this prevents style inheritance from the parent |
@@ -258,9 +259,11 @@ func (e *Element) Border() BorderStyle
 func (e *Element) SetBorder(border BorderStyle)
 func (e *Element) BorderStyle() Style
 func (e *Element) SetBorderStyle(style Style)
+func (e *Element) BorderTitle() string
+func (e *Element) SetBorderTitle(title string)
 ```
 
-`Border()` returns the border shape (`BorderSingle`, `BorderRounded`, etc.). `BorderStyle()` returns the color/attribute style used to draw the border lines.
+`Border()` returns the border shape (`BorderSingle`, `BorderRounded`, etc.). `BorderStyle()` returns the color/attribute style used to draw the border lines. `BorderTitle()` returns the title text drawn in the top border, or `""` when no title is set.
 
 ### Background
 

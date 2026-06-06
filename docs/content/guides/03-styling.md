@@ -151,6 +151,26 @@ Color the border with `border-{color}`:
 
 All 16 named colors and their bright variants work: `border-red`, `border-bright-green`, etc. Arbitrary hex values are supported too: `border-[#FF6B35]`.
 
+### Border Titles
+
+The `borderTitle` attribute draws a label centered in the top border line:
+
+```gsx
+<div class="border-rounded p-1" borderTitle=" Status ">
+    <span>All systems normal</span>
+</div>
+```
+
+```
+╭────── Status ──────╮
+│ All systems normal │
+╰────────────────────╯
+```
+
+The title renders with the border's style, so border color classes and the `borderStyle` attribute color both the line and the label. Titles wider than the top edge are truncated. Wrapping the text in spaces (`" Status "`) keeps a gap between the label and the line characters.
+
+Border titles also work with border gradients. The gradient draws first and the title overwrites the characters it covers.
+
 ## Gradients
 
 Gradients interpolate between two colors across text, backgrounds, or borders.
