@@ -124,7 +124,7 @@ func formatDuration(seconds int) string {
 	return fmt.Sprintf("%02d:%02d", m, s)
 }
 
-templ (w *watcherApp) Render() {
+t1 (w *watcherApp) Render() {
 	<div class="flex-col p-1 gap-1 border-rounded border-cyan">
 		<span class="text-gradient-cyan-magenta font-bold">Timers & Watchers</span>
 

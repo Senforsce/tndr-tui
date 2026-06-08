@@ -4,12 +4,12 @@ import "testing"
 
 func TestAnalyzer_DetectEventsVars_GoCodeDeclaration(t *testing.T) {
 	input := `package x
-templ Example() {
+t1 Example() {
 	bus := tui.NewEvents[string]("app.notifications")
 	<span>ok</span>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -28,13 +28,13 @@ templ Example() {
 
 func TestAnalyzer_DetectEventsVars_MultipleDeclarations(t *testing.T) {
 	input := `package x
-templ Example() {
+t1 Example() {
 	eventsA := tui.NewEvents[string]("topic.a")
 	eventsB := tui.NewEvents[int]("topic.b")
 	<span>ok</span>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {

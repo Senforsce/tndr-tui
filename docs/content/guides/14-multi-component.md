@@ -8,19 +8,19 @@ go-tui handles this through shared state and the mount system. Parent components
 
 This guide walks through splitting code across files, sharing state between components, conditional KeyMaps, and architecture patterns for larger apps.
 
-## Multiple .gsx Files
+## Multiple .t2 Files
 
-Each component can live in its own `.gsx` file. All files in the same package share scope, so components defined in one file are callable from another without imports:
+Each component can live in its own `.t2` file. All files in the same package share scope, so components defined in one file are callable from another without imports:
 
 ```
 myapp/
   main.go
-  app.gsx          -> app_gsx.go
-  sidebar.gsx      -> sidebar_gsx.go
-  search.gsx       -> search_gsx.go   (search bar + content panel)
+  app.t2          -> app_t2.go
+  sidebar.t2      -> sidebar_t2.go
+  search.t2       -> search_t2.go   (search bar + content panel)
 ```
 
-Run `tui generate ./...` and it processes every `.gsx` file in the package, producing a corresponding `_gsx.go` file for each. The generated files are standard Go, so all the components end up in the same package and can reference each other directly.
+Run `tui generate ./...` and it processes every `.t2` file in the package, producing a corresponding `_t2.go` file for each. The generated files are standard Go, so all the components end up in the same package and can reference each other directly.
 
 There's no strict rule about how many components go in one file. A small pure component that's only used alongside its parent can share a file. A struct component with its own state and key handling usually deserves its own file. Split when it makes the code easier to navigate.
 
@@ -30,7 +30,7 @@ The main coordination mechanism between components is shared `*tui.State[T]`. Th
 
 Here's the pattern. A root component creates a `category` state and hands it to both a sidebar and a content panel:
 
-```gsx
+```t2
 package main
 
 import tui "github.com/grindlemire/go-tui"
@@ -51,7 +51,7 @@ func (a *myApp) KeyMap() tui.KeyMap {
     }
 }
 
-templ (a *myApp) Render() {
+t1 (a *myApp) Render() {
     <div class="flex h-full">
         @Sidebar(a.category)
         @Content(a.category)
@@ -61,7 +61,7 @@ templ (a *myApp) Render() {
 
 The sidebar receives the shared state and also creates its own local `selected` state for tracking which list item has the cursor:
 
-```gsx
+```t2
 package main
 
 import tui "github.com/grindlemire/go-tui"
@@ -103,7 +103,7 @@ func (s *sidebar) KeyMap() tui.KeyMap {
     }
 }
 
-templ (s *sidebar) Render() {
+t1 (s *sidebar) Render() {
     <div class="flex-col border-single shrink-0 px-1" width={20}>
         <span class="text-gradient-cyan-magenta font-bold">Folders</span>
         <hr />
@@ -120,7 +120,7 @@ templ (s *sidebar) Render() {
 
 The content panel reads the same `category` state to display the right files:
 
-```gsx
+```t2
 package main
 
 import (
@@ -145,7 +145,7 @@ func Content(category *tui.State[string]) *content {
     return &content{category: category}
 }
 
-templ (c *content) Render() {
+t1 (c *content) Render() {
     <div class="flex-col grow px-2">
         <span class="font-bold text-cyan">{c.category.Get() + "/"}</span>
         <hr />
@@ -175,7 +175,7 @@ In the example above, `category` is shared because both the sidebar and the cont
 
 Here's a search bar that returns `nil` (no bindings) when inactive, and captures all runes when active:
 
-```gsx
+```t2
 package main
 
 import tui "github.com/grindlemire/go-tui"
@@ -221,7 +221,7 @@ func (s *searchBar) deactivate(ke tui.KeyEvent) {
     s.query.Set("")
 }
 
-templ (s *searchBar) Render() {
+t1 (s *searchBar) Render() {
     <div class="shrink-0">
         if s.active.Get() {
             <hr />
@@ -297,7 +297,7 @@ This is why a child's local state survives parent re-renders. The sidebar's `sel
 
 When a component is no longer rendered (removed from the tree by an `if` condition, for example), the framework's mark-and-sweep cleanup calls the cleanup function returned by `Init()` and removes the instance from cache.
 
-You don't call `Mount` directly. The code generator handles it. Write `@Sidebar(a.category)` in your `.gsx` file and the generated code does the rest.
+You don't call `Mount` directly. The code generator handles it. Write `@Sidebar(a.category)` in your `.t2` file and the generated code does the rest.
 
 ### Generated BindApp and UpdateProps
 
@@ -326,7 +326,7 @@ func (s *sidebar) BindApp(app *tui.App) {
 
 One root component owns all shared state. Children receive state through their constructors and read/write it, but the root is the single source of truth.
 
-```gsx
+```t2
 type myApp struct {
     searchActive *tui.State[bool]
     query        *tui.State[string]
@@ -341,7 +341,7 @@ func MyApp() *myApp {
     }
 }
 
-templ (a *myApp) Render() {
+t1 (a *myApp) Render() {
     <div class="flex-col h-full border-rounded border-cyan">
         <div class="flex justify-center px-1 shrink-0">
             <span class="text-gradient-cyan-magenta font-bold">File Explorer</span>
@@ -382,9 +382,9 @@ Most apps end up somewhere in between: a root that owns the shared coordination 
 
 Here's a full file explorer with three components: sidebar, content panel, and search bar. The root component wires them together with shared state.
 
-**app.gsx**:
+**app.t2**:
 
-```gsx
+```t2
 package main
 
 import tui "github.com/grindlemire/go-tui"
@@ -418,7 +418,7 @@ func (a *myApp) KeyMap() tui.KeyMap {
     return km
 }
 
-templ (a *myApp) Render() {
+t1 (a *myApp) Render() {
     <div class="flex-col h-full border-rounded border-cyan">
         <div class="flex justify-center px-1 shrink-0">
             <span class="text-gradient-cyan-magenta font-bold">File Explorer</span>
@@ -437,9 +437,9 @@ templ (a *myApp) Render() {
 }
 ```
 
-**sidebar.gsx**:
+**sidebar.t2**:
 
-```gsx
+```t2
 package main
 
 import tui "github.com/grindlemire/go-tui"
@@ -508,7 +508,7 @@ func (s *sidebar) sidebarWidth() int {
     return 5
 }
 
-templ (s *sidebar) Render() {
+t1 (s *sidebar) Render() {
     <div class="flex-col border-single shrink-0" width={s.sidebarWidth()}>
         if s.expanded.Get() {
             <div class="flex-col px-1">
@@ -535,9 +535,9 @@ templ (s *sidebar) Render() {
 }
 ```
 
-**search.gsx** (search bar and content panel):
+**search.t2** (search bar and content panel):
 
-```gsx
+```t2
 package main
 
 import (
@@ -588,7 +588,7 @@ func (s *searchBar) deactivate(ke tui.KeyEvent) {
     s.query.Set("")
 }
 
-templ (s *searchBar) Render() {
+t1 (s *searchBar) Render() {
     <div class="shrink-0">
         if s.active.Get() {
             <hr />
@@ -638,7 +638,7 @@ func (c *content) filteredFiles() []string {
     return result
 }
 
-templ (c *content) Render() {
+t1 (c *content) Render() {
     <div class="flex-col grow px-2 overflow-hidden">
         <span class="font-bold text-cyan">{c.category.Get() + "/"}</span>
         <hr />

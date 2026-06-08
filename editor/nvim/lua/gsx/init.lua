@@ -3,21 +3,21 @@ local M = {}
 --- Find the root of this plugin (editor/nvim/) on the runtimepath.
 local function plugin_root()
 	for _, p in ipairs(vim.api.nvim_list_runtime_paths()) do
-		if vim.uv.fs_stat(p .. "/lua/gsx/init.lua") then
+		if vim.uv.fs_stat(p .. "/lua/t2/init.lua") then
 			return p
 		end
 	end
 	return nil
 end
 
---- Find the tree-sitter-gsx source directory.
---- It sits alongside the nvim plugin at ../tree-sitter-gsx.
+--- Find the tree-sitter-t2 source directory.
+--- It sits alongside the nvim plugin at ../tree-sitter-t2.
 local function grammar_src_dir()
 	local root = plugin_root()
 	if not root then
 		return nil
 	end
-	local src = vim.fs.normalize(root .. "/../tree-sitter-gsx/src")
+	local src = vim.fs.normalize(root .. "/../tree-sitter-t2/src")
 	if vim.uv.fs_stat(src .. "/parser.c") then
 		return src
 	end
@@ -29,12 +29,12 @@ end
 function M.build_parser()
 	local src = grammar_src_dir()
 	if not src then
-		return "Could not find tree-sitter-gsx/src/parser.c relative to the plugin"
+		return "Could not find tree-sitter-t2/src/parser.c relative to the plugin"
 	end
 
 	local parser_dir = vim.fn.stdpath("data") .. "/site/parser"
 	vim.fn.mkdir(parser_dir, "p")
-	local output = parser_dir .. "/gsx.so"
+	local output = parser_dir .. "/t2.so"
 
 	-- Use the same flags nvim-treesitter uses on macOS vs Linux
 	local cc = vim.fn.exepath("cc")
@@ -68,15 +68,15 @@ function M.build_parser()
 	return nil
 end
 
---- Check if the gsx parser .so is installed.
+--- Check if the t2 parser .so is installed.
 function M.parser_installed()
-	local path = vim.fn.stdpath("data") .. "/site/parser/gsx.so"
+	local path = vim.fn.stdpath("data") .. "/site/parser/t2.so"
 	return vim.uv.fs_stat(path) ~= nil
 end
 
 --- Set up GSX support for Neovim.
 ---
---- Registers the gsx filetype and tree-sitter language, configures the LSP,
+--- Registers the t2 filetype and tree-sitter language, configures the LSP,
 --- and auto-builds the parser if it isn't installed yet.
 ---
 --- Options:
@@ -85,25 +85,25 @@ end
 ---   lsp.log       string    Path to LSP log file for debugging (optional)
 ---
 --- Example:
----   require("gsx").setup()
----   require("gsx").setup({ lsp = { cmd = { "/path/to/tui", "lsp" } } })
----   require("gsx").setup({ lsp = { log = "/tmp/gsx-lsp.log" } })
+---   require("t2").setup()
+---   require("t2").setup({ lsp = { cmd = { "/path/to/tui", "lsp" } } })
+---   require("t2").setup({ lsp = { log = "/tmp/t2-lsp.log" } })
 function M.setup(opts)
 	opts = opts or {}
 	opts.lsp = opts.lsp or {}
 
 	local lsp_enabled = opts.lsp.enabled ~= false
 
-	-- Register gsx as a tree-sitter language so Neovim knows which parser to load.
+	-- Register t2 as a tree-sitter language so Neovim knows which parser to load.
 	if vim.treesitter.language and vim.treesitter.language.register then
-		vim.treesitter.language.register("gsx", "gsx")
+		vim.treesitter.language.register("t2", "t2")
 	end
 
 	-- Auto-build the parser if it isn't installed yet.
 	if not M.parser_installed() then
 		local err = M.build_parser()
 		if err then
-			vim.notify("[gsx] Failed to build parser: " .. err, vim.log.levels.WARN)
+			vim.notify("[t2] Failed to build parser: " .. err, vim.log.levels.WARN)
 		end
 	end
 
@@ -111,9 +111,9 @@ function M.setup(opts)
 	vim.api.nvim_create_user_command("GSXBuildParser", function()
 		local err = M.build_parser()
 		if err then
-			vim.notify("[gsx] " .. err, vim.log.levels.ERROR)
+			vim.notify("[t2] " .. err, vim.log.levels.ERROR)
 		else
-			vim.notify("[gsx] Parser built successfully", vim.log.levels.INFO)
+			vim.notify("[t2] Parser built successfully", vim.log.levels.INFO)
 		end
 	end, { desc = "Build and install the GSX tree-sitter parser" })
 
@@ -128,19 +128,19 @@ function M.setup(opts)
 
 		-- Neovim 0.11+ native LSP config
 		if vim.lsp.config then
-			vim.lsp.config("gsx", {
+			vim.lsp.config("t2", {
 				cmd = cmd,
-				filetypes = { "gsx" },
+				filetypes = { "t2" },
 				root_markers = { "go.mod", "go.sum" },
 			})
-			vim.lsp.enable("gsx")
+			vim.lsp.enable("t2")
 		else
 			-- Fallback: set up an autocommand that starts the LSP on BufEnter
 			vim.api.nvim_create_autocmd("FileType", {
-				pattern = "gsx",
+				pattern = "t2",
 				callback = function(ev)
 					vim.lsp.start({
-						name = "gsx",
+						name = "t2",
 						cmd = cmd,
 						root_dir = vim.fs.root(ev.buf, { "go.mod", "go.sum" }),
 					})

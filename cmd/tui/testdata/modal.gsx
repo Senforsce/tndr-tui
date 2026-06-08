@@ -23,7 +23,7 @@ func (c *myModal) gameOverKeys() tui.KeyMap {
 	}
 }
 
-templ (c *myModal) Render() {
+t1 (c *myModal) Render() {
 	<div class="flex-col">
 		<span>Background content</span>
 		<modal open={c.showModal} class="justify-center items-center" backdrop="dim">

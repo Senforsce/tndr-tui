@@ -89,7 +89,7 @@ func TestSemanticTokens_ComponentDecl(t *testing.T) {
 		"simple component": {
 			content: `package main
 
-templ Hello() {
+t1 Hello() {
 	<span>Hello</span>
 }
 `,
@@ -100,7 +100,7 @@ templ Hello() {
 		"component with params": {
 			content: `package main
 
-templ Greeting(name string, count int) {
+t1 Greeting(name string, count int) {
 	<span>{name}</span>
 }
 `,
@@ -124,7 +124,7 @@ templ Greeting(name string, count int) {
 
 			keywordCount := countByType(tokens, TokenTypeKeyword)
 			if tt.wantKeyword && keywordCount == 0 {
-				t.Error("expected at least one keyword token (templ)")
+				t.Error("expected at least one keyword token (t1)")
 			}
 
 			classCount := countByType(tokens, TokenTypeClass)
@@ -222,7 +222,7 @@ func TestSemanticTokens_Keywords(t *testing.T) {
 		"for loop keyword": {
 			content: `package main
 
-templ List(items []string) {
+t1 List(items []string) {
 	for _, item := range items {
 		<span>{item}</span>
 	}
@@ -233,7 +233,7 @@ templ List(items []string) {
 		"if/else keywords": {
 			content: `package main
 
-templ Cond(show bool) {
+t1 Cond(show bool) {
 	if show {
 		<span>Yes</span>
 	} else {
@@ -312,7 +312,7 @@ templ Cond(show bool) {
 
 import "fmt"
 
-templ Cond(show bool) {
+t1 Cond(show bool) {
 	if show {
 		<span>{fmt.Sprintf("something else happened")}</span>
 	} else {
@@ -348,7 +348,7 @@ templ Cond(show bool) {
 	t.Run("bare else keyword highlighted", func(t *testing.T) {
 		content := `package main
 
-templ Cond(show bool) {
+t1 Cond(show bool) {
 	if show {
 		<span>Yes</span>
 	} else {
@@ -384,7 +384,7 @@ func TestSemanticTokens_ElementAttributes(t *testing.T) {
 		"element with attributes": {
 			content: `package main
 
-templ Hello() {
+t1 Hello() {
 	<div class="border-single" id="main">
 		<span>Hello</span>
 	</div>
@@ -426,7 +426,7 @@ func TestSemanticTokens_Comments(t *testing.T) {
 			content: `package main
 
 // A comment
-templ Hello() {
+t1 Hello() {
 	<span>Hello</span>
 }
 `,
@@ -436,7 +436,7 @@ templ Hello() {
 			content: `package main
 
 /* Block comment */
-templ Hello() {
+t1 Hello() {
 	<span>Hello</span>
 }
 `,
@@ -445,7 +445,7 @@ templ Hello() {
 		"comment inside component": {
 			content: `package main
 
-templ Hello() {
+t1 Hello() {
 	// inner comment
 	<span>Hello</span>
 }

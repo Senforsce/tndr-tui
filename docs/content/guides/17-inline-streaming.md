@@ -153,7 +153,7 @@ go func() {
 }()
 ```
 
-`WriteElement` accepts any `Viewable`, which includes the view structs generated from templ functions. The element tree is rendered once and baked into static ANSI text. It does not remain interactive.
+`WriteElement` accepts any `Viewable`, which includes the view structs generated from t1 functions. The element tree is rendered once and baked into static ANSI text. It does not remain interactive.
 
 You can also use `PrintAboveElement` directly on the app when you're not mid-stream:
 
@@ -199,9 +199,9 @@ func main() {
 }
 ```
 
-The component uses a `State[bool]` to track whether a stream is in progress, and disables starting another stream until the current one finishes. A `ReportCard` templ function builds a styled table that gets inserted into the scrollback via `WriteElement`:
+The component uses a `State[bool]` to track whether a stream is in progress, and disables starting another stream until the current one finishes. A `ReportCard` t1 function builds a styled table that gets inserted into the scrollback via `WriteElement`:
 
-```gsx
+```t2
 package main
 
 import (
@@ -272,7 +272,7 @@ func randomPeople() []person {
     return people
 }
 
-templ ReportCard(people []person) {
+t1 ReportCard(people []person) {
     <div class="flex justify-center">
         <div class="flex-col border-rounded w-3/4 px-1" borderStyle={tui.NewStyle().Foreground(tui.BrightCyan)}>
             <span class="font-bold text-bright-magenta">Streaming Report</span>
@@ -362,7 +362,7 @@ func (s *streamDemo) statusText() string {
     return "Enter to stream  |  Tab to stream with element  |  Esc to quit"
 }
 
-templ (s *streamDemo) Render() {
+t1 (s *streamDemo) Render() {
     <div class="border-rounded border-cyan items-center justify-center">
         <span class="text-cyan">{s.statusText()}</span>
     </div>
@@ -377,7 +377,7 @@ The writing happens in goroutines so it doesn't block the event loop. `streamPhr
 
 `WriteGradient` handles per-character gradient coloring and column tracking internally. No manual ANSI escape sequences, column counters, or position tracking needed.
 
-`WriteElement` takes the output of the `ReportCard` templ function and renders it as static ANSI text into the scrollback. The table keeps its borders, colors, and layout, and appears between the streamed gradient text. The element is rendered once at insertion time and doesn't stay interactive.
+`WriteElement` takes the output of the `ReportCard` t1 function and renders it as static ANSI text into the scrollback. The table keeps its borders, colors, and layout, and appears between the streamed gradient text. The element is rendered once at insertion time and doesn't stay interactive.
 
 After writing, both methods close the writer and set `streaming` back to `false` through `QueueUpdate`.
 

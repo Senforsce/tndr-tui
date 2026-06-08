@@ -28,7 +28,7 @@ go get github.com/grindlemire/go-tui
 
 You'll create two files:
 
-- `tree.gsx` - the component and all its logic
+- `tree.t2` - the component and all its logic
 - `main.go` - the entry point
 
 ## Data Model
@@ -421,7 +421,7 @@ The `onPath` field was already computed during flattening in `visibleNodes()`, s
 
 The render template uses chained `if`/`else if` to apply the right class to each row:
 
-```gsx
+```t2
 for i, vn := range d.visibleNodes() {
     if i == d.cursor.Get() {
         <span class="bg-bright-black text-cyan font-bold">{buildPrefix(vn) + nodeLabel(vn, d.expanded.Get())}</span>
@@ -439,9 +439,9 @@ The selected row gets the same teal color as the ancestor path, plus a dark back
 
 ## Complete Example
 
-Here's the full `tree.gsx`:
+Here's the full `tree.t2`:
 
-```gsx
+```t2
 package main
 
 import (
@@ -669,7 +669,7 @@ func (d *directoryTree) collapseOrParent() {
     }
 }
 
-templ (d *directoryTree) Render() {
+t1 (d *directoryTree) Render() {
     <div class="flex-col w-full h-full border-rounded border-cyan">
         <div class="flex-col p-1">
             <span class="text-gradient-cyan-magenta font-bold">Directory Tree</span>

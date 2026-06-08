@@ -38,7 +38,7 @@ func (p *panelForm) KeyMap() tui.KeyMap {
 	}...)
 }
 
-templ (p *panelForm) Render() {
+t1 (p *panelForm) Render() {
 	<div class="flex-col gap-1 p-1">
 		<span class="font-bold text-gradient-cyan-magenta">Focus Demo — Tab to switch, Space to interact</span>
 		<div class="flex gap-1">

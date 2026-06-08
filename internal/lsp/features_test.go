@@ -16,7 +16,7 @@ func TestComponentIndex(t *testing.T) {
 		"single component": {
 			content: `package main
 
-templ Hello() {
+t1 Hello() {
 	<span>Hello</span>
 }
 `,
@@ -27,11 +27,11 @@ templ Hello() {
 		"multiple components": {
 			content: `package main
 
-templ Header() {
+t1 Header() {
 	<span>Header</span>
 }
 
-templ Footer() {
+t1 Footer() {
 	<span>Footer</span>
 }
 `,
@@ -42,7 +42,7 @@ templ Footer() {
 		"lookup nonexistent": {
 			content: `package main
 
-templ Hello() {
+t1 Hello() {
 	<span>Hello</span>
 }
 `,
@@ -57,7 +57,7 @@ templ Hello() {
 			dm := NewDocumentManager()
 			idx := NewComponentIndex()
 
-			uri := "file:///test.gsx"
+			uri := "file:///test.t2"
 			doc := dm.Open(uri, tt.content, 1)
 
 			idx.IndexDocument(uri, doc.AST)
@@ -82,10 +82,10 @@ func TestComponentIndexRemove(t *testing.T) {
 	dm := NewDocumentManager()
 	idx := NewComponentIndex()
 
-	uri := "file:///test.gsx"
+	uri := "file:///test.t2"
 	content := `package main
 
-templ Hello() {
+t1 Hello() {
 	<span>Hello</span>
 }
 `

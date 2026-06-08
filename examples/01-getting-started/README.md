@@ -1,6 +1,6 @@
 # Getting Started
 
-A minimal go-tui app: one component with gradient text and a quit handler. Covers project setup, writing your first `.gsx` file, generating Go code, and running the result.
+A minimal go-tui app: one component with gradient text and a quit handler. Covers project setup, writing your first `.t2` file, generating Go code, and running the result.
 
 ## Screenshot
 

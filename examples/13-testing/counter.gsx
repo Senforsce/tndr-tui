@@ -27,7 +27,7 @@ func (c *counter) KeyMap() tui.KeyMap {
 	}
 }
 
-templ (c *counter) Render() {
+t1 (c *counter) Render() {
 	<div class="flex-col grow items-center justify-center">
 		<span class="font-bold">{fmt.Sprintf("Count: %d", c.count.Get())}</span>
 		<span class="font-dim">Press + / - to change, Esc to quit</span>

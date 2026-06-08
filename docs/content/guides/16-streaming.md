@@ -175,7 +175,7 @@ func lineColor(line string) string {
 
 Use it in the template with a dynamic `class` attribute:
 
-```gsx
+```t2
 for _, line := range s.lines.Get() {
     <span class={lineColor(line)}>{line}</span>
 }
@@ -206,7 +206,7 @@ The timer fires every second regardless of channel activity. Both watchers trigg
 
 This live stream viewer receives timestamped metrics from a background goroutine, with auto-scroll, manual scrolling, and color-coded output:
 
-```gsx
+```t2
 package main
 
 import (
@@ -337,7 +337,7 @@ func lineColor(line string) string {
     return ""
 }
 
-templ (s *streamingApp) Render() {
+t1 (s *streamingApp) Render() {
     <div class="flex-col gap-1 p-1 h-full border-rounded border-cyan">
         <div class="flex justify-between shrink-0">
             <span class="text-gradient-cyan-magenta font-bold shrink-0">Live Stream</span>

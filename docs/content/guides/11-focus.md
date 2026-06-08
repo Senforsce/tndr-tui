@@ -6,15 +6,15 @@ Focus determines which element receives keyboard input. go-tui handles element-l
 
 ## Making Elements Focusable
 
-Mark an element as focusable with the `focusable` attribute in your `.gsx` template:
+Mark an element as focusable with the `focusable` attribute in your `.t2` template:
 
-```gsx
+```t2
 <button focusable={true} class="px-2 border-single">Click me</button>
 ```
 
 You can also attach focus and blur callbacks. These fire when the element gains or loses focus:
 
-```gsx
+```t2
 <div
     focusable={true}
     onFocus={func(el *tui.Element) { el.SetBorderStyle(tui.NewStyle().Foreground(tui.ANSIColor(tui.Cyan))) }}
@@ -130,8 +130,8 @@ func (f *myForm) KeyMap() tui.KeyMap {
 
 Read each member state in your template to change styles based on which section is active:
 
-```gsx
-templ (f *myForm) Render() {
+```t2
+t1 (f *myForm) Render() {
     <div class="flex gap-1 h-full">
         if f.sidebarActive.Get() {
             <div class="flex-col border-rounded border-cyan p-1" width={20}>
@@ -209,7 +209,7 @@ Focusable elements with borders receive an automatic cyan border highlight when 
 
 This form has three panels that highlight when active. Tab and Shift+Tab cycle between them using `FocusGroup`:
 
-```gsx
+```t2
 package main
 
 import (
@@ -250,7 +250,7 @@ func (p *panelForm) KeyMap() tui.KeyMap {
     }...)
 }
 
-templ (p *panelForm) Render() {
+t1 (p *panelForm) Render() {
     <div class="flex-col gap-1 p-1">
         <span class="font-bold text-gradient-cyan-magenta">Focus Demo — Tab to switch, Space to interact</span>
         <div class="flex gap-1">

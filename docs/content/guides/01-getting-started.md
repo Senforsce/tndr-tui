@@ -4,7 +4,7 @@
 
 ## What is go-tui
 
-go-tui is a declarative terminal UI framework for Go. You write UI layouts in `.gsx` files using a templ-like syntax with HTML-style elements, and the framework handles flexbox layout, rendering, and terminal input. It's pure Go with minimal external dependencies and generates type-safe code from your templates.
+go-tui is a declarative terminal UI framework for Go. You write UI layouts in `.t2` files using a templ-like syntax with HTML-style elements, and the framework handles flexbox layout, rendering, and terminal input. It's pure Go with minimal external dependencies and generates type-safe code from your templates.
 
 ## Installation
 
@@ -14,7 +14,7 @@ First, add go-tui to your Go module:
 go get github.com/grindlemire/go-tui
 ```
 
-Then install the `tui` CLI tool, which compiles `.gsx` files into Go code:
+Then install the `tui` CLI tool, which compiles `.t2` files into Go code:
 
 ```bash
 go install github.com/grindlemire/go-tui/cmd/tui@latest
@@ -24,7 +24,7 @@ Make sure `$GOPATH/bin` (or `$GOBIN`) is in your `PATH` so the `tui` command is 
 
 ## Editor Setup
 
-For VS Code (or compatible editors like Cursor), install the official extension. It provides LSP support for `.gsx` files:
+For VS Code (or compatible editors like Cursor), install the official extension. It provides LSP support for `.t2` files:
 
 - [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=grindlemire.go-tui)
 - [Open VSX](https://open-vsx.org/extension/grindlemire/go-tui)
@@ -43,11 +43,11 @@ go mod init hello-tui
 go get github.com/grindlemire/go-tui
 ```
 
-### 2. Write hello.gsx
+### 2. Write hello.t2
 
-Create a file called `hello.gsx`:
+Create a file called `hello.t2`:
 
-```gsx
+```t2
 package main
 
 import tui "github.com/grindlemire/go-tui"
@@ -65,7 +65,7 @@ func (h *helloApp) KeyMap() tui.KeyMap {
 	}
 }
 
-templ (h *helloApp) Render() {
+t1 (h *helloApp) Render() {
 	<div class="flex-col items-center justify-center h-full">
 		<div class="border-rounded border-cyan p-2 gap-1 flex-col items-center">
 			<span class="text-cyan font-bold">Hello, Terminal!</span>
@@ -117,10 +117,10 @@ func main() {
 
 ### 4. Generate and run
 
-Compile the `.gsx` file, then run the app:
+Compile the `.t2` file, then run the app:
 
 ```bash
-tui generate hello.gsx
+tui generate hello.t2
 go run .
 ```
 
@@ -130,15 +130,15 @@ You should see a centered box with "Hello, Terminal!" in cyan. Press `q` or `Esc
 
 ## How It Works
 
-You write `.gsx` files using templ-like syntax, then `tui generate` compiles them into `_gsx.go` files containing standard Go code that calls the `tui` package API. From there, `go build` produces a single binary with no runtime dependencies. At runtime, the framework handles the event loop, flexbox layout, and double-buffered terminal rendering.
+You write `.t2` files using templ-like syntax, then `tui generate` compiles them into `_t2.go` files containing standard Go code that calls the `tui` package API. From there, `go build` produces a single binary with no runtime dependencies. At runtime, the framework handles the event loop, flexbox layout, and double-buffered terminal rendering.
 
-The generated `_gsx.go` files are recreated every time you run `tui generate` and should not be edited by hand.
+The generated `_t2.go` files are recreated every time you run `tui generate` and should not be edited by hand.
 
 ## Core Concepts
 
-**Components** come in two flavors. *Pure components* (`templ Greeting(name string) { ... }`) are stateless functions that take parameters and return UI. *Struct components* carry their own state, handle input, and support lifecycle hooks. See [GSX Syntax](gsx-syntax) and [Components](components).
+**Components** come in two flavors. *Pure components* (`templ Greeting(name string) { ... }`) are stateless functions that take parameters and return UI. *Struct components* carry their own state, handle input, and support lifecycle hooks. See [GSX Syntax](t2-syntax) and [Components](components).
 
-**Elements** are the HTML-like tags you use in `.gsx` files: `<div>` for block containers, `<span>` for inline text, `<input />` for text fields, `<progress />` for progress bars, and more. See [GSX Syntax](gsx-syntax).
+**Elements** are the HTML-like tags you use in `.t2` files: `<div>` for block containers, `<span>` for inline text, `<input />` for text fields, `<progress />` for progress bars, and more. See [GSX Syntax](t2-syntax).
 
 **Styling** uses Tailwind-inspired classes in the `class` attribute. Apply text colors (`text-cyan`), font styles (`font-bold`), borders (`border-rounded`), backgrounds (`bg-red`), and gradients (`text-gradient-cyan-magenta`). See [Styling and Colors](styling).
 
@@ -150,5 +150,5 @@ The generated `_gsx.go` files are recreated every time you run `tui generate` an
 
 ## Next Steps
 
-- [GSX Syntax](gsx-syntax) — The full `.gsx` file format: elements, attributes, control flow, and code generation
+- [GSX Syntax](t2-syntax) — The full `.t2` file format: elements, attributes, control flow, and code generation
 - [Styling and Colors](styling) — Text styles, colors, borders, and gradients

@@ -7,7 +7,7 @@ import (
 	"github.com/grindlemire/go-tui/internal/tuigen"
 )
 
-// printer generates formatted .gsx source code from an AST.
+// printer generates formatted .t2 source code from an AST.
 type printer struct {
 	indent string
 	depth  int
@@ -21,7 +21,7 @@ func newPrinter(indent string) *printer {
 	}
 }
 
-// PrintFile formats an entire .gsx file.
+// PrintFile formats an entire .t2 file.
 func (p *printer) PrintFile(file *tuigen.File) string {
 	p.buf.Reset()
 
@@ -123,23 +123,23 @@ func (p *printer) printImports(imports []tuigen.Import) {
 }
 
 // printComponent outputs a component declaration.
-// Supports both function components: templ Name(params) { ... }
-// and method components: templ (s *Type) Render() { ... }
+// Supports both function components: t1 Name(params) { ... }
+// and method components: t1 (s *Type) Render() { ... }
 func (p *printer) printComponent(comp *tuigen.Component) {
 	// Leading comments (doc comments)
 	p.printLeadingComments(comp.LeadingComments)
 
-	p.write("templ ")
+	p.write("t1 ")
 
 	if comp.Receiver != "" {
-		// Method component: templ (s *sidebar) Render() { ... }
+		// Method component: t1 (s *sidebar) Render() { ... }
 		p.write("(")
 		p.write(comp.Receiver)
 		p.write(") ")
 		p.write(comp.Name)
 		p.write("()")
 	} else {
-		// Function component: templ Name(params) { ... }
+		// Function component: t1 Name(params) { ... }
 		p.write(comp.Name)
 		p.write("(")
 

@@ -26,16 +26,16 @@ go get github.com/grindlemire/go-tui
 
 You'll create two files:
 
-- `dashboard.gsx` -- the component and all its logic
+- `dashboard.t2` -- the component and all its logic
 - `main.go` -- the entry point that wires everything up
 
 ## Layout Skeleton
 
 Start with the outer structure. The dashboard is a vertical stack inside a bordered container, with sections for the title, metrics, a row containing the network chart and event feed side by side, and a key hint at the bottom.
 
-Create `dashboard.gsx`:
+Create `dashboard.t2`:
 
-```gsx
+```t2
 package main
 
 import (
@@ -57,7 +57,7 @@ func (d *dashboardApp) KeyMap() tui.KeyMap {
     }
 }
 
-templ (d *dashboardApp) Render() {
+t1 (d *dashboardApp) Render() {
     <div class="flex-col p-1 gap-1 h-full border-rounded border-cyan">
         <div class="flex justify-center shrink-0">
             <span class="text-gradient-cyan-magenta font-bold">Dashboard</span>
@@ -124,7 +124,7 @@ Now add reactive state for three gauges: CPU, memory, and disk. Each is a `State
 
 Update the struct and constructor:
 
-```gsx
+```t2
 type dashboardApp struct {
     cpu  *tui.State[int]
     mem  *tui.State[int]
@@ -142,7 +142,7 @@ func Dashboard() *dashboardApp {
 
 Add two helper functions that convert a percentage into a visual bar and a color class. These are regular Go functions, not components:
 
-```gsx
+```t2
 func metricBar(value, max int) string {
     width := 20
     filled := value * width / max
@@ -172,7 +172,7 @@ func metricColor(value int) string {
 
 Now add the metric panels to the render method, replacing the `// Metrics will go here` comment:
 
-```gsx
+```t2
 // Metric gauges
 <div class="flex gap-1 shrink-0">
     <div class="flex-col border-rounded p-1 gap-1" flexGrow={1.0}>
@@ -201,7 +201,7 @@ Run `tui generate ./...` and `go run .` to see the three gauges. They display st
 
 To make the gauges move, add a timer watcher. Import `"math/rand"` and `"time"`, then implement `WatcherProvider`:
 
-```gsx
+```t2
 import (
     "fmt"
     "math/rand"
@@ -242,7 +242,7 @@ Regenerate and run. The bars should shift every half second, with colors changin
 
 The network section shows a scrolling sparkline for inbound and outbound traffic. Add state for the current rates and the sparkline data arrays:
 
-```gsx
+```t2
 type dashboardApp struct {
     cpu      *tui.State[int]
     mem      *tui.State[int]
@@ -268,7 +268,7 @@ func Dashboard() *dashboardApp {
 
 The sparkline data is a fixed-length slice of integers. Each value maps to a Unicode block character that represents the height of that data point. Add the `sparkline` helper:
 
-```gsx
+```t2
 func sparkline(data []int) string {
     blocks := []rune{'▁', '▂', '▃', '▄', '▅', '▆', '▇', '█'}
     maxVal := 1
@@ -293,7 +293,7 @@ This normalizes values against the current maximum, so the sparkline always uses
 
 Add the network panel to the render method. We'll place it inside a horizontal row that will also hold the events panel (added in the next section), replacing `// Network + Events will go here`:
 
-```gsx
+```t2
 // Network Traffic + Recent Events
 <div class="flex gap-1 flex-grow">
     <div class="flex-col border-rounded p-1 gap-1" flexGrow={1.0}>
@@ -347,7 +347,7 @@ The event feed receives messages from outside the component through a Go channel
 
 Add the channel field, event state, scroll state, and a ref to the struct:
 
-```gsx
+```t2
 type dashboardApp struct {
     cpu       *tui.State[int]
     mem       *tui.State[int]
@@ -468,7 +468,7 @@ This keeps the last 50 events. After appending, it auto-scrolls to the bottom so
 
 Add the events panel inside the network row (replacing `// Events panel will go here`), right after the network traffic `</div>`:
 
-```gsx
+```t2
 <div
     ref={d.eventsRef}
     class="flex-col border-rounded p-1 gap-1"
@@ -526,7 +526,7 @@ func main() {
 
 `tui.WithMouse()` enables mouse event reporting so the scroll wheel works in the event feed.
 
-The `produceEvents` function lives in `dashboard.gsx` alongside the component. It sends random events at 2-5 second intervals and respects the stop channel so it shuts down cleanly:
+The `produceEvents` function lives in `dashboard.t2` alongside the component. It sends random events at 2-5 second intervals and respects the stop channel so it shuts down cleanly:
 
 ```go
 func produceEvents(ch chan<- string, stopCh <-chan struct{}) {
@@ -575,9 +575,9 @@ Each panel gets its own `border-rounded` frame for visual separation, and `gap-1
 
 ## Full Code
 
-Here's the complete `dashboard.gsx`:
+Here's the complete `dashboard.t2`:
 
-```gsx
+```t2
 package main
 
 import (
@@ -779,7 +779,7 @@ func produceEvents(ch chan<- string, stopCh <-chan struct{}) {
     }
 }
 
-templ (d *dashboardApp) Render() {
+t1 (d *dashboardApp) Render() {
     <div class="flex-col p-1 gap-1 h-full border-rounded border-cyan">
         <div class="flex justify-center shrink-0">
             <span class="text-gradient-cyan-magenta font-bold">Dashboard</span>
@@ -897,5 +897,5 @@ That covers it. Here are some ways you could extend the dashboard:
 
 - Add clickable panels that expand when clicked ([Events Guide](events))
 - Add focus navigation between panels with Tab/Shift-Tab ([Focus Guide](focus))
-- Split the dashboard into multiple `.gsx` files with separate components for each panel ([Multi-Component Guide](multi-component))
+- Split the dashboard into multiple `.t2` files with separate components for each panel ([Multi-Component Guide](multi-component))
 - Add an alternate screen settings overlay ([Inline Mode Guide](inline-mode))

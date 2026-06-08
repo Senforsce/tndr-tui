@@ -55,7 +55,7 @@ func (s *Server) publishDiagnostics(doc *Document) {
 					End:   Position{Line: e.Pos.Line - 1, Character: e.Pos.Column - 1 + 10},
 				},
 				Severity: DiagnosticSeverityError,
-				Source:   "gsx",
+				Source:   "t2",
 				Message:  e.Message,
 			})
 		}

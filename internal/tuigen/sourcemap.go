@@ -1,12 +1,12 @@
 package tuigen
 
-// SourceMap tracks position mappings between .gsx source and generated .go files.
+// SourceMap tracks position mappings between .t2 source and generated .go files.
 // All line numbers are 0-indexed.
 type SourceMap struct {
-	// SourceFile is the original .gsx file path
+	// SourceFile is the original .t2 file path
 	SourceFile string `json:"sourceFile"`
 
-	// Mappings contains position mappings from .go to .gsx
+	// Mappings contains position mappings from .go to .t2
 	Mappings []SourceMapping `json:"mappings"`
 }
 
@@ -16,10 +16,10 @@ type SourceMapping struct {
 	GoLine int `json:"goLine"`
 	// GoCol is the column in the generated .go file (0-indexed)
 	GoCol int `json:"goCol"`
-	// GsxLine is the line in the source .gsx file (0-indexed)
-	GsxLine int `json:"gsxLine"`
-	// GsxCol is the column in the source .gsx file (0-indexed)
-	GsxCol int `json:"gsxCol"`
+	// T2Line is the line in the source .t2 file (0-indexed)
+	T2Line int `json:"t2Line"`
+	// T2Col is the column in the source .t2 file (0-indexed)
+	T2Col int `json:"t2Col"`
 	// Length is the length of the mapped region
 	Length int `json:"length"`
 }
@@ -37,27 +37,27 @@ func (sm *SourceMap) AddMapping(m SourceMapping) {
 	sm.Mappings = append(sm.Mappings, m)
 }
 
-// GoToGsx converts a .go position to a .gsx position.
+// GoToT2 converts a .go position to a .t2 position.
 // Returns the translated position and true if found, otherwise returns
 // the input position and false.
-func (sm *SourceMap) GoToGsx(goLine, goCol int) (gsxLine, gsxCol int, found bool) {
+func (sm *SourceMap) GoToT2(goLine, goCol int) (t2Line, t2Col int, found bool) {
 	for _, m := range sm.Mappings {
 		if m.GoLine == goLine && goCol >= m.GoCol && goCol <= m.GoCol+m.Length {
 			offset := goCol - m.GoCol
-			return m.GsxLine, m.GsxCol + offset, true
+			return m.T2Line, m.T2Col + offset, true
 		}
 	}
 	return goLine, goCol, false
 }
 
-// GsxToGo converts a .gsx position to a .go position.
+// T2ToGo converts a .t2 position to a .go position.
 // Returns the translated position and true if found.
-func (sm *SourceMap) GsxToGo(gsxLine, gsxCol int) (goLine, goCol int, found bool) {
+func (sm *SourceMap) T2ToGo(t2Line, t2Col int) (goLine, goCol int, found bool) {
 	for _, m := range sm.Mappings {
-		if m.GsxLine == gsxLine && gsxCol >= m.GsxCol && gsxCol <= m.GsxCol+m.Length {
-			offset := gsxCol - m.GsxCol
+		if m.T2Line == t2Line && t2Col >= m.T2Col && t2Col <= m.T2Col+m.Length {
+			offset := t2Col - m.T2Col
 			return m.GoLine, m.GoCol + offset, true
 		}
 	}
-	return gsxLine, gsxCol, false
+	return t2Line, t2Col, false
 }

@@ -48,7 +48,7 @@ func (g *CommentGroup) Text() string {
 	return strings.Join(lines, "\n")
 }
 
-// File represents a complete .gsx source file.
+// File represents a complete .t2 source file.
 type File struct {
 	Package    string
 	Imports    []Import
@@ -264,7 +264,7 @@ type GoCode struct {
 func (g *GoCode) node()         {}
 func (g *GoCode) Pos() Position { return g.Position }
 
-// GoFunc represents a top-level Go function definition in a .gsx file.
+// GoFunc represents a top-level Go function definition in a .t2 file.
 type GoFunc struct {
 	Code     string // the entire function definition
 	Position Position
@@ -276,7 +276,7 @@ type GoFunc struct {
 func (g *GoFunc) node()         {}
 func (g *GoFunc) Pos() Position { return g.Position }
 
-// GoDecl represents a top-level Go declaration (type, const, var) in a .gsx file.
+// GoDecl represents a top-level Go declaration (type, const, var) in a .t2 file.
 type GoDecl struct {
 	Kind     string // "type", "const", or "var"
 	Code     string // the entire declaration

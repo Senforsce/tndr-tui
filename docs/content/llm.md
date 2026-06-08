@@ -1,7 +1,7 @@
 # go-tui — Complete Reference for LLMs
 
 > Declarative terminal UI framework for Go with templ-like syntax and flexbox layout.
-> Pure Go, minimal dependencies, generates type-safe code from `.gsx` templates.
+> Pure Go, minimal dependencies, generates type-safe code from `.t2` templates.
 
 ## Installation
 
@@ -13,9 +13,9 @@ go install github.com/grindlemire/go-tui/cmd/tui@latest
 ## CLI Commands
 
 ```bash
-tui generate [path...]       # Generate Go code from .gsx files
-tui check [path...]          # Validate .gsx files without writing output
-tui fmt [path...]            # Format .gsx files
+tui generate [path...]       # Generate Go code from .t2 files
+tui check [path...]          # Validate .t2 files without writing output
+tui fmt [path...]            # Format .t2 files
 tui fmt --check [path...]    # Check formatting without modifying
 tui lsp                      # Start language server (stdio)
 ```
@@ -23,28 +23,28 @@ tui lsp                      # Start language server (stdio)
 ## Architecture
 
 ```
-.gsx files → tui generate → _gsx.go files → go build → binary
+.t2 files → tui generate → _t2.go files → go build → binary
 ```
 
 At runtime: Event Loop → Layout Engine (flexbox) → Double-buffered Render → ANSI Terminal Output
 
 ## GSX Syntax
 
-`.gsx` files are Go files with a `templ` keyword for declaring UI components. They compile to standard Go code.
+`.t2` files are Go files with a `templ` keyword for declaring UI components. They compile to standard Go code.
 
 ### Pure Components (stateless)
 
-```gsx
+```t2
 package main
 
 import tui "github.com/grindlemire/go-tui"
 
-templ Greeting(name string) {
+t1 Greeting(name string) {
     <span class="text-cyan font-bold">{"Hello, " + name}</span>
 }
 
 // With children slot
-templ Card(title string) {
+t1 Card(title string) {
     <div class="border-rounded p-1 flex-col gap-1">
         <span class="font-bold">{title}</span>
         {children...}
@@ -52,7 +52,7 @@ templ Card(title string) {
 }
 
 // Usage
-templ App() {
+t1 App() {
     @Card("Info") {
         @Greeting("Alice")
     }
@@ -61,7 +61,7 @@ templ App() {
 
 ### Struct Components (stateful)
 
-```gsx
+```t2
 type counter struct {
     count *tui.State[int]
 }
@@ -79,7 +79,7 @@ func (c *counter) KeyMap() tui.KeyMap {
     }
 }
 
-templ (c *counter) Render() {
+t1 (c *counter) Render() {
     <div class="flex-col items-center justify-center h-full">
         <span class="text-cyan font-bold">{fmt.Sprintf("Count: %d", c.count.Get())}</span>
     </div>
@@ -88,7 +88,7 @@ templ (c *counter) Render() {
 
 ### Struct Components with Children
 
-```gsx
+```t2
 type panel struct {
     title    string
     children []*tui.Element
@@ -98,7 +98,7 @@ func NewPanel(title string, children []*tui.Element) *panel {
     return &panel{title: title, children: children}
 }
 
-templ (p *panel) Render() {
+t1 (p *panel) Render() {
     <div class="border-rounded p-1 flex-col">
         <span class="font-bold">{p.title}</span>
         {children...}
@@ -108,7 +108,7 @@ templ (p *panel) Render() {
 
 ### Control Flow
 
-```gsx
+```t2
 // Conditionals
 if condition {
     <span>True</span>
@@ -130,7 +130,7 @@ badge := <span class="font-bold">{label}</span>
 
 ### Go Expressions
 
-```gsx
+```t2
 <span>{fmt.Sprintf("Count: %d", c.count.Get())}</span>
 <span class={computedClass(isActive)}>Dynamic class</span>
 <div width={42} height={10} flexGrow={1.5}>content</div>
@@ -184,7 +184,7 @@ s := tui.Sprint(view, tui.WithPrintWidth(80))
 tui.Fprint(w, view, tui.WithPrintWidth(120))
 ```
 
-All three accept a `Viewable` (generated `.gsx` views and raw `*Element` values). Same components work with both `Print` and `App.Run()`.
+All three accept a `Viewable` (generated `.t2` views and raw `*Element` values). Same components work with both `Print` and `App.Run()`.
 
 ```go
 // PrintOption
@@ -678,7 +678,7 @@ Returns a no-op writer when not in inline mode. Only one stream writer is active
 
 ### PrintAboveElement
 
-`app.PrintAboveElement(el)` renders an element tree at the terminal width and inserts the resulting rows into the inline scrollback as static ANSI text. Works with templ function output. No-op outside inline mode. Must be called from the main event loop. `QueuePrintAboveElement(el)` is the goroutine-safe variant.
+`app.PrintAboveElement(el)` renders an element tree at the terminal width and inserts the resulting rows into the inline scrollback as static ANSI text. Works with t1 function output. No-op outside inline mode. Must be called from the main event loop. `QueuePrintAboveElement(el)` is the goroutine-safe variant.
 
 `StreamWriter.WriteElement(el)` inserts a rendered element mid-stream. Finalizes the current partial line first.
 
@@ -696,7 +696,7 @@ w.Close()
 
 ## Common Layout Patterns
 
-```gsx
+```t2
 // Full-screen with header/content/footer
 <div class="flex-col h-full">
     <div class="border-single p-1"><span>Header</span></div>
@@ -732,7 +732,7 @@ w.Close()
 
 **Important:** Modals require full-screen mode. They are silently ignored in inline mode (`WithInlineHeight`). To show a modal from an inline app, call `app.EnterAlternateScreen()` first, then `app.ExitAlternateScreen()` when the modal closes.
 
-```gsx
+```t2
 <modal open={s.showConfirm} class="justify-center items-center" backdrop="dim">
     <div class="border-rounded p-2 flex-col gap-1 w-40">
         <span class="font-bold text-yellow">Confirm?</span>
@@ -744,7 +744,7 @@ w.Close()
 
 Bottom sheet variant:
 
-```gsx
+```t2
 <modal open={s.showSheet} class="justify-end items-stretch" closeOnBackdropClick={false}>
     <div class="border-single p-1 flex gap-4 items-center justify-center">
         <span class="font-bold">Action?</span>
@@ -776,7 +776,7 @@ for name, tt := range tests {
 
 ## Element Option Functions (Go API)
 
-When building elements programmatically (outside .gsx):
+When building elements programmatically (outside .t2):
 
 ```go
 el := tui.New(
@@ -811,7 +811,7 @@ el := tui.New(
 
 ## Cross-Component Communication
 
-```gsx
+```t2
 // Producer component
 type producer struct {
     bus *tui.Events[string]

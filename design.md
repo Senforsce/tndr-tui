@@ -1,6 +1,6 @@
 # go-tui Design Document
 
-A declarative terminal UI framework for Go with templ-like syntax and flexbox layout.
+A declarative terminal UI framework for Go with tndr-like syntax and flexbox layout.
 
 ## Goals
 

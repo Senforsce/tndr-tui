@@ -23,7 +23,7 @@ func itemClass(selected bool) string {
 }
 
 // Pure component with children slot
-templ Panel(title string) {
+t1 Panel(title string) {
 	<div class="border-rounded p-1 flex-col gap-1" width={32}>
 		<span class="font-bold text-gradient-cyan-magenta">{title}</span>
 		<hr />
@@ -66,7 +66,7 @@ func (l *listApp) KeyMap() tui.KeyMap {
 	}
 }
 
-templ (l *listApp) Render() {
+t1 (l *listApp) Render() {
 	<div class="flex-col items-center justify-center h-full">
 		@Panel("Select an Item") {
 			for i, item := range l.items {

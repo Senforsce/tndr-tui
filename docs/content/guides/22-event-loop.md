@@ -148,9 +148,9 @@ Use **`Events()` + select** when you are building something that is driven by mu
 
 ## Complete Example
 
-The UI component lives in `feed.gsx` and displays a scrollable message feed with pause/resume and sticky-bottom scrolling.
+The UI component lives in `feed.t2` and displays a scrollable message feed with pause/resume and sticky-bottom scrolling.
 
-```gsx
+```t2
 package main
 
 import (
@@ -252,7 +252,7 @@ func (f *feedApp) IsPaused() bool {
     return f.paused.Get()
 }
 
-templ (f *feedApp) Render() {
+t1 (f *feedApp) Render() {
     <div class="flex-col h-full border-rounded border-cyan">
         <div class="flex justify-between px-1 shrink-0">
             <span class="text-gradient-cyan-magenta font-bold">Event Loop Demo</span>
@@ -298,7 +298,7 @@ import (
     tui "github.com/grindlemire/go-tui"
 )
 
-//go:generate go run ../../cmd/tui generate feed.gsx
+//go:generate go run ../../cmd/tui generate feed.t2
 
 func main() {
     mode := "run"

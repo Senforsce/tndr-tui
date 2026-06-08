@@ -24,13 +24,13 @@ func TestFormat(t *testing.T) {
 		"simple package and component": {
 			input: `package main
 
-templ Hello() {
+t1 Hello() {
 <span>Hello</span>
 }
 `,
 			want: `package main
 
-templ Hello() {
+t1 Hello() {
 	<span>Hello</span>
 }
 `,
@@ -40,7 +40,7 @@ templ Hello() {
 
 import "fmt"
 
-templ Hello() {
+t1 Hello() {
 <span>{fmt.Sprintf("hi")}</span>
 }
 `,
@@ -48,7 +48,7 @@ templ Hello() {
 
 import "fmt"
 
-templ Hello() {
+t1 Hello() {
 	<span>{fmt.Sprintf("hi")}</span>
 }
 `,
@@ -61,7 +61,7 @@ import (
 "strings"
 )
 
-templ Hello() {
+t1 Hello() {
 <span>{strings.ToUpper(fmt.Sprintf("hi"))}</span>
 }
 `,
@@ -72,7 +72,7 @@ import (
 	"strings"
 )
 
-templ Hello() {
+t1 Hello() {
 	<span>{strings.ToUpper(fmt.Sprintf("hi"))}</span>
 }
 `,
@@ -84,7 +84,7 @@ import (
 tui "github.com/grindlemire/go-tui"
 )
 
-templ Hello() {
+t1 Hello() {
 <div border={tui.BorderSingle}></div>
 }
 `,
@@ -92,7 +92,7 @@ templ Hello() {
 
 import tui "github.com/grindlemire/go-tui"
 
-templ Hello() {
+t1 Hello() {
 	<div border={tui.BorderSingle}></div>
 }
 `,
@@ -100,13 +100,13 @@ templ Hello() {
 		"component with parameters": {
 			input: `package main
 
-templ Card(title string, count int) {
+t1 Card(title string, count int) {
 <span>{title}</span>
 }
 `,
 			want: `package main
 
-templ Card(title string, count int) {
+t1 Card(title string, count int) {
 	<span>{title}</span>
 }
 `,
@@ -114,7 +114,7 @@ templ Card(title string, count int) {
 		"nested elements": {
 			input: `package main
 
-templ Layout() {
+t1 Layout() {
 <div>
 <div>
 <span>Hello</span>
@@ -124,7 +124,7 @@ templ Layout() {
 `,
 			want: `package main
 
-templ Layout() {
+t1 Layout() {
 	<div>
 		<div>
 			<span>Hello</span>
@@ -136,13 +136,13 @@ templ Layout() {
 		"self-closing element": {
 			input: `package main
 
-templ Divider() {
+t1 Divider() {
 <hr />
 }
 `,
 			want: `package main
 
-templ Divider() {
+t1 Divider() {
 	<hr />
 }
 `,
@@ -150,7 +150,7 @@ templ Divider() {
 		"for loop": {
 			input: `package main
 
-templ List(items []string) {
+t1 List(items []string) {
 for i, item := range items {
 <span>{item}</span>
 }
@@ -158,7 +158,7 @@ for i, item := range items {
 `,
 			want: `package main
 
-templ List(items []string) {
+t1 List(items []string) {
 	for i, item := range items {
 		<span>{item}</span>
 	}
@@ -168,7 +168,7 @@ templ List(items []string) {
 		"if statement": {
 			input: `package main
 
-templ Cond(show bool) {
+t1 Cond(show bool) {
 if show {
 <span>Visible</span>
 }
@@ -176,7 +176,7 @@ if show {
 `,
 			want: `package main
 
-templ Cond(show bool) {
+t1 Cond(show bool) {
 	if show {
 		<span>Visible</span>
 	}
@@ -186,7 +186,7 @@ templ Cond(show bool) {
 		"if-else statement": {
 			input: `package main
 
-templ Cond(show bool) {
+t1 Cond(show bool) {
 if show {
 <span>Yes</span>
 } else {
@@ -196,7 +196,7 @@ if show {
 `,
 			want: `package main
 
-templ Cond(show bool) {
+t1 Cond(show bool) {
 	if show {
 		<span>Yes</span>
 	} else {
@@ -208,14 +208,14 @@ templ Cond(show bool) {
 		"let binding": {
 			input: `package main
 
-templ WithLet() {
+t1 WithLet() {
 x := <span>Hello</span>
 {x}
 }
 `,
 			want: `package main
 
-templ WithLet() {
+t1 WithLet() {
 	x := <span>Hello</span>
 	{x}
 }
@@ -224,21 +224,21 @@ templ WithLet() {
 		"component call": {
 			input: `package main
 
-templ Parent() {
+t1 Parent() {
 @Child("arg1", "arg2")
 }
 
-templ Child(a string, b string) {
+t1 Child(a string, b string) {
 <span>{a}</span>
 }
 `,
 			want: `package main
 
-templ Parent() {
+t1 Parent() {
 	@Child("arg1", "arg2")
 }
 
-templ Child(a string, b string) {
+t1 Child(a string, b string) {
 	<span>{a}</span>
 }
 `,
@@ -246,13 +246,13 @@ templ Child(a string, b string) {
 		"component call with children": {
 			input: `package main
 
-templ Parent() {
+t1 Parent() {
 @Card("Title") {
 <span>Content</span>
 }
 }
 
-templ Card(title string) {
+t1 Card(title string) {
 <div>
 <span>{title}</span>
 {children...}
@@ -261,13 +261,13 @@ templ Card(title string) {
 `,
 			want: `package main
 
-templ Parent() {
+t1 Parent() {
 	@Card("Title") {
 		<span>Content</span>
 	}
 }
 
-templ Card(title string) {
+t1 Card(title string) {
 	<div>
 		<span>{title}</span>
 		{children...}
@@ -278,27 +278,27 @@ templ Card(title string) {
 		"component call with multi-line args": {
 			input: `package main
 
-templ Parent() {
+t1 Parent() {
 	@Child(
 		"arg1",
 		"arg2",
 	)
 }
 
-templ Child(a string, b string) {
+t1 Child(a string, b string) {
 	<span>{a}</span>
 }
 `,
 			want: `package main
 
-templ Parent() {
+t1 Parent() {
 	@Child(
 		"arg1",
 		"arg2",
 	)
 }
 
-templ Child(a string, b string) {
+t1 Child(a string, b string) {
 	<span>{a}</span>
 }
 `,
@@ -306,7 +306,7 @@ templ Child(a string, b string) {
 		"component call with multi-line args and children": {
 			input: `package main
 
-templ Parent() {
+t1 Parent() {
 	@Card(
 		"Title",
 		42,
@@ -315,13 +315,13 @@ templ Parent() {
 	}
 }
 
-templ Card(title string, count int) {
+t1 Card(title string, count int) {
 	<div>{title}</div>
 }
 `,
 			want: `package main
 
-templ Parent() {
+t1 Parent() {
 	@Card(
 		"Title",
 		42,
@@ -330,7 +330,7 @@ templ Parent() {
 	}
 }
 
-templ Card(title string, count int) {
+t1 Card(title string, count int) {
 	<div>{title}</div>
 }
 `,
@@ -338,27 +338,27 @@ templ Card(title string, count int) {
 		"component call multi-line args reformat indentation": {
 			input: `package main
 
-templ Parent() {
+t1 Parent() {
 @Child(
 "arg1",
       "arg2",
 )
 }
 
-templ Child(a string, b string) {
+t1 Child(a string, b string) {
 <span>{a}</span>
 }
 `,
 			want: `package main
 
-templ Parent() {
+t1 Parent() {
 	@Child(
 		"arg1",
 		"arg2",
 	)
 }
 
-templ Child(a string, b string) {
+t1 Child(a string, b string) {
 	<span>{a}</span>
 }
 `,
@@ -366,7 +366,7 @@ templ Child(a string, b string) {
 		"multiple attributes": {
 			input: `package main
 
-templ Box() {
+t1 Box() {
 <div border={1} padding={2} margin={1}>
 <span>Content</span>
 </div>
@@ -374,7 +374,7 @@ templ Box() {
 `,
 			want: `package main
 
-templ Box() {
+t1 Box() {
 	<div border={1} padding={2} margin={1}>
 		<span>Content</span>
 	</div>
@@ -384,7 +384,7 @@ templ Box() {
 		"string attribute": {
 			input: `package main
 
-templ Styled() {
+t1 Styled() {
 <div class="flex-col gap-1">
 <span>Content</span>
 </div>
@@ -392,7 +392,7 @@ templ Styled() {
 `,
 			want: `package main
 
-templ Styled() {
+t1 Styled() {
 	<div class="flex-col gap-1">
 		<span>Content</span>
 	</div>
@@ -402,13 +402,13 @@ templ Styled() {
 		"ref attribute": {
 			input: `package main
 
-templ App() {
+t1 App() {
 <div ref={content} class="flex-col"></div>
 }
 `,
 			want: `package main
 
-templ App() {
+t1 App() {
 	<div ref={content} class="flex-col"></div>
 }
 `,
@@ -416,7 +416,7 @@ templ App() {
 		"ref attribute with children": {
 			input: `package main
 
-templ App() {
+t1 App() {
 <div ref={wrapper}>
 <span ref={title}>Hello</span>
 </div>
@@ -424,7 +424,7 @@ templ App() {
 `,
 			want: `package main
 
-templ App() {
+t1 App() {
 	<div ref={wrapper}>
 		<span ref={title}>Hello</span>
 	</div>
@@ -434,7 +434,7 @@ templ App() {
 		"method component receiver syntax": {
 			input: `package main
 
-templ (s *sidebar) Render() {
+t1 (s *sidebar) Render() {
 <div>
 <span>Hello</span>
 </div>
@@ -442,7 +442,7 @@ templ (s *sidebar) Render() {
 `,
 			want: `package main
 
-templ (s *sidebar) Render() {
+t1 (s *sidebar) Render() {
 	<div>
 		<span>Hello</span>
 	</div>
@@ -456,7 +456,7 @@ type myApp struct {
 	query string
 }
 
-templ Hello() {
+t1 Hello() {
 	<span>Hello</span>
 }
 `,
@@ -466,7 +466,7 @@ type myApp struct {
 	query string
 }
 
-templ Hello() {
+t1 Hello() {
 	<span>Hello</span>
 }
 `,
@@ -490,7 +490,7 @@ func (a *myApp) KeyMap() tui.KeyMap {
 	return nil
 }
 
-templ (a *myApp) Render() {
+t1 (a *myApp) Render() {
 	<div>
 		<span>Hello</span>
 	</div>
@@ -514,7 +514,7 @@ func (a *myApp) KeyMap() tui.KeyMap {
 	return nil
 }
 
-templ (a *myApp) Render() {
+t1 (a *myApp) Render() {
 	<div>
 		<span>Hello</span>
 	</div>
@@ -526,7 +526,7 @@ templ (a *myApp) Render() {
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
 			fmtr := newTestFormatter()
-			got, err := fmtr.Format("test.gsx", tt.input)
+			got, err := fmtr.Format("test.t2", tt.input)
 			if err != nil {
 				t.Fatalf("Format() error = %v", err)
 			}
@@ -547,7 +547,7 @@ func TestFormatRoundTrip(t *testing.T) {
 		"simple component": {
 			input: `package main
 
-templ Hello() {
+t1 Hello() {
 	<span>Hello</span>
 }
 `,
@@ -559,7 +559,7 @@ import (
 	"fmt"
 )
 
-templ Complex(items []string, selected int) {
+t1 Complex(items []string, selected int) {
 	<div border={1}>
 		for i, item := range items {
 			if i == selected {
@@ -575,7 +575,7 @@ templ Complex(items []string, selected int) {
 		"multi-line attrs": {
 			input: `package main
 
-templ Test() {
+t1 Test() {
 	<div
 		class="a"
 		id="b">
@@ -587,7 +587,7 @@ templ Test() {
 		"closing bracket on own line": {
 			input: `package main
 
-templ Test() {
+t1 Test() {
 	<div
 		class="a"
 		id="b"
@@ -600,7 +600,7 @@ templ Test() {
 		"blank lines between siblings": {
 			input: `package main
 
-templ Test() {
+t1 Test() {
 	<div>
 		<span>First</span>
 
@@ -616,13 +616,13 @@ templ Test() {
 			fmtr := newTestFormatter()
 
 			// First format
-			first, err := fmtr.Format("test.gsx", tt.input)
+			first, err := fmtr.Format("test.t2", tt.input)
 			if err != nil {
 				t.Fatalf("First Format() error = %v", err)
 			}
 
 			// Second format (should be identical)
-			second, err := fmtr.Format("test.gsx", first)
+			second, err := fmtr.Format("test.t2", first)
 			if err != nil {
 				t.Fatalf("Second Format() error = %v", err)
 			}
@@ -645,7 +645,7 @@ func TestFormatWithResult(t *testing.T) {
 		"already formatted": {
 			input: `package main
 
-templ Hello() {
+t1 Hello() {
 	<span>Hello</span>
 }
 `,
@@ -654,7 +654,7 @@ templ Hello() {
 		"needs formatting": {
 			input: `package main
 
-templ Hello() {
+t1 Hello() {
 <span>Hello</span>
 }
 `,
@@ -665,7 +665,7 @@ templ Hello() {
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
 			fmtr := newTestFormatter()
-			res, err := fmtr.FormatWithResult("test.gsx", tt.input)
+			res, err := fmtr.FormatWithResult("test.t2", tt.input)
 			if err != nil {
 				t.Fatalf("FormatWithResult() error = %v", err)
 			}
@@ -684,7 +684,7 @@ func TestFormatParseError(t *testing.T) {
 
 	tests := map[string]tc{
 		"missing package": {
-			input: `templ Hello() {
+			input: `t1 Hello() {
 	<span>Hello</span>
 }
 `,
@@ -702,7 +702,7 @@ func TestFormatParseError(t *testing.T) {
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
 			fmtr := newTestFormatter()
-			_, err := fmtr.Format("test.gsx", tt.input)
+			_, err := fmtr.Format("test.t2", tt.input)
 			if err == nil {
 				t.Error("Format() expected error, got nil")
 			}
@@ -760,12 +760,12 @@ func TestFormatPreservesGoExpressions(t *testing.T) {
 
 import "fmt"
 
-templ Complex() {
+t1 Complex() {
 	<span>{fmt.Sprintf("%d + %d = %d", 1, 2, 1+2)}</span>
 }
 `
 	fmtr := newTestFormatter()
-	got, err := fmtr.Format("test.gsx", input)
+	got, err := fmtr.Format("test.t2", input)
 	if err != nil {
 		t.Fatalf("Format() error = %v", err)
 	}
@@ -788,7 +788,7 @@ func TestFormatLayoutPreservation(t *testing.T) {
 		"single-line attrs stay single-line even if long": {
 			input: `package main
 
-templ Test() {
+t1 Test() {
 <div class="very-long-class-name-that-exceeds-100-chars" id="also-very-long-identifier">
 <span>Content</span>
 </div>
@@ -796,7 +796,7 @@ templ Test() {
 `,
 			want: `package main
 
-templ Test() {
+t1 Test() {
 	<div class="very-long-class-name-that-exceeds-100-chars" id="also-very-long-identifier">
 		<span>Content</span>
 	</div>
@@ -806,7 +806,7 @@ templ Test() {
 		"multi-line attrs indented one tab deeper": {
 			input: `package main
 
-templ Test() {
+t1 Test() {
 <div class="a"
 id="b">
 <span>Content</span>
@@ -815,7 +815,7 @@ id="b">
 `,
 			want: `package main
 
-templ Test() {
+t1 Test() {
 	<div
 		class="a"
 		id="b">
@@ -827,7 +827,7 @@ templ Test() {
 		"closing bracket on own line preserved": {
 			input: `package main
 
-templ Test() {
+t1 Test() {
 <div class="a"
 id="b"
 >
@@ -837,7 +837,7 @@ id="b"
 `,
 			want: `package main
 
-templ Test() {
+t1 Test() {
 	<div
 		class="a"
 		id="b"
@@ -850,7 +850,7 @@ templ Test() {
 		"closing bracket after last attr preserved": {
 			input: `package main
 
-templ Test() {
+t1 Test() {
 <div class="a"
 id="b">
 <span>Content</span>
@@ -859,7 +859,7 @@ id="b">
 `,
 			want: `package main
 
-templ Test() {
+t1 Test() {
 	<div
 		class="a"
 		id="b">
@@ -871,13 +871,13 @@ templ Test() {
 		"inline children preserved": {
 			input: `package main
 
-templ Test() {
+t1 Test() {
 <span>hello world</span>
 }
 `,
 			want: `package main
 
-templ Test() {
+t1 Test() {
 	<span>hello world</span>
 }
 `,
@@ -885,7 +885,7 @@ templ Test() {
 		"multi-line children preserved even if short": {
 			input: `package main
 
-templ Test() {
+t1 Test() {
 <span>
 hello
 </span>
@@ -893,7 +893,7 @@ hello
 `,
 			want: `package main
 
-templ Test() {
+t1 Test() {
 	<span>
 		hello
 	</span>
@@ -903,7 +903,7 @@ templ Test() {
 		"self-closing with closing bracket on own line": {
 			input: `package main
 
-templ Test() {
+t1 Test() {
 <input class="text"
 value="hello"
 />
@@ -911,7 +911,7 @@ value="hello"
 `,
 			want: `package main
 
-templ Test() {
+t1 Test() {
 	<input
 		class="text"
 		value="hello"
@@ -922,14 +922,14 @@ templ Test() {
 		"self-closing with closing bracket on same line": {
 			input: `package main
 
-templ Test() {
+t1 Test() {
 <input class="text"
 value="hello" />
 }
 `,
 			want: `package main
 
-templ Test() {
+t1 Test() {
 	<input
 		class="text"
 		value="hello" />
@@ -939,13 +939,13 @@ templ Test() {
 		"empty element stays inline": {
 			input: `package main
 
-templ Test() {
+t1 Test() {
 <div></div>
 }
 `,
 			want: `package main
 
-templ Test() {
+t1 Test() {
 	<div></div>
 }
 `,
@@ -953,7 +953,7 @@ templ Test() {
 		"blank lines between siblings preserved": {
 			input: `package main
 
-templ Test() {
+t1 Test() {
 <div>
 <span>First</span>
 
@@ -963,7 +963,7 @@ templ Test() {
 `,
 			want: `package main
 
-templ Test() {
+t1 Test() {
 	<div>
 		<span>First</span>
 
@@ -975,7 +975,7 @@ templ Test() {
 		"ref attribute in multi-line mode": {
 			input: `package main
 
-templ Test() {
+t1 Test() {
 <div
 ref={content}
 class="flex-col">
@@ -985,7 +985,7 @@ class="flex-col">
 `,
 			want: `package main
 
-templ Test() {
+t1 Test() {
 	<div
 		ref={content}
 		class="flex-col">
@@ -997,7 +997,7 @@ templ Test() {
 		"closing bracket on own line forces multi-line": {
 			input: `package main
 
-templ Test() {
+t1 Test() {
 <div class="a"
 >
 <span>Content</span>
@@ -1006,7 +1006,7 @@ templ Test() {
 `,
 			want: `package main
 
-templ Test() {
+t1 Test() {
 	<div
 		class="a"
 	>
@@ -1020,7 +1020,7 @@ templ Test() {
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
 			fmtr := newTestFormatter()
-			got, err := fmtr.Format("test.gsx", tt.input)
+			got, err := fmtr.Format("test.t2", tt.input)
 			if err != nil {
 				t.Fatalf("Format() error = %v", err)
 			}
@@ -1029,7 +1029,7 @@ templ Test() {
 			}
 
 			// Verify idempotency: format(format(x)) == format(x)
-			second, err := fmtr.Format("test.gsx", got)
+			second, err := fmtr.Format("test.t2", got)
 			if err != nil {
 				t.Fatalf("Second Format() error = %v", err)
 			}
@@ -1051,7 +1051,7 @@ func TestFormatAutoImports(t *testing.T) {
 		"adds tui root import": {
 			input: `package main
 
-templ Hello() {
+t1 Hello() {
 	<span>Hello</span>
 }
 `,
@@ -1062,7 +1062,7 @@ templ Hello() {
 		"adds fmt import when used": {
 			input: `package main
 
-templ Hello() {
+t1 Hello() {
 	<span>{fmt.Sprintf("hello")}</span>
 }
 `,
@@ -1076,7 +1076,7 @@ templ Hello() {
 
 import "fmt"
 
-templ Hello() {
+t1 Hello() {
 	<span>{fmt.Sprintf("hello")}</span>
 }
 `,
@@ -1089,7 +1089,7 @@ templ Hello() {
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
 			fmtr := New() // Use default formatter with FixImports=true
-			got, err := fmtr.Format("test.gsx", tt.input)
+			got, err := fmtr.Format("test.t2", tt.input)
 			if err != nil {
 				t.Fatalf("Format() error = %v", err)
 			}

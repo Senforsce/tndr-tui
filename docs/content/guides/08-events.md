@@ -239,8 +239,8 @@ func ColorMixer() *colorMixer {
 
 **2. Attach refs to elements in your render method:**
 
-```gsx
-templ (c *colorMixer) Render() {
+```t2
+t1 (c *colorMixer) Render() {
     <div class="flex gap-2 p-1">
         <div class="flex-col items-center gap-1">
             <span class="text-red font-bold">Red</span>
@@ -305,7 +305,7 @@ Most apps won't need this. The `KeyMap` system on components covers almost every
 
 This keyboard explorer tracks which keys have been pressed, using `On(tui.AnyRune, ...)` as a catch-all for printable characters and `On` with Key constants for special keys:
 
-```gsx
+```t2
 package main
 
 import (
@@ -349,7 +349,7 @@ func (e *explorer) KeyMap() tui.KeyMap {
     }
 }
 
-templ (e *explorer) Render() {
+t1 (e *explorer) Render() {
     <div class="flex-col gap-1 p-2 border-rounded border-cyan">
         <span class="text-gradient-cyan-magenta font-bold">Keyboard Explorer</span>
         <hr class="border-single" />

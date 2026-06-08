@@ -124,26 +124,26 @@ func (g *Generator) generateGoDecl(decl *GoDecl) {
 	g.writeln("")
 }
 
-// generatePassthroughCode generates code that is passed through from .gsx to .go
+// generatePassthroughCode generates code that is passed through from .t2 to .go
 // and records source map mappings for each line.
 func (g *Generator) generatePassthroughCode(code string, pos Position) {
 	lines := strings.Split(code, "\n")
 	// Convert to 0-indexed. We count newlines in the Code to determine the
 	// actual starting line, since Position.Line may point to inside the declaration.
 	codeLines := strings.Count(code, "\n") + 1
-	// gsxLine is where this code block ENDS, so start = end - count + 1
+	// t2Line is where this code block ENDS, so start = end - count + 1
 	// But we use Position.Line as the start, just convert to 0-indexed
-	gsxLine := pos.Line - 1 // Convert to 0-indexed
+	t2Line := pos.Line - 1 // Convert to 0-indexed
 
 	for i, line := range lines {
 		// Record mapping for this line
 		if g.sourceMap != nil {
 			g.sourceMap.AddMapping(SourceMapping{
-				GoLine:  g.currentLine,
-				GoCol:   0,
-				GsxLine: gsxLine + i,
-				GsxCol:  0,
-				Length:  len(line),
+				GoLine: g.currentLine,
+				GoCol:  0,
+				T2Line: t2Line + i,
+				T2Col:  0,
+				Length: len(line),
 			})
 		}
 		g.writeln(line)

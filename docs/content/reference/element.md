@@ -4,10 +4,10 @@
 
 `Element` is the building block of go-tui UIs. Every visible piece of content (text, borders, containers, scrollable regions) is an Element. Elements form a tree: a root element contains children, which contain their own children, and so on. The layout engine computes positions using CSS flexbox, and the renderer draws the result to a character buffer.
 
-You can create elements two ways: in `.gsx` templates (the common path) or programmatically with `tui.New()`.
+You can create elements two ways: in `.t2` templates (the common path) or programmatically with `tui.New()`.
 
-```gsx
-// In .gsx — the compiler turns this into tui.New(...) calls
+```t2
+// In .t2 — the compiler turns this into tui.New(...) calls
 <div class="flex-col gap-1 p-1 border-rounded">
     <span class="font-bold text-cyan">Hello</span>
     <span>World</span>
@@ -51,9 +51,9 @@ box := tui.New(
 )
 ```
 
-In `.gsx` files, elements are created with HTML-like tags:
+In `.t2` files, elements are created with HTML-like tags:
 
-```gsx
+```t2
 <div width={40} height={10} border={tui.BorderRounded}>
     <span>Content</span>
 </div>
@@ -61,7 +61,7 @@ In `.gsx` files, elements are created with HTML-like tags:
 
 ## Option Functions
 
-`Option` is defined as `func(*Element)`. Pass options to `tui.New()` to configure an element at creation time. The `.gsx` compiler translates element attributes and Tailwind classes into these same option calls.
+`Option` is defined as `func(*Element)`. Pass options to `tui.New()` to configure an element at creation time. The `.t2` compiler translates element attributes and Tailwind classes into these same option calls.
 
 ### Dimensions
 

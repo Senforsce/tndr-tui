@@ -1,6 +1,6 @@
 # GSX Language Server
 
-The LSP implementation for `.gsx` files, providing real-time editor intelligence including hover, completion, go-to-definition, find-references, diagnostics, formatting, semantic tokens, and document/workspace symbols.
+The LSP implementation for `.t2` files, providing real-time editor intelligence including hover, completion, go-to-definition, find-references, diagnostics, formatting, semantic tokens, and document/workspace symbols.
 
 ## Architecture Overview
 
@@ -64,7 +64,7 @@ Editor                          Server
   │─── initialized ──────────────>│  formatting, semanticTokens
   │                               │
   │                               ├── go indexWorkspace()
-  │                               │   Walk rootURI for *.gsx files,
+  │                               │   Walk rootURI for *.t2 files,
   │                               │   parse each, populate ComponentIndex
   │                               │
   │                               └── go InitGopls()
@@ -208,7 +208,7 @@ Every cursor position is classified into one of these kinds, which drives dispat
 
 | NodeKind | What it represents |
 |----------|--------------------|
-| `Component` | `templ Name(...)` declaration line, on the name |
+| `Component` | `t1 Name(...)` declaration line, on the name |
 | `Element` | HTML-like element tag (`<div>`, `<span>`, etc.) |
 | `Attribute` | Element attribute name (`class`, `id`, etc.) |
 | `Ref` | `ref` attribute on an element |
@@ -295,17 +295,17 @@ Function                → Function declaration + calls across workspace
 For Go expressions inside `{...}`, the LSP delegates to a real gopls instance:
 
 ```
-.gsx file                    Virtual .go file              gopls
+.t2 file                    Virtual .go file              gopls
 ─────────                    ────────────────              ─────
-templ Counter(n int) {       func Counter(n int)           Hover/Complete/
+t1 Counter(n int) {       func Counter(n int)           Hover/Complete/
   <span>{n + 1}</span>  ──>   *element.Element {          Definition on
 }                              _ = n + 1          ──────> generated Go
                                return nil
                              }
 
 Position translation:
-.gsx line:col ──[SourceMap.TuiToGo()]──> .go line:col ──> gopls
-.gsx line:col <──[SourceMap.GoToTui()]── .go line:col <── gopls result
+.t2 line:col ──[SourceMap.TuiToGo()]──> .go line:col ──> gopls
+.t2 line:col <──[SourceMap.GoToTui()]── .go line:col <── gopls result
 ```
 
 **How virtual files are generated** (`gopls/generate.go`):
@@ -318,11 +318,11 @@ Position translation:
 6. For loops, if statements, and let bindings map to their Go equivalents
 7. Component calls become `_ = Name(args)` assignments
 
-Every generated construct has a `SourceMap` entry recording the bidirectional mapping between `.gsx` and `.go` positions. The `SourceMap` uses `Mapping` structs:
+Every generated construct has a `SourceMap` entry recording the bidirectional mapping between `.t2` and `.go` positions. The `SourceMap` uses `Mapping` structs:
 
 ```go
 type Mapping struct {
-    TuiLine, TuiCol int  // 0-indexed position in .gsx
+    TuiLine, TuiCol int  // 0-indexed position in .t2
     GoLine,  GoCol  int  // 0-indexed position in .go
     Length          int  // length of the mapped region
 }
@@ -360,8 +360,8 @@ Protocol types (`Position`, `Range`, `Location`, `Hover`, etc.) are defined once
 ### `gopls/`
 
 - **`proxy.go`** - Manages a gopls subprocess over JSON-RPC. Provides `Hover()`, `Complete()`, `Definition()` methods. Spawns gopls with `cmd/gopls serve`, communicates over stdin/stdout.
-- **`generate.go`** - Transforms `.gsx` ASTs into valid Go source files that gopls can analyze. Handles parameter mapping, state variable declarations, named ref declarations, expression mapping, control flow mapping.
-- **`mapping.go`** - `SourceMap` for bidirectional `.gsx` <-> `.go` position translation. `VirtualFileCache` stores generated content and maps keyed by `.gsx` URI.
+- **`generate.go`** - Transforms `.t2` ASTs into valid Go source files that gopls can analyze. Handles parameter mapping, state variable declarations, named ref declarations, expression mapping, control flow mapping.
+- **`mapping.go`** - `SourceMap` for bidirectional `.t2` <-> `.go` position translation. `VirtualFileCache` stores generated content and maps keyed by `.t2` URI.
 
 ### `schema/`
 
@@ -375,7 +375,7 @@ Protocol types (`Position`, `Range`, `Location`, `Hover`, etc.) are defined once
 
 ## Key Design Decisions
 
-1. **Full-document sync**: Every edit sends the complete document content. Simpler than incremental sync, and `.gsx` files are small enough that re-parsing the entire file on each keystroke is fast.
+1. **Full-document sync**: Every edit sends the complete document content. Simpler than incremental sync, and `.t2` files are small enough that re-parsing the entire file on each keystroke is fast.
 
 2. **CursorContext as universal currency**: All provider logic receives a pre-resolved context instead of raw positions. This centralizes the complex "what's under the cursor" logic and ensures consistency across all features.
 

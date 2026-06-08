@@ -10,17 +10,17 @@ type KeywordDef struct {
 
 // Canonical keyword definitions.
 var (
-	kwTempl = &KeywordDef{
-		Name:        "templ",
+	kwT1 = &KeywordDef{
+		Name:        "t1",
 		Description: "Define a reusable TUI component",
-		Syntax:      "templ Name(params) { ... }",
-		Documentation: `## templ
+		Syntax:      "t1 Name(params) { ... }",
+		Documentation: `## t1
 
 Defines a reusable TUI component. Supports two forms:
 
 ### Function Component
-` + "```gsx" + `
-templ Name(param1 Type1, param2 Type2) {
+` + "```t2" + `
+t1 Name(param1 Type1, param2 Type2) {
     <div>...</div>
 }
 ` + "```" + `
@@ -28,17 +28,17 @@ templ Name(param1 Type1, param2 Type2) {
 Compiles to a Go function returning ` + "`*tui.Element`" + `.
 
 ### Method Component (Struct)
-` + "```gsx" + `
-templ (s *MyStruct) Render() {
+` + "```t2" + `
+t1 (s *MyStruct) Render() {
     <div>...</div>
 }
 ` + "```" + `
 
 Used with Go struct types that implement ` + "`tui.Component`" + `.
 The struct, constructor, and methods are defined as regular Go code
-in the same .gsx file:
+in the same .t2 file:
 
-` + "```gsx" + `
+` + "```t2" + `
 type sidebar struct {
     expanded *tui.State[bool]
 }
@@ -51,7 +51,7 @@ func (s *sidebar) KeyMap() tui.KeyMap {
     return tui.KeyMap{...}
 }
 
-templ (s *sidebar) Render() {
+t1 (s *sidebar) Render() {
     <div>...</div>
 }
 ` + "```" + `
@@ -60,8 +60,8 @@ templ (s *sidebar) Render() {
 
 Components can accept children using ` + "`{children...}`" + `:
 
-` + "```gsx" + `
-templ Card(title string) {
+` + "```t2" + `
+t1 Card(title string) {
     <div class="border-rounded p-1">
         <span>{title}</span>
         {children...}
@@ -71,7 +71,7 @@ templ Card(title string) {
 
 Callers pass children with a block:
 
-` + "```gsx" + `
+` + "```t2" + `
 @Card("Title") {
     <span>Content</span>
 }
@@ -81,7 +81,7 @@ Callers pass children with a block:
 
 Struct components can also accept children by adding a ` + "`children []*tui.Element`" + ` field:
 
-` + "```gsx" + `
+` + "```t2" + `
 type card struct {
     title    string
     children []*tui.Element
@@ -91,7 +91,7 @@ func NewCard(title string, children []*tui.Element) *card {
     return &card{title: title, children: children}
 }
 
-templ (c *card) Render() {
+t1 (c *card) Render() {
     <div class="border-rounded p-1">
         <span>{c.title}</span>
         {children...}
@@ -109,14 +109,14 @@ templ (c *card) Render() {
 Iterates over a collection, rendering elements for each item.
 
 **Syntax:**
-` + "```gsx" + `
+` + "```t2" + `
 for index, item := range collection {
     <element>...</element>
 }
 ` + "```" + `
 
 **Example:**
-` + "```gsx" + `
+` + "```t2" + `
 for i, name := range names {
     <li>{fmt.Sprintf("%d. %s", i+1, name)}</li>
 }
@@ -136,7 +136,7 @@ for i, name := range names {
 Conditionally renders elements based on a boolean expression.
 
 **Syntax:**
-` + "```gsx" + `
+` + "```t2" + `
 if condition {
     <element>...</element>
 } else {
@@ -145,7 +145,7 @@ if condition {
 ` + "```" + `
 
 **Example:**
-` + "```gsx" + `
+` + "```t2" + `
 if user.IsAdmin {
     <span class="text-green">Admin</span>
 } else {
@@ -166,7 +166,7 @@ if user.IsAdmin {
 The else branch of a conditional if statement.
 
 **Syntax:**
-` + "```gsx" + `
+` + "```t2" + `
 if condition {
     <element>...</element>
 } else {
@@ -187,7 +187,7 @@ if condition {
 Declares the Go package for the generated code.
 
 **Syntax:**
-` + "```gsx" + `
+` + "```t2" + `
 package mypackage
 ` + "```" + `
 
@@ -205,7 +205,7 @@ package mypackage
 Imports Go packages for use in expressions.
 
 **Syntax:**
-` + "```gsx" + `
+` + "```t2" + `
 import (
     "fmt"
     "strings"
@@ -225,18 +225,18 @@ import (
 		Syntax:      "func name(params) returnType { ... }",
 		Documentation: `## func
 
-Defines a Go function or method at the file level. Unlike ` + "`templ`" + `,
+Defines a Go function or method at the file level. Unlike ` + "`tndr`" + `,
 these are plain Go code compiled as-is into the generated file.
 
 ### Helper Function
-` + "```gsx" + `
+` + "```t2" + `
 func formatLabel(s string) string {
     return fmt.Sprintf("[%s]", s)
 }
 ` + "```" + `
 
 ### Method (for struct components)
-` + "```gsx" + `
+` + "```t2" + `
 func (s *sidebar) KeyMap() tui.KeyMap {
     return tui.KeyMap{
         tui.On(tui.Rune('b').Ctrl(), s.toggle),
@@ -253,7 +253,7 @@ func (s *sidebar) KeyMap() tui.KeyMap {
 
 // Keywords maps keyword names to their definitions.
 var Keywords = map[string]*KeywordDef{
-	"templ":   kwTempl,
+	"t1":      kwT1,
 	"for":     kwFor,
 	"if":      kwIf,
 	"else":    kwElse,

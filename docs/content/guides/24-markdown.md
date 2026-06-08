@@ -10,28 +10,28 @@ It is a pure content renderer that owns no scroll position or key handling, so y
 
 The tag is self-closing. Content comes from an expression attribute rather than from children, because the generator cannot tell a literal markdown string apart from a Go expression that returns one.
 
-```gsx
-templ Doc() {
+```t2
+t1 Doc() {
     <markdown source={"# Hello\n\nSome **bold** text and `inline code`."} />
 }
 ```
 
 The `source` attribute takes any string expression, so the document usually lives in a variable or a function:
 
-```gsx
-templ Doc(readme string) {
+```t2
+t1 Doc(readme string) {
     <markdown source={readme} />
 }
 ```
 
-A markdown string with backticks and newlines is awkward to write inline in `.gsx`. The example keeps its sample document in `main.go` as a plain Go constant, where a double-quoted string concatenation can hold the backticks that code fences and inline code need, then passes it through the component constructor.
+A markdown string with backticks and newlines is awkward to write inline in `.t2`. The example keeps its sample document in `main.go` as a plain Go constant, where a double-quoted string concatenation can hold the backticks that code fences and inline code need, then passes it through the component constructor.
 
 ## Static and Reactive Sources
 
 `source` is for content that does not change. When the document updates at runtime, bind a `*State[string]` to the `state` attribute instead and the component re-renders on every change:
 
-```gsx
-templ Preview(text *tui.State[string]) {
+```t2
+t1 Preview(text *tui.State[string]) {
     <markdown state={text} />
 }
 ```
@@ -44,7 +44,7 @@ The `width` attribute fixes the render width in characters. Leave it at the defa
 
 The example derives its width from the terminal size so the document reflows on resize:
 
-```gsx
+```t2
 func (v *viewer) mdWidth(app *tui.App) int {
     w, _ := app.Size()
     if w < 10 {
@@ -53,7 +53,7 @@ func (v *viewer) mdWidth(app *tui.App) int {
     return w
 }
 
-templ (v *viewer) Render() {
+t1 (v *viewer) Render() {
     <markdown source={v.doc} width={v.mdWidth(app)} />
 }
 ```
@@ -64,7 +64,7 @@ templ (v *viewer) Render() {
 
 Since `Markdown` holds no scroll state, you scroll it the same way you scroll any overflowing container: put it inside a `scrollable` element, attach a ref, and drive the offset from a `*State[int]`. This is the pattern from the [Scrolling](scrolling) guide applied to one markdown child.
 
-```gsx
+```t2
 type viewer struct {
     doc     string
     scrollY *tui.State[int]
@@ -108,7 +108,7 @@ func (v *viewer) KeyMap() tui.KeyMap {
     }
 }
 
-templ (v *viewer) Render() {
+t1 (v *viewer) Render() {
     <div class="flex-col">
         <span class="text-gradient-cyan-magenta font-bold">Markdown Viewer</span>
         <div
@@ -138,7 +138,7 @@ func docTheme() tui.MarkdownTheme {
 }
 ```
 
-```gsx
+```t2
 <markdown source={doc} theme={docTheme()} />
 ```
 
@@ -224,7 +224,7 @@ A delimiter with no closer stays literal, so `see **docs` and `3 * 4` render as 
 ## Run
 
 ```bash
-tui generate markdown.gsx
+tui generate markdown.t2
 go run .
 ```
 

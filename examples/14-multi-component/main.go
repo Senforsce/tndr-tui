@@ -13,7 +13,7 @@ import (
 	tui "github.com/grindlemire/go-tui"
 )
 
-//go:generate go run ../../cmd/tui generate app.gsx sidebar.gsx search.gsx
+//go:generate go run ../../cmd/tui generate app.t2 sidebar.t2 search.t2
 
 func main() {
 	app, err := tui.NewApp(

@@ -129,7 +129,7 @@ func lineColor(line string) string {
 	return ""
 }
 
-templ (s *streamingApp) Render() {
+t1 (s *streamingApp) Render() {
 	<div class="flex-col gap-1 p-1 h-full border-rounded border-cyan">
 		<div class="flex justify-between shrink-0">
 			<span class="text-gradient-cyan-magenta font-bold shrink-0">Live Stream</span>

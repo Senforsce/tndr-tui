@@ -10,7 +10,7 @@
 "import" @keyword.import
 
 ; DSL keywords
-"templ" @keyword.function
+"t1" @keyword.function
 "for" @keyword.repeat
 "if" @keyword.conditional
 "else" @keyword.conditional

@@ -39,7 +39,7 @@ The framework does not route `ResizeEvent` to component listeners, so resize is 
 
 The component captures all input through `AnyKey` and a mouse listener:
 
-```gsx
+```t2
 type eventDump struct {
     log       *tui.State[[]string]
     scrollY   *tui.State[int]

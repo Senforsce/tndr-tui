@@ -9,11 +9,11 @@ import (
 
 func parseTestDoc(src string) *Document {
 	doc := &Document{
-		URI:     "file:///test.gsx",
+		URI:     "file:///test.t2",
 		Content: src,
 		Version: 1,
 	}
-	lexer := tuigen.NewLexer("test.gsx", src)
+	lexer := tuigen.NewLexer("test.t2", src)
 	parser := tuigen.NewParser(lexer)
 	ast, _ := parser.ParseFile()
 	doc.AST = ast

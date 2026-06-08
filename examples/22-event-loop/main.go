@@ -5,7 +5,7 @@
 //
 // Usage:
 //
-//	go run ../../cmd/tui generate feed.gsx
+//	go run ../../cmd/tui generate feed.t2
 //	go run . run       # Standard Run() - go-tui owns the loop
 //	go run . step      # Step() - you own the loop, call Step() each frame
 //	go run . select    # Events() + select - multiplex with your own channels
@@ -19,7 +19,7 @@ import (
 	tui "github.com/grindlemire/go-tui"
 )
 
-//go:generate go run ../../cmd/tui generate feed.gsx
+//go:generate go run ../../cmd/tui generate feed.t2
 
 func main() {
 	mode := "run"

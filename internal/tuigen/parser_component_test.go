@@ -15,7 +15,7 @@ func TestParser_SimpleComponent(t *testing.T) {
 	tests := map[string]tc{
 		"no params": {
 			input: `package x
-templ Header() {
+t1 Header() {
 	<span>Hello</span>
 }`,
 			wantName:   "Header",
@@ -23,7 +23,7 @@ templ Header() {
 		},
 		"one param": {
 			input: `package x
-templ Greeting(name string) {
+t1 Greeting(name string) {
 	<span>Hello</span>
 }`,
 			wantName:   "Greeting",
@@ -31,7 +31,7 @@ templ Greeting(name string) {
 		},
 		"multiple params": {
 			input: `package x
-templ Counter(count int, label string) {
+t1 Counter(count int, label string) {
 	<span>Hello</span>
 }`,
 			wantName:   "Counter",
@@ -39,7 +39,7 @@ templ Counter(count int, label string) {
 		},
 		"complex types": {
 			input: `package x
-templ List(items []string, onClick func()) {
+t1 List(items []string, onClick func()) {
 	<span>Hello</span>
 }`,
 			wantName:   "List",
@@ -47,7 +47,7 @@ templ List(items []string, onClick func()) {
 		},
 		"pointer type": {
 			input: `package x
-templ View(elem *element.Element) {
+t1 View(elem *element.Element) {
 	<span>Hello</span>
 }`,
 			wantName:   "View",
@@ -55,7 +55,7 @@ templ View(elem *element.Element) {
 		},
 		"multiline with trailing comma": {
 			input: `package x
-templ View(
+t1 View(
 	name string,
 	count int,
 ) {
@@ -68,7 +68,7 @@ templ View(
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			l := NewLexer("test.gsx", tt.input)
+			l := NewLexer("test.t2", tt.input)
 			p := NewParser(l)
 			file, err := p.ParseFile()
 
@@ -100,11 +100,11 @@ templ View(
 
 func TestParser_ComponentParams(t *testing.T) {
 	input := `package x
-templ Test(name string, count int, items []string, handler func()) {
+t1 Test(name string, count int, items []string, handler func()) {
 	<span>Hello</span>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -151,28 +151,28 @@ func TestParser_ComplexTypeSignatures(t *testing.T) {
 	tests := map[string]tc{
 		"channel type": {
 			input: `package x
-templ Test(ch chan int) {
+t1 Test(ch chan int) {
 	<span>Hello</span>
 }`,
 			wantTypes: []string{"chan int"},
 		},
 		"receive channel": {
 			input: `package x
-templ Test(ch <-chan string) {
+t1 Test(ch <-chan string) {
 	<span>Hello</span>
 }`,
 			wantTypes: []string{"<-chan string"},
 		},
 		"complex map": {
 			input: `package x
-templ Test(m map[string][]int) {
+t1 Test(m map[string][]int) {
 	<span>Hello</span>
 }`,
 			wantTypes: []string{"map[string][]int"},
 		},
 		"function with return": {
 			input: `package x
-templ Test(fn func(a, b int) (string, error)) {
+t1 Test(fn func(a, b int) (string, error)) {
 	<span>Hello</span>
 }`,
 			wantTypes: []string{"func(a, b int) (string, error)"},
@@ -181,7 +181,7 @@ templ Test(fn func(a, b int) (string, error)) {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			l := NewLexer("test.gsx", tt.input)
+			l := NewLexer("test.t2", tt.input)
 			p := NewParser(l)
 			file, err := p.ParseFile()
 			if err != nil {
@@ -218,7 +218,7 @@ func TestParser_ComponentCall(t *testing.T) {
 	tests := map[string]tc{
 		"call without args or children": {
 			input: `package x
-templ App() {
+t1 App() {
 	@Header()
 }`,
 			wantName:     "Header",
@@ -227,7 +227,7 @@ templ App() {
 		},
 		"call with args no children": {
 			input: `package x
-templ App() {
+t1 App() {
 	@Header("Welcome", true)
 }`,
 			wantName:     "Header",
@@ -236,7 +236,7 @@ templ App() {
 		},
 		"call with children": {
 			input: `package x
-templ App() {
+t1 App() {
 	@Card("Title") {
 		<span>Child 1</span>
 		<span>Child 2</span>
@@ -248,7 +248,7 @@ templ App() {
 		},
 		"call with empty args and children": {
 			input: `package x
-templ App() {
+t1 App() {
 	@Wrapper() {
 		<span>Content</span>
 	}
@@ -259,7 +259,7 @@ templ App() {
 		},
 		"call with multi-line args": {
 			input: `package x
-templ App() {
+t1 App() {
 	@Header(
 		"Welcome",
 		true,
@@ -272,7 +272,7 @@ templ App() {
 		},
 		"call with multi-line args and children": {
 			input: `package x
-templ App() {
+t1 App() {
 	@Card(
 		"Title",
 		42,
@@ -289,7 +289,7 @@ templ App() {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			l := NewLexer("test.gsx", tt.input)
+			l := NewLexer("test.t2", tt.input)
 			p := NewParser(l)
 			file, err := p.ParseFile()
 			if err != nil {
@@ -328,13 +328,13 @@ templ App() {
 
 func TestParser_ChildrenSlot(t *testing.T) {
 	input := `package x
-templ Card(title string) {
+t1 Card(title string) {
 	<div>
 		<span>{title}</span>
 		{children...}
 	</div>
 }`
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -372,13 +372,13 @@ templ Card(title string) {
 
 func TestParser_ComponentCallNestedInElement(t *testing.T) {
 	input := `package x
-templ App() {
+t1 App() {
 	<div>
 		@Header("Title")
 		@Footer()
 	</div>
 }`
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -430,7 +430,7 @@ func TestParser_MethodTempl(t *testing.T) {
 	tests := map[string]tc{
 		"pointer receiver": {
 			input: `package x
-templ (s *sidebar) Render() {
+t1 (s *sidebar) Render() {
 	<span>Hello</span>
 }`,
 			wantName:         "Render",
@@ -441,7 +441,7 @@ templ (s *sidebar) Render() {
 		},
 		"value receiver": {
 			input: `package x
-templ (v myView) Render() {
+t1 (v myView) Render() {
 	<span>Hello</span>
 }`,
 			wantName:         "Render",
@@ -452,7 +452,7 @@ templ (v myView) Render() {
 		},
 		"receiver with qualified type": {
 			input: `package x
-templ (a *pkg.App) Render() {
+t1 (a *pkg.App) Render() {
 	<div>
 		<span>Content</span>
 	</div>
@@ -467,7 +467,7 @@ templ (a *pkg.App) Render() {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			l := NewLexer("test.gsx", tt.input)
+			l := NewLexer("test.t2", tt.input)
 			p := NewParser(l)
 			file, err := p.ParseFile()
 			if err != nil {
@@ -510,14 +510,14 @@ func TestParser_MethodTemplErrors(t *testing.T) {
 	tests := map[string]tc{
 		"method name must be Render": {
 			input: `package x
-templ (s *sidebar) NotRender() {
+t1 (s *sidebar) NotRender() {
 	<span>Hello</span>
 }`,
 			wantErrText: "method templ name must be 'Render'",
 		},
 		"method templ no params allowed": {
 			input: `package x
-templ (s *sidebar) Render(title string) {
+t1 (s *sidebar) Render(title string) {
 	<span>Hello</span>
 }`,
 			wantErrText: "method templ Render() must not have parameters",
@@ -526,7 +526,7 @@ templ (s *sidebar) Render(title string) {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			l := NewLexer("test.gsx", tt.input)
+			l := NewLexer("test.t2", tt.input)
 			p := NewParser(l)
 			_, err := p.ParseFile()
 
@@ -544,10 +544,10 @@ templ (s *sidebar) Render(title string) {
 
 func TestParser_FunctionTemplReceiverFieldsEmpty(t *testing.T) {
 	input := `package x
-templ Header(title string) {
+t1 Header(title string) {
 	<span>{title}</span>
 }`
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -575,21 +575,21 @@ func TestParser_ComponentCallIsStructMount(t *testing.T) {
 	tests := map[string]tc{
 		"component call in method templ is struct mount": {
 			input: `package x
-templ (a *myApp) Render() {
+t1 (a *myApp) Render() {
 	@Sidebar(a.query)
 }`,
 			wantStructMount: true,
 		},
 		"component call in function templ is not struct mount": {
 			input: `package x
-templ App() {
+t1 App() {
 	@Header()
 }`,
 			wantStructMount: false,
 		},
 		"nested component call in method templ element": {
 			input: `package x
-templ (a *myApp) Render() {
+t1 (a *myApp) Render() {
 	<div>
 		@SearchInput(a.active, a.query)
 	</div>
@@ -600,7 +600,7 @@ templ (a *myApp) Render() {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			l := NewLexer("test.gsx", tt.input)
+			l := NewLexer("test.t2", tt.input)
 			p := NewParser(l)
 			file, err := p.ParseFile()
 			if err != nil {
@@ -627,17 +627,17 @@ templ (a *myApp) Render() {
 func TestParser_BothTemplFormsCoexist(t *testing.T) {
 	input := `package x
 
-templ Header(title string) {
+t1 Header(title string) {
 	<span>{title}</span>
 }
 
-templ (s *sidebar) Render() {
+t1 (s *sidebar) Render() {
 	<div>
 		@Header("Welcome")
 	</div>
 }
 `
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -678,14 +678,14 @@ templ (s *sidebar) Render() {
 
 func TestParser_MethodTemplWithControlFlow(t *testing.T) {
 	input := `package x
-templ (s *sidebar) Render() {
+t1 (s *sidebar) Render() {
 	if s.expanded.Get() {
 		<div>
 			@ChildComponent(s.query)
 		</div>
 	}
 }`
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {

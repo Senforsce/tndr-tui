@@ -156,7 +156,7 @@ func colorBar(value int) string {
 	return bar
 }
 
-templ (c *colorMixer) Render() {
+t1 (c *colorMixer) Render() {
 	<div class="flex-col p-1 border-rounded border-cyan">
 		<span class="text-gradient-cyan-magenta font-bold">Color Mixer</span>
 

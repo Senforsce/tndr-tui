@@ -190,7 +190,7 @@ func actionString(a tui.MouseAction) string {
 	return "?"
 }
 
-templ (e *eventDump) Render() {
+t1 (e *eventDump) Render() {
 	<div class="flex-col gap-1 p-1 border-rounded border-cyan grow">
 		<span class="text-gradient-cyan-magenta font-bold">Event Dump</span>
 		<span class="text-yellow font-bold">{e.statusLine()}</span>

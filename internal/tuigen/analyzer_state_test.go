@@ -44,11 +44,11 @@ func TestAnalyzer_DetectStateVars_IntLiteral(t *testing.T) {
 
 func TestAnalyzer_DetectStateVars_Parameter(t *testing.T) {
 	input := `package x
-templ Counter(count *tui.State[int]) {
+t1 Counter(count *tui.State[int]) {
 	<span>{count.Get()}</span>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -79,11 +79,11 @@ templ Counter(count *tui.State[int]) {
 
 func TestAnalyzer_DetectStateVars_StringParameter(t *testing.T) {
 	input := `package x
-templ Greeting(name *tui.State[string]) {
+t1 Greeting(name *tui.State[string]) {
 	<span>{name.Get()}</span>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -108,11 +108,11 @@ templ Greeting(name *tui.State[string]) {
 
 func TestAnalyzer_DetectStateVars_SliceParameter(t *testing.T) {
 	input := `package x
-templ TodoList(items *tui.State[[]string]) {
+t1 TodoList(items *tui.State[[]string]) {
 	<div>{items.Get()}</div>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -134,11 +134,11 @@ templ TodoList(items *tui.State[[]string]) {
 
 func TestAnalyzer_DetectStateVars_PointerParameter(t *testing.T) {
 	input := `package x
-templ UserProfile(user *tui.State[*User]) {
+t1 UserProfile(user *tui.State[*User]) {
 	<div>{user.Get()}</div>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -161,12 +161,12 @@ templ UserProfile(user *tui.State[*User]) {
 func TestAnalyzer_DetectStateVars_GoCodeDeclaration(t *testing.T) {
 	// Test detection of tui.NewState in component body (GoCode block)
 	input := `package x
-templ Counter() {
+t1 Counter() {
 	count := tui.NewState(0)
 	<span>{count.Get()}</span>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -198,12 +198,12 @@ templ Counter() {
 func TestAnalyzer_DetectStateVars_GoCodeDeclarationString(t *testing.T) {
 	// Test detection of tui.NewState with string literal
 	input := `package x
-templ Greeting() {
+t1 Greeting() {
 	name := tui.NewState("Alice")
 	<span>{name.Get()}</span>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -232,12 +232,12 @@ templ Greeting() {
 func TestAnalyzer_DetectStateVars_GoCodeDeclarationSlice(t *testing.T) {
 	// Test detection of tui.NewState with slice literal (matching plan spec)
 	input := `package x
-templ TodoList() {
+t1 TodoList() {
 	items := tui.NewState([]string{})
 	<div>{items.Get()}</div>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -263,12 +263,12 @@ templ TodoList() {
 func TestAnalyzer_DetectStateVars_GoCodeDeclarationBool(t *testing.T) {
 	// Test detection of tui.NewState with boolean literal
 	input := `package x
-templ Toggle() {
+t1 Toggle() {
 	enabled := tui.NewState(true)
 	<span>{enabled.Get()}</span>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -294,14 +294,14 @@ templ Toggle() {
 func TestAnalyzer_DetectStateVars_MultipleDeclarations(t *testing.T) {
 	// Test detection of multiple tui.NewState declarations
 	input := `package x
-templ Profile() {
+t1 Profile() {
 	firstName := tui.NewState("Alice")
 	lastName := tui.NewState("Smith")
 	age := tui.NewState(30)
 	<span>{firstName.Get()}</span>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -335,12 +335,12 @@ templ Profile() {
 func TestAnalyzer_DetectStateVars_MixedParamsAndDeclarations(t *testing.T) {
 	// Test detection of both parameter states and GoCode declarations
 	input := `package x
-templ Counter(initialCount *tui.State[int]) {
+t1 Counter(initialCount *tui.State[int]) {
 	label := tui.NewState("Count: ")
 	<span>{label.Get()}</span>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {

@@ -5,7 +5,7 @@
 //
 // To build and run:
 //
-//	go run ../../cmd/tui generate report.gsx
+//	go run ../../cmd/tui generate report.t2
 //	go run .
 package main
 
@@ -15,7 +15,7 @@ import (
 	tui "github.com/grindlemire/go-tui"
 )
 
-//go:generate go run ../../cmd/tui generate report.gsx
+//go:generate go run ../../cmd/tui generate report.t2
 
 func main() {
 	fmt.Println("[2026-03-01 10:14:02] starting build...")

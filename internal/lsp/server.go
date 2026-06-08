@@ -1,4 +1,4 @@
-// Package lsp provides a Language Server Protocol implementation for .gsx files.
+// Package lsp provides a Language Server Protocol implementation for .t2 files.
 package lsp
 
 import (
@@ -118,17 +118,17 @@ func (s *Server) InitGopls() error {
 	return nil
 }
 
-// lookupSourceMap returns a position translation function for the given .gsx URI.
+// lookupSourceMap returns a position translation function for the given .t2 URI.
 // Uses the in-memory virtual file source map, which is always up-to-date with the current document.
-func (s *Server) lookupSourceMap(gsxURI string) func(goLine, goCol int) (gsxLine, gsxCol int, found bool) {
+func (s *Server) lookupSourceMap(t2URI string) func(goLine, goCol int) (t2Line, t2Col int, found bool) {
 	// Use the virtual file cache (in-memory, always current)
-	cached := s.virtualFiles.Get(gsxURI)
+	cached := s.virtualFiles.Get(t2URI)
 	if cached == nil || cached.SourceMap == nil {
-		log.Server("No virtual file source map for %s", gsxURI)
+		log.Server("No virtual file source map for %s", t2URI)
 		return nil
 	}
 
-	log.Server("Using in-memory source map for %s (%d mappings)", gsxURI, cached.SourceMap.Len())
+	log.Server("Using in-memory source map for %s (%d mappings)", t2URI, cached.SourceMap.Len())
 	return cached.SourceMap.GoToTui
 }
 
@@ -159,7 +159,7 @@ func (s *Server) ShutdownGopls() {
 	}
 }
 
-// UpdateVirtualFile updates the virtual .go file for a .gsx document.
+// UpdateVirtualFile updates the virtual .go file for a .t2 document.
 func (s *Server) UpdateVirtualFile(doc *Document) {
 	if s.goplsProxy == nil || doc.AST == nil {
 		return
@@ -199,7 +199,7 @@ func (s *Server) UpdateVirtualFile(doc *Document) {
 	s.virtualFiles.Put(doc.URI, goURI, goContent, sourceMap, doc.Version)
 }
 
-// CloseVirtualFile closes the virtual .go file for a .gsx document.
+// CloseVirtualFile closes the virtual .go file for a .t2 document.
 func (s *Server) CloseVirtualFile(uri string) {
 	if s.goplsProxy == nil {
 		return

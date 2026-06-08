@@ -18,7 +18,7 @@
 * add Hyperlinks capability, default on except TERM=dumb ([b5633e1](https://github.com/grindlemire/go-tui/commit/b5633e1cd7878e6f3eadbb77499fa110eb11cb56))
 * add Link field to Cell and include it in Equal/Diff ([61003b5](https://github.com/grindlemire/go-tui/commit/61003b51e50e5f747aa4f08a498c821cf5e4d071))
 * add Markdown component with block tree rendering ([97dd1a4](https://github.com/grindlemire/go-tui/commit/97dd1a45aa8be69f17a7ddb79730630eed7744b6))
-* add markdown rendering support (rich text, OSC 8 links, parser, component, gsx) ([f3cc139](https://github.com/grindlemire/go-tui/commit/f3cc139dd2b11b479f83dec6dcb8af5f9ec2487b))
+* add markdown rendering support (rich text, OSC 8 links, parser, component, t2) ([f3cc139](https://github.com/grindlemire/go-tui/commit/f3cc139dd2b11b479f83dec6dcb8af5f9ec2487b))
 * add MarkdownTheme and DefaultMarkdownTheme ([1e46923](https://github.com/grindlemire/go-tui/commit/1e469231a5059fa49afb0a5b1a047bd59308bd9f))
 * add OSC 8 hyperlink escape sequences to escBuilder ([0409c6f](https://github.com/grindlemire/go-tui/commit/0409c6fea3d456fc042970748a16495d1606854a))
 * add pluggable CodeHighlighter with built-in palette ([e1d7080](https://github.com/grindlemire/go-tui/commit/e1d70800c5a192844234ba85af4385ad3789640b))
@@ -168,8 +168,8 @@
 
 ### Bug Fixes
 
-* **formatter:** run gofmt on Go code blocks in .gsx files ([80dcff3](https://github.com/grindlemire/go-tui/commit/80dcff36605403815056d6e23a09f0a6f744201b))
-* kitty keyboard negotiation and gofmt for .gsx Go code ([08a633f](https://github.com/grindlemire/go-tui/commit/08a633f495818e41160258dfed1c1f1238967233))
+* **formatter:** run gofmt on Go code blocks in .t2 files ([80dcff3](https://github.com/grindlemire/go-tui/commit/80dcff36605403815056d6e23a09f0a6f744201b))
+* kitty keyboard negotiation and gofmt for .t2 Go code ([08a633f](https://github.com/grindlemire/go-tui/commit/08a633f495818e41160258dfed1c1f1238967233))
 * negotiate Kitty keyboard after entering alt screen ([7746d43](https://github.com/grindlemire/go-tui/commit/7746d438eaec2a6dc74c14b7727a3bcb39aaba6d))
 
 ## [0.10.0](https://github.com/grindlemire/go-tui/compare/v0.9.0...v0.10.0) (2026-03-26)

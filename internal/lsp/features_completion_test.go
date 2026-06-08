@@ -17,11 +17,11 @@ func TestDefinitionDirect(t *testing.T) {
 		"component definition from call": {
 			content: `package main
 
-templ Header() {
+t1 Header() {
 	<span>Header</span>
 }
 
-templ Main() {
+t1 Main() {
 	@Header()
 }
 `,
@@ -36,11 +36,11 @@ templ Main() {
 			// Create a server and test via router
 			server := NewServer(nil, nil)
 
-			doc := server.docs.Open("file:///test.gsx", tt.content, 1)
-			server.index.IndexDocument("file:///test.gsx", doc.AST)
+			doc := server.docs.Open("file:///test.t2", tt.content, 1)
+			server.index.IndexDocument("file:///test.t2", doc.AST)
 
 			params, _ := json.Marshal(DefinitionParams{
-				TextDocument: TextDocumentIdentifier{URI: "file:///test.gsx"},
+				TextDocument: TextDocumentIdentifier{URI: "file:///test.t2"},
 				Position:     Position{Line: tt.line, Character: tt.character},
 			})
 
@@ -74,11 +74,11 @@ func TestHoverDirect(t *testing.T) {
 		"hover on component call": {
 			content: `package main
 
-templ Header(title string) {
+t1 Header(title string) {
 	<span>{title}</span>
 }
 
-templ Main() {
+t1 Main() {
 	@Header("test")
 }
 `,
@@ -89,7 +89,7 @@ templ Main() {
 		"hover on element tag": {
 			content: `package main
 
-templ Hello() {
+t1 Hello() {
 	<div padding={1}>
 		<span>Hello</span>
 	</div>
@@ -105,11 +105,11 @@ templ Hello() {
 		t.Run(name, func(t *testing.T) {
 			server := NewServer(nil, nil)
 
-			doc := server.docs.Open("file:///test.gsx", tt.content, 1)
-			server.index.IndexDocument("file:///test.gsx", doc.AST)
+			doc := server.docs.Open("file:///test.t2", tt.content, 1)
+			server.index.IndexDocument("file:///test.t2", doc.AST)
 
 			params, _ := json.Marshal(HoverParams{
-				TextDocument: TextDocumentIdentifier{URI: "file:///test.gsx"},
+				TextDocument: TextDocumentIdentifier{URI: "file:///test.t2"},
 				Position:     Position{Line: tt.line, Character: tt.character},
 			})
 
@@ -144,11 +144,11 @@ func TestCompletionDirect(t *testing.T) {
 		"after @": {
 			content: `package main
 
-templ Hello() {
+t1 Hello() {
 	<span>Hello</span>
 }
 
-templ Main() {
+t1 Main() {
 	@
 }
 `,
@@ -160,7 +160,7 @@ templ Main() {
 		"after <": {
 			content: `package main
 
-templ Hello() {
+t1 Hello() {
 	<
 }
 `,
@@ -175,11 +175,11 @@ templ Hello() {
 		t.Run(name, func(t *testing.T) {
 			server := NewServer(nil, nil)
 
-			doc := server.docs.Open("file:///test.gsx", tt.content, 1)
-			server.index.IndexDocument("file:///test.gsx", doc.AST)
+			doc := server.docs.Open("file:///test.t2", tt.content, 1)
+			server.index.IndexDocument("file:///test.t2", doc.AST)
 
 			completionParams := CompletionParams{
-				TextDocument: TextDocumentIdentifier{URI: "file:///test.gsx"},
+				TextDocument: TextDocumentIdentifier{URI: "file:///test.t2"},
 				Position:     Position{Line: tt.line, Character: tt.character},
 			}
 			if tt.trigger != "" {
@@ -219,7 +219,7 @@ func TestDocumentSymbolDirect(t *testing.T) {
 		"single component": {
 			content: `package main
 
-templ Hello() {
+t1 Hello() {
 	<span>Hello</span>
 }
 `,
@@ -228,15 +228,15 @@ templ Hello() {
 		"multiple components": {
 			content: `package main
 
-templ Header() {
+t1 Header() {
 	<span>Header</span>
 }
 
-templ Footer() {
+t1 Footer() {
 	<span>Footer</span>
 }
 
-templ Main() {
+t1 Main() {
 	@Header()
 	@Footer()
 }
@@ -246,7 +246,7 @@ templ Main() {
 		"component with go func": {
 			content: `package main
 
-templ Hello() {
+t1 Hello() {
 	<span>Hello</span>
 }
 
@@ -262,11 +262,11 @@ func helper() string {
 		t.Run(name, func(t *testing.T) {
 			server := NewServer(nil, nil)
 
-			doc := server.docs.Open("file:///test.gsx", tt.content, 1)
-			server.index.IndexDocument("file:///test.gsx", doc.AST)
+			doc := server.docs.Open("file:///test.t2", tt.content, 1)
+			server.index.IndexDocument("file:///test.t2", doc.AST)
 
 			params, _ := json.Marshal(DocumentSymbolParams{
-				TextDocument: TextDocumentIdentifier{URI: "file:///test.gsx"},
+				TextDocument: TextDocumentIdentifier{URI: "file:///test.t2"},
 			})
 
 			result, rpcErr := server.router.Route(Request{Method: "textDocument/documentSymbol", Params: params})

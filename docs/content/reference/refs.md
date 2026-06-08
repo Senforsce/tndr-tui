@@ -2,7 +2,7 @@
 
 ## Overview
 
-Refs give you direct access to rendered elements from your event handlers. Attach a ref to an element in `.gsx`, and after the render pass completes, the ref holds a pointer to that element. From there you can read layout bounds, control scroll position, or wire up click handlers.
+Refs give you direct access to rendered elements from your event handlers. Attach a ref to an element in `.t2`, and after the render pass completes, the ref holds a pointer to that element. From there you can read layout bounds, control scroll position, or wire up click handlers.
 
 go-tui provides three ref types to cover different use cases:
 
@@ -14,7 +14,7 @@ All three are thread-safe.
 
 ## Ref
 
-A reference to one element. Declare it as a struct field, create it in the constructor, attach it in `.gsx` with `ref={...}`, and read it in handlers.
+A reference to one element. Declare it as a struct field, create it in the constructor, attach it in `.t2` with `ref={...}`, and read it in handlers.
 
 ### NewRef
 
@@ -74,12 +74,12 @@ if s.header.IsSet() {
 }
 ```
 
-### Usage in .gsx
+### Usage in .t2
 
 Attach a ref to any element with the `ref` attribute:
 
-```gsx
-templ (s *myApp) Render() {
+```t2
+t1 (s *myApp) Render() {
     <div ref={s.header} class="border-rounded p-1">
         <span>Header content</span>
     </div>
@@ -159,12 +159,12 @@ func (r *RefList) Len() int
 
 Returns the number of elements in the list.
 
-### Usage in .gsx
+### Usage in .t2
 
 Use `ref=` inside a `for` loop **without** a `key` attribute. The analyzer detects the loop context and generates `Append` calls instead of `Set`:
 
-```gsx
-templ (s *listApp) Render() {
+```t2
+t1 (s *listApp) Render() {
     <div class="flex-col">
         for _, item := range s.items.Get() {
             <span ref={s.itemRefs} class="p-1">{item}</span>
@@ -240,12 +240,12 @@ func (r *RefMap[K]) Len() int
 
 Returns the number of entries in the map.
 
-### Usage in .gsx
+### Usage in .t2
 
 Use `ref=` together with `key=` inside a `for` loop. The `key` attribute provides the map key for each element:
 
-```gsx
-templ (s *tabApp) Render() {
+```t2
+t1 (s *tabApp) Render() {
     <div class="flex gap-1">
         for _, name := range s.tabs.Get() {
             <button ref={s.tabRefs} key={name} class="px-1">{name}</button>
@@ -384,8 +384,8 @@ func (v *logViewer) scrollBy(delta int) {
 }
 ```
 
-```gsx
-templ (v *logViewer) Render() {
+```t2
+t1 (v *logViewer) Render() {
     <div
         ref={v.content}
         class="flex-col border-single p-1"
@@ -404,8 +404,8 @@ templ (v *logViewer) Render() {
 
 Combine refs, state, and click handling for interactive buttons:
 
-```gsx
-templ (s *myApp) Render() {
+```t2
+t1 (s *myApp) Render() {
     <div class="flex gap-2">
         <button ref={s.incBtn} class="px-2 border-rounded text-green">{" + "}</button>
         <span class="font-bold">{fmt.Sprintf("%d", s.count.Get())}</span>

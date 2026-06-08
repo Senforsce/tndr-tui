@@ -385,7 +385,7 @@ func (s *semanticTokensProvider) findElseKeyword(ifStmt *tuigen.IfStmt) (int, in
 	lines := strings.Split(doc.Content, "\n")
 	startLine := ifStmt.Position.Line - 1 // 0-indexed
 	for i := startLine; i < len(lines); i++ {
-		// The else keyword in .gsx always appears as "} else" at the statement level,
+		// The else keyword in .t2 always appears as "} else" at the statement level,
 		// meaning only whitespace precedes the "}". We require the "}" to be the first
 		// non-whitespace character on the line to avoid matching inside strings/expressions.
 		trimmed := strings.TrimLeft(lines[i], " \t")

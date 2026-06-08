@@ -1,7 +1,7 @@
 {
   "name": "go-tui",
   "displayName": "go-tui",
-  "description": "Syntax highlighting and LSP support for .gsx files (go-tui DSL)",
+  "description": "Syntax highlighting and LSP support for .t2 files (go-tui DSL)",
   "version": "0.15.1",
   "publisher": "grindlemire",
   "license": "MIT",
@@ -17,39 +17,39 @@
   ],
   "icon": "./icons/icon-dark.png",
   "keywords": [
-    "gsx",
+    "t2",
     "go-tui",
     "terminal",
     "ui",
     "dsl"
   ],
   "activationEvents": [
-    "onLanguage:gsx"
+    "onLanguage:t2"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "languages": [
       {
-        "id": "gsx",
+        "id": "t2",
         "aliases": [
           "GSX",
-          "gsx"
+          "t2"
         ],
         "extensions": [
-          ".gsx"
+          ".t2"
         ],
         "icon": {
-          "light": "./icons/gsx-file-light.svg",
-          "dark": "./icons/gsx-file-dark.svg"
+          "light": "./icons/t2-file-light.svg",
+          "dark": "./icons/t2-file-dark.svg"
         },
         "configuration": "./language-configuration.json"
       }
     ],
     "grammars": [
       {
-        "language": "gsx",
-        "scopeName": "source.gsx",
-        "path": "./syntaxes/gsx.tmLanguage.json",
+        "language": "t2",
+        "scopeName": "source.t2",
+        "path": "./syntaxes/t2.tmLanguage.json",
         "embeddedLanguages": {
           "meta.embedded.block.go": "go"
         }
@@ -59,30 +59,30 @@
       "type": "object",
       "title": "GSX Language Server",
       "properties": {
-        "gsx.lsp.path": {
+        "t2.lsp.path": {
           "type": "string",
           "default": "tui",
           "description": "Path to the tui CLI binary (must be in PATH or an absolute path)"
         },
-        "gsx.lsp.enabled": {
+        "t2.lsp.enabled": {
           "type": "boolean",
           "default": true,
           "description": "Enable the GSX language server"
         },
-        "gsx.lsp.logPath": {
+        "t2.lsp.logPath": {
           "type": "string",
           "default": "",
-          "description": "Path to LSP log file for debugging (e.g., /tmp/gsx-lsp.log)"
+          "description": "Path to LSP log file for debugging (e.g., /tmp/t2-lsp.log)"
         }
       }
     },
     "configurationDefaults": {
-      "[gsx]": {
+      "[t2]": {
         "editor.semanticHighlighting.enabled": true
       },
       "editor.semanticTokenColorCustomizations": {
         "rules": {
-          "typeParameter:gsx": "#C586C0"
+          "typeParameter:t2": "#C586C0"
         }
       }
     }

@@ -23,7 +23,7 @@ func TestLexer_Strings(t *testing.T) {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			l := NewLexer("test.gsx", tt.input)
+			l := NewLexer("test.t2", tt.input)
 			tok := l.Next()
 			if tok.Type != TokenString {
 				t.Errorf("Type = %v, want TokenString", tok.Type)
@@ -51,7 +51,7 @@ func TestLexer_RawStrings(t *testing.T) {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			l := NewLexer("test.gsx", tt.input)
+			l := NewLexer("test.t2", tt.input)
 			tok := l.Next()
 			if tok.Type != TokenRawString {
 				t.Errorf("Type = %v, want TokenRawString", tok.Type)
@@ -64,13 +64,13 @@ func TestLexer_RawStrings(t *testing.T) {
 }
 
 func TestLexer_CompleteComponent(t *testing.T) {
-	input := `templ Counter(count int) {
+	input := `t1 Counter(count int) {
     <div direction={layout.Column}>
         <span>{fmt.Sprintf("Count: %d", count)}</span>
     </div>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	tokens := []Token{}
 	for {
 		tok := l.Next()
@@ -89,8 +89,8 @@ func TestLexer_CompleteComponent(t *testing.T) {
 	if len(tokens) < 5 {
 		t.Fatalf("expected at least 5 tokens, got %d", len(tokens))
 	}
-	if tokens[0].Type != TokenTempl {
-		t.Errorf("token 0: Type = %v, want TokenTempl", tokens[0].Type)
+	if tokens[0].Type != TokenT1 {
+		t.Errorf("token 0: Type = %v, want TokenT1", tokens[0].Type)
 	}
 	if tokens[1].Type != TokenIdent || tokens[1].Literal != "Counter" {
 		t.Errorf("token 1: Type = %v, Literal = %q, want TokenIdent, Counter", tokens[1].Type, tokens[1].Literal)

@@ -130,7 +130,7 @@ func stickyClass(sticky bool) string {
 	return "text-yellow"
 }
 
-templ (f *feedApp) Render() {
+t1 (f *feedApp) Render() {
 	<div class="flex-col h-full border-rounded border-cyan">
 		<div class="flex justify-between px-1 shrink-0">
 			<span class="text-gradient-cyan-magenta font-bold">Event Loop Demo</span>

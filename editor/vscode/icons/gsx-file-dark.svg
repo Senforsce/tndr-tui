@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-labelledby="v1-title">
-  <title id="v1-title">.gsx file icon — stacked blocks</title>
-  <!-- Pure pixel-art "gsx" — bold block letters with offset shadow.
+  <title id="v1-title">.t2 file icon — stacked blocks</title>
+  <!-- Pure pixel-art "t2" — bold block letters with offset shadow.
        Grid: 5 rows × 5px pitch, 4px block height. 18px wide per letter, 5px gaps.
        G at x=0, S at x=23, X at x=46. Rows at y=20,25,30,35,40.
        g = pink #f92672, s = green #a6e22e, x = cyan #66d9ef

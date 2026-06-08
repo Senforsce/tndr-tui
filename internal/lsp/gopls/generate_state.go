@@ -23,7 +23,7 @@ func (g *generator) emitStateVarDeclarations(comp *tuigen.Component) {
 		varName := matches[1]
 		initExpr := matches[2]
 
-		// Map the variable name position from .gsx to .go
+		// Map the variable name position from .t2 to .go
 		tuiLine := goCode.Position.Line - 1
 		tuiCol := goCode.Position.Column - 1
 		// Find the variable name offset in the original code

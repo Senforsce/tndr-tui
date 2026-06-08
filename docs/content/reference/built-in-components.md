@@ -55,9 +55,9 @@ inp := tui.NewInput(
 // Typing in the input updates name.Get()
 ```
 
-In `.gsx`:
+In `.t2`:
 
-```gsx
+```t2
 <input value={s.name} placeholder="Type your name..." border={tui.BorderRounded} />
 ```
 
@@ -96,9 +96,9 @@ tui.WithInputBorderGradient(tui.NewGradient(tui.Blue, tui.Cyan))
 tui.WithInputFocusGradient(tui.NewGradient(tui.Cyan, tui.Magenta))
 ```
 
-In `.gsx`:
+In `.t2`:
 
-```gsx
+```t2
 <input
     value={s.query}
     border={tui.BorderRounded}
@@ -465,9 +465,9 @@ ta := tui.NewTextArea(tui.WithTextAreaValue(note))
 // note.Set("preset text") updates the textarea display
 ```
 
-In `.gsx`:
+In `.t2`:
 
-```gsx
+```t2
 <textarea value={s.note} placeholder="Write a note..." border={tui.BorderRounded} />
 ```
 
@@ -635,7 +635,7 @@ When closed, it returns a hidden placeholder element with no key bindings.
 
 ### GSX Usage
 
-```gsx
+```t2
 <modal open={s.showDialog} class="justify-center items-center" backdrop="dim">
     <div class="border-rounded p-2 flex-col gap-1 w-40">
         <span class="font-bold">Title</span>
@@ -760,7 +760,7 @@ Set `theme.CodeHighlighter = nil` to render code uncolored, pass `NewHighlighter
 
 ### GSX Usage
 
-```gsx
+```t2
 <div class="overflow-y-scroll scrollbar-hidden grow" ref={s.content} scrollOffset={0, s.scrollY.Get()}>
     <markdown source={s.doc} width={80} />
 </div>

@@ -10,7 +10,7 @@ import (
 )
 
 // runFmt implements the fmt subcommand.
-// It formats .gsx files in place or checks formatting.
+// It formats .t2 files in place or checks formatting.
 func runFmt(args []string) error {
 	var (
 		stdout bool // print to stdout instead of modifying file
@@ -35,14 +35,14 @@ func runFmt(args []string) error {
 		paths = []string{"."}
 	}
 
-	// Collect all .gsx files
-	files, err := collectGsxFiles(paths)
+	// Collect all .t2 files
+	files, err := collectT2Files(paths)
 	if err != nil {
 		return err
 	}
 
 	if len(files) == 0 {
-		return fmt.Errorf("no .gsx files found")
+		return fmt.Errorf("no .t2 files found")
 	}
 
 	// Process files

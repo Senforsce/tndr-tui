@@ -1,4 +1,4 @@
-// Complex.gsx
+// Complex.t2
 package testdata
 
 import (
@@ -10,7 +10,7 @@ import (
 // For package comment
 
 // ItemList test
-templ ItemList(items []string, selected int) {
+t1 ItemList(items []string, selected int) {
 	<div direction={tui.Column} gap={1}>
 		// ItemList direction
 		for i, item := range items {
@@ -41,7 +41,7 @@ templ ItemList(items []string, selected int) {
 Counter
 tests block comment
 */
-templ Counter(count int, label string) {
+t1 Counter(count int, label string) {
 	countText := <span>{fmt.Sprintf("%d", count)}</span>
 	<div direction={tui.Column} gap={1} padding={1}>
 		<span class="font-bold">{label}</span>
@@ -49,7 +49,7 @@ templ Counter(count int, label string) {
 	</div>
 }
 
-templ ConditionalContent(showHeader bool, showFooter bool) {
+t1 ConditionalContent(showHeader bool, showFooter bool) {
 	<div direction={tui.Column}>
 		if showHeader {
 			<span>Header</span>
@@ -63,7 +63,7 @@ templ ConditionalContent(showHeader bool, showFooter bool) {
 	</div>
 }
 
-templ WithHelper(text string) {
+t1 WithHelper(text string) {
 	shouldShowHeader := true
 	otherHelperFunction("test")
 	<div>

@@ -10,7 +10,7 @@ func MyForm() *myForm {
 	return &myForm{}
 }
 
-templ (c *myForm) Render() {
+t1 (c *myForm) Render() {
 	<div class="flex-col gap-1">
 		<textarea placeholder="Enter text..." width={50} border={tui.BorderRounded} onSubmit={c.handleSubmit} />
 	</div>

@@ -5,7 +5,7 @@ import (
 	tui "github.com/grindlemire/go-tui"
 )
 
-templ BuildReport(project string, status string, duration string, tests int, passed int) {
+t1 BuildReport(project string, status string, duration string, tests int, passed int) {
 	<div class="flex-row justify-center">
 		<div class="flex-col border-rounded border-cyan p-1 w-1/2">
 			<div class="flex-row justify-between">

@@ -23,16 +23,16 @@ go get github.com/grindlemire/go-tui
 
 You'll create two files:
 
-- `animation.gsx` -- the component, helpers, and render template
+- `animation.t2` -- the component, helpers, and render template
 - `main.go` -- the entry point
 
 ## The Animation Loop
 
 Terminal animations boil down to updating state on a timer and letting the framework re-render. The simplest approach: one `OnTimer` callback that ticks at your target frame rate, with frame counting to run different animations at different speeds.
 
-Create `animation.gsx` with the struct and timer:
+Create `animation.t2` with the struct and timer:
 
-```gsx
+```t2
 package main
 
 import (
@@ -131,7 +131,7 @@ func main() {
 
 The simplest animation pattern is cycling through an array of Unicode characters. Define several frame sets with different visual styles:
 
-```gsx
+```t2
 var spinnerDots = []string{"⠋", "⠙", "⠚", "⠞", "⠖", "⠦", "⠴", "⠲", "⠳", "⠓"}
 var spinnerLine = []string{"┤", "┘", "┴", "└", "├", "┌", "┬", "┐"}
 var spinnerCircle = []string{"◜", "◠", "◝", "◞", "◡", "◟"}
@@ -140,7 +140,7 @@ var spinnerBraille = []string{"⣾", "⣽", "⣻", "⢿", "⡿", "⣟", "⣯", "
 
 Each array represents one full cycle. The render template indexes into them with modular arithmetic:
 
-```gsx
+```t2
 <span class="text-cyan">{spinnerDots[a.spinnerFrame.Get()%len(spinnerDots)]}</span>
 ```
 
@@ -150,7 +150,7 @@ The `%len(...)` wraps around at the end of the array, so the spinner loops forev
 
 A linear progress bar moves at a constant rate, which looks stiff. An easing function remaps the progress value so the bar starts slow, speeds up through the middle, and slows down again at the end.
 
-```gsx
+```t2
 func easeInOutCubic(t float64) float64 {
     if t < 0.5 {
         return 4 * t * t * t
@@ -163,7 +163,7 @@ The input `t` and the output are both in the range [0, 1]. Wrapping the linear p
 
 For the bar itself, fractional block characters (`▏▎▍▌▋▊▉█`) give 8 sub-steps per character cell, making the fill transition look smooth instead of jumping one full block at a time:
 
-```gsx
+```t2
 var barBlocks = []string{" ", "▏", "▎", "▍", "▌", "▋", "▊", "▉"}
 
 func renderBar(value float64, width int) string {
@@ -190,7 +190,7 @@ func renderBar(value float64, width int) string {
 
 The progress timing uses wall clock time through a helper that cycles on a 4-second loop (3 seconds to fill, 1 second hold):
 
-```gsx
+```t2
 func progressT(elapsed time.Duration) float64 {
     const cycleDuration = 3.0
     const pauseDuration = 1.0
@@ -205,7 +205,7 @@ func progressT(elapsed time.Duration) float64 {
 
 The render template shows both bars side by side so you can see the difference:
 
-```gsx
+```t2
 <div class="flex gap-1">
     <span class="font-dim w-8">Linear:</span>
     <span class="text-blue">{renderBar(progressT(time.Since(a.startTime)), 30)}</span>
@@ -224,7 +224,7 @@ Each character in the word "ANIMATIONS" gets its own color based on its position
 
 The color computation converts HSL to RGB so we can rotate the hue evenly:
 
-```gsx
+```t2
 func hslToRGB(h, s, l float64) (uint8, uint8, uint8) {
     h = math.Mod(h, 360)
     if h < 0 {
@@ -261,7 +261,7 @@ func waveStyle(charIndex int, phase float64) tui.Style {
 
 Each character is spaced 36 degrees apart in hue. The `phase*60` term shifts the entire palette over time. In the template, a `for` loop renders each character as its own `<span>` with a computed `textStyle`:
 
-```gsx
+```t2
 <div class="flex gap-0">
     for i, ch := range waveChars {
         <span textStyle={waveStyle(i, a.wavePhase.Get())}>{ch}</span>
@@ -273,7 +273,7 @@ Each character is spaced 36 degrees apart in hue. The `phase*60` term shifts the
 
 The color wave section's border oscillates between cyan and magenta using `math.Sin()` and the gradient API:
 
-```gsx
+```t2
 func pulseBorderStyle(phase float64) tui.Style {
     t := (math.Sin(phase) + 1) / 2
     color := tui.NewGradient(tui.Cyan, tui.Magenta).At(t)
@@ -283,15 +283,15 @@ func pulseBorderStyle(phase float64) tui.Style {
 
 `math.Sin()` outputs a value from -1 to 1, which we remap to the 0 to 1 range. `Gradient.At(t)` interpolates between the two colors at that position, so the border fades back and forth between cyan and magenta. In the template, the `borderStyle` attribute accepts this computed style:
 
-```gsx
+```t2
 <div class="flex-col border-rounded p-1 gap-1" borderStyle={pulseBorderStyle(a.pulsePhase.Get())}>
 ```
 
 ## Full Code
 
-Here's the complete `animation.gsx`:
+Here's the complete `animation.t2`:
 
-```gsx
+```t2
 package main
 
 import (
@@ -435,7 +435,7 @@ func (a *animationApp) animate() {
     a.pulsePhase.Update(func(v float64) float64 { return v + 0.03 })
 }
 
-templ (a *animationApp) Render() {
+t1 (a *animationApp) Render() {
     <div class="flex-col gap-1 p-1">
         <span class="font-bold text-gradient-cyan-magenta">Animation Patterns</span>
 

@@ -2,7 +2,7 @@
 //
 // To build and run:
 //
-//	go run ../../cmd/tui generate animation.gsx
+//	go run ../../cmd/tui generate animation.t2
 //	go run .
 package main
 
@@ -13,7 +13,7 @@ import (
 	tui "github.com/grindlemire/go-tui"
 )
 
-//go:generate go run ../../cmd/tui generate animation.gsx
+//go:generate go run ../../cmd/tui generate animation.t2
 
 func main() {
 	app, err := tui.NewApp(

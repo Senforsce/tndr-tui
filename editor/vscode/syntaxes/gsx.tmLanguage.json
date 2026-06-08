@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
   "name": "GSX",
-  "scopeName": "source.gsx",
+  "scopeName": "source.t2",
   "patterns": [
     { "include": "#comments" },
     { "include": "#package-clause" },
@@ -19,35 +19,35 @@
     "comments": {
       "patterns": [
         {
-          "name": "comment.line.double-slash.gsx",
+          "name": "comment.line.double-slash.t2",
           "match": "//.*$"
         },
         {
-          "name": "comment.block.gsx",
+          "name": "comment.block.t2",
           "begin": "/\\*",
           "end": "\\*/",
           "captures": {
-            "0": { "name": "punctuation.definition.comment.gsx" }
+            "0": { "name": "punctuation.definition.comment.t2" }
           }
         }
       ]
     },
     "package-clause": {
-      "name": "meta.package.gsx",
+      "name": "meta.package.t2",
       "match": "^\\s*(package)\\s+([a-zA-Z_][a-zA-Z0-9_]*)",
       "captures": {
-        "1": { "name": "keyword.other.package.gsx" },
-        "2": { "name": "entity.name.package.gsx" }
+        "1": { "name": "keyword.other.package.t2" },
+        "2": { "name": "entity.name.package.t2" }
       }
     },
     "import-declaration": {
       "patterns": [
         {
-          "name": "meta.import.gsx",
+          "name": "meta.import.t2",
           "begin": "^\\s*(import)\\s*\\(",
           "end": "\\)",
           "beginCaptures": {
-            "1": { "name": "keyword.other.import.gsx" }
+            "1": { "name": "keyword.other.import.t2" }
           },
           "patterns": [
             { "include": "#comments" },
@@ -55,12 +55,12 @@
           ]
         },
         {
-          "name": "meta.import.gsx",
+          "name": "meta.import.t2",
           "match": "^\\s*(import)\\s+(?:([a-zA-Z_][a-zA-Z0-9_]*|\\.)\\s+)?(\"[^\"]*\")",
           "captures": {
-            "1": { "name": "keyword.other.import.gsx" },
-            "2": { "name": "entity.name.import.gsx" },
-            "3": { "name": "string.quoted.double.gsx" }
+            "1": { "name": "keyword.other.import.t2" },
+            "2": { "name": "entity.name.import.t2" },
+            "3": { "name": "string.quoted.double.t2" }
           }
         }
       ]
@@ -70,8 +70,8 @@
         {
           "match": "\\s*([a-zA-Z_][a-zA-Z0-9_]*)?\\s*(\"[^\"]*\")",
           "captures": {
-            "1": { "name": "entity.name.import.gsx" },
-            "2": { "name": "string.quoted.double.gsx" }
+            "1": { "name": "entity.name.import.t2" },
+            "2": { "name": "string.quoted.double.t2" }
           }
         }
       ]
@@ -79,16 +79,16 @@
     "component-declaration": {
       "patterns": [
         {
-          "comment": "Method templ: templ (s *Type) Render() { ... }",
-          "name": "meta.component.method.gsx",
-          "begin": "^\\s*(templ)\\s+\\(([a-zA-Z_][a-zA-Z0-9_]*)\\s+(\\*?)([a-zA-Z_][a-zA-Z0-9_.]*)\\)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*\\(",
+          "comment": "Method t1: t1 (s *Type) Render() { ... }",
+          "name": "meta.component.method.t2",
+          "begin": "^\\s*(t1)\\s+\\(([a-zA-Z_][a-zA-Z0-9_]*)\\s+(\\*?)([a-zA-Z_][a-zA-Z0-9_.]*)\\)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*\\(",
           "end": "(?<=\\})",
           "beginCaptures": {
-            "1": { "name": "keyword.function.gsx" },
-            "2": { "name": "variable.parameter.receiver.gsx" },
-            "3": { "name": "keyword.operator.go.gsx" },
-            "4": { "name": "entity.name.type.gsx" },
-            "5": { "name": "entity.name.function.component.gsx" }
+            "1": { "name": "keyword.function.t2" },
+            "2": { "name": "variable.parameter.receiver.t2" },
+            "3": { "name": "keyword.operator.go.t2" },
+            "4": { "name": "entity.name.type.t2" },
+            "5": { "name": "entity.name.function.component.t2" }
           },
           "patterns": [
             { "include": "#parameter-list" },
@@ -96,13 +96,13 @@
           ]
         },
         {
-          "comment": "Function templ: templ Name(params) { ... }",
-          "name": "meta.component.gsx",
-          "begin": "^\\s*(templ)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*\\(",
+          "comment": "Function t1: t1 Name(params) { ... }",
+          "name": "meta.component.t2",
+          "begin": "^\\s*(t1)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*\\(",
           "end": "(?<=\\})",
           "beginCaptures": {
-            "1": { "name": "keyword.function.gsx" },
-            "2": { "name": "entity.name.function.component.gsx" }
+            "1": { "name": "keyword.function.t2" },
+            "2": { "name": "entity.name.function.component.t2" }
           },
           "patterns": [
             { "include": "#parameter-list" },
@@ -119,13 +119,13 @@
         {
           "match": "([a-zA-Z_][a-zA-Z0-9_]*)\\s+([\\[\\]\\*a-zA-Z0-9_.]+)",
           "captures": {
-            "1": { "name": "variable.parameter.gsx" },
-            "2": { "name": "entity.name.type.gsx" }
+            "1": { "name": "variable.parameter.t2" },
+            "2": { "name": "entity.name.type.t2" }
           }
         },
         {
           "match": ",",
-          "name": "punctuation.separator.comma.gsx"
+          "name": "punctuation.separator.comma.t2"
         }
       ]
     },
@@ -133,10 +133,10 @@
       "begin": "\\{",
       "end": "\\}",
       "beginCaptures": {
-        "0": { "name": "punctuation.definition.block.begin.gsx" }
+        "0": { "name": "punctuation.definition.block.begin.t2" }
       },
       "endCaptures": {
-        "0": { "name": "punctuation.definition.block.end.gsx" }
+        "0": { "name": "punctuation.definition.block.end.t2" }
       },
       "patterns": [
         { "include": "#body-contents" }
@@ -154,14 +154,14 @@
     },
     "state-declaration-line": {
       "comment": "State/ref variable declaration at body level: name := tui.NewState(value) or tui.NewRef() etc.",
-      "name": "meta.state-declaration.gsx",
+      "name": "meta.state-declaration.t2",
       "match": "([a-zA-Z_][a-zA-Z0-9_]*)\\s*(:=)\\s*(tui)(\\.)(NewState|NewRef|NewRefList|NewRefMap)\\s*(?:\\[[^\\]]*\\])?\\s*\\(([^)]*)\\)",
       "captures": {
-        "1": { "name": "variable.other.state.gsx" },
-        "2": { "name": "keyword.operator.go.gsx" },
-        "3": { "name": "variable.other.go.gsx" },
-        "4": { "name": "punctuation.delimiter.go.gsx" },
-        "5": { "name": "entity.name.function.go.gsx" },
+        "1": { "name": "variable.other.state.t2" },
+        "2": { "name": "keyword.operator.go.t2" },
+        "3": { "name": "variable.other.go.t2" },
+        "4": { "name": "punctuation.delimiter.go.t2" },
+        "5": { "name": "entity.name.function.go.t2" },
         "6": { "name": "meta.embedded.block.go" }
       }
     },
@@ -169,11 +169,11 @@
       "patterns": [
         {
           "comment": "for loop: for ... {",
-          "name": "meta.control.for.gsx",
+          "name": "meta.control.for.t2",
           "begin": "((?<=^|\\s)for)\\s+",
           "end": "(?=\\{)",
           "beginCaptures": {
-            "1": { "name": "keyword.control.for.gsx" }
+            "1": { "name": "keyword.control.for.t2" }
           },
           "patterns": [
             { "include": "#go-expression-inline" }
@@ -181,11 +181,11 @@
         },
         {
           "comment": "if statement: if ... {",
-          "name": "meta.control.if.gsx",
+          "name": "meta.control.if.t2",
           "begin": "((?<=^|\\s)if)\\s+",
           "end": "(?=\\{)",
           "beginCaptures": {
-            "1": { "name": "keyword.control.if.gsx" }
+            "1": { "name": "keyword.control.if.t2" }
           },
           "patterns": [
             { "include": "#go-expression-inline" }
@@ -195,27 +195,27 @@
           "comment": "else keyword: } else {",
           "match": "(?<=\\})\\s*(else)\\b",
           "captures": {
-            "0": { "name": "keyword.control.else.gsx" },
-            "1": { "name": "keyword.control.else.gsx" }
+            "0": { "name": "keyword.control.else.t2" },
+            "1": { "name": "keyword.control.else.t2" }
           }
         },
         {
           "comment": "Short binding: name := <element> or name := @Component()",
-          "name": "meta.control.binding.gsx",
+          "name": "meta.control.binding.t2",
           "match": "([a-zA-Z_][a-zA-Z0-9_]*)\\s*(:=)\\s*(?=<|@[A-Z])",
           "captures": {
-            "1": { "name": "variable.other.gsx" },
-            "2": { "name": "keyword.operator.assignment.gsx" }
+            "1": { "name": "variable.other.t2" },
+            "2": { "name": "keyword.operator.assignment.t2" }
           }
         },
         {
           "begin": "\\{",
           "end": "\\}",
           "beginCaptures": {
-            "0": { "name": "punctuation.definition.block.begin.gsx" }
+            "0": { "name": "punctuation.definition.block.begin.t2" }
           },
           "endCaptures": {
-            "0": { "name": "punctuation.definition.block.end.gsx" }
+            "0": { "name": "punctuation.definition.block.end.t2" }
           },
           "patterns": [
             { "include": "#body-contents" }
@@ -224,11 +224,11 @@
       ]
     },
     "component-call": {
-      "name": "meta.component-call.gsx",
+      "name": "meta.component-call.t2",
       "match": "(@)([A-Z][a-zA-Z0-9_]*)\\s*\\(",
       "captures": {
-        "1": { "name": "punctuation.definition.component-call.gsx" },
-        "2": { "name": "entity.name.function.component-call.gsx" }
+        "1": { "name": "punctuation.definition.component-call.t2" },
+        "2": { "name": "entity.name.function.component-call.t2" }
       }
     },
     "element": {
@@ -238,63 +238,63 @@
       ]
     },
     "element-open-tag": {
-      "name": "meta.element.open-tag.gsx",
+      "name": "meta.element.open-tag.t2",
       "begin": "(<)([a-zA-Z][a-zA-Z0-9-]*)",
       "end": "(/?>)",
       "beginCaptures": {
-        "1": { "name": "punctuation.definition.tag.begin.gsx" },
-        "2": { "name": "entity.name.tag.gsx" }
+        "1": { "name": "punctuation.definition.tag.begin.t2" },
+        "2": { "name": "entity.name.tag.t2" }
       },
       "endCaptures": {
-        "1": { "name": "punctuation.definition.tag.end.gsx" }
+        "1": { "name": "punctuation.definition.tag.end.t2" }
       },
       "patterns": [
         { "include": "#attributes" }
       ]
     },
     "element-close-tag": {
-      "name": "meta.element.close-tag.gsx",
+      "name": "meta.element.close-tag.t2",
       "match": "(</)([a-zA-Z][a-zA-Z0-9-]*)(>)",
       "captures": {
-        "1": { "name": "punctuation.definition.tag.begin.gsx" },
-        "2": { "name": "entity.name.tag.gsx" },
-        "3": { "name": "punctuation.definition.tag.end.gsx" }
+        "1": { "name": "punctuation.definition.tag.begin.t2" },
+        "2": { "name": "entity.name.tag.t2" },
+        "3": { "name": "punctuation.definition.tag.end.t2" }
       }
     },
     "attributes": {
       "patterns": [
         {
           "comment": "Ref attribute: ref={varName}",
-          "name": "meta.attribute.ref.gsx",
+          "name": "meta.attribute.ref.t2",
           "begin": "(ref)\\s*(=)\\s*(\\{)",
           "end": "(\\})",
           "beginCaptures": {
-            "1": { "name": "entity.other.attribute-name.ref.gsx" },
-            "2": { "name": "punctuation.separator.key-value.gsx" },
-            "3": { "name": "punctuation.definition.expression.begin.gsx" }
+            "1": { "name": "entity.other.attribute-name.ref.t2" },
+            "2": { "name": "punctuation.separator.key-value.t2" },
+            "3": { "name": "punctuation.definition.expression.begin.t2" }
           },
           "endCaptures": {
-            "1": { "name": "punctuation.definition.expression.end.gsx" }
+            "1": { "name": "punctuation.definition.expression.end.t2" }
           },
           "patterns": [
             {
               "match": "[a-zA-Z_][a-zA-Z0-9_]*",
-              "name": "variable.other.ref.gsx"
+              "name": "variable.other.ref.t2"
             }
           ]
         },
         {
           "comment": "Event handler attribute with expression value: onClick={handler}",
-          "name": "meta.attribute.event.gsx",
+          "name": "meta.attribute.event.t2",
           "begin": "(on(?:Click|Focus|Blur|KeyPress|Event))\\s*(=)\\s*(\\{)",
           "end": "(\\})",
           "beginCaptures": {
-            "1": { "name": "entity.other.attribute-name.event.gsx" },
-            "2": { "name": "punctuation.separator.key-value.gsx" },
-            "3": { "name": "punctuation.definition.expression.begin.gsx" }
+            "1": { "name": "entity.other.attribute-name.event.t2" },
+            "2": { "name": "punctuation.separator.key-value.t2" },
+            "3": { "name": "punctuation.definition.expression.begin.t2" }
           },
           "endCaptures": {
-            "1": { "name": "punctuation.definition.expression.end.gsx" }
+            "1": { "name": "punctuation.definition.expression.end.t2" }
           },
           "contentName": "meta.embedded.block.go",
           "patterns": [
@@ -302,16 +302,16 @@
           ]
         },
         {
-          "name": "meta.attribute.gsx",
+          "name": "meta.attribute.t2",
           "begin": "([a-zA-Z_][a-zA-Z0-9_-]*)\\s*(=)\\s*(\\{)",
           "end": "(\\})",
           "beginCaptures": {
-            "1": { "name": "entity.other.attribute-name.gsx" },
-            "2": { "name": "punctuation.separator.key-value.gsx" },
-            "3": { "name": "punctuation.definition.expression.begin.gsx" }
+            "1": { "name": "entity.other.attribute-name.t2" },
+            "2": { "name": "punctuation.separator.key-value.t2" },
+            "3": { "name": "punctuation.definition.expression.begin.t2" }
           },
           "endCaptures": {
-            "1": { "name": "punctuation.definition.expression.end.gsx" }
+            "1": { "name": "punctuation.definition.expression.end.t2" }
           },
           "contentName": "meta.embedded.block.go",
           "patterns": [
@@ -319,45 +319,45 @@
           ]
         },
         {
-          "name": "meta.attribute.gsx",
+          "name": "meta.attribute.t2",
           "begin": "([a-zA-Z_][a-zA-Z0-9_-]*)\\s*(=)\\s*(\")",
           "end": "\"",
           "beginCaptures": {
-            "1": { "name": "entity.other.attribute-name.gsx" },
-            "2": { "name": "punctuation.separator.key-value.gsx" },
-            "3": { "name": "punctuation.definition.string.begin.gsx" }
+            "1": { "name": "entity.other.attribute-name.t2" },
+            "2": { "name": "punctuation.separator.key-value.t2" },
+            "3": { "name": "punctuation.definition.string.begin.t2" }
           },
           "endCaptures": {
-            "0": { "name": "punctuation.definition.string.end.gsx" }
+            "0": { "name": "punctuation.definition.string.end.t2" }
           },
-          "contentName": "string.quoted.double.gsx",
+          "contentName": "string.quoted.double.t2",
           "patterns": [
             {
-              "name": "constant.character.escape.gsx",
+              "name": "constant.character.escape.t2",
               "match": "\\\\."
             }
           ]
         },
         {
-          "name": "meta.attribute.gsx",
+          "name": "meta.attribute.t2",
           "match": "([a-zA-Z_][a-zA-Z0-9_-]*)\\s*(=)\\s*([0-9]+)",
           "captures": {
-            "1": { "name": "entity.other.attribute-name.gsx" },
-            "2": { "name": "punctuation.separator.key-value.gsx" },
-            "3": { "name": "constant.numeric.gsx" }
+            "1": { "name": "entity.other.attribute-name.t2" },
+            "2": { "name": "punctuation.separator.key-value.t2" },
+            "3": { "name": "constant.numeric.t2" }
           }
         }
       ]
     },
     "go-expression-block": {
-      "name": "meta.expression.go.gsx",
+      "name": "meta.expression.go.t2",
       "begin": "(\\{)(?!\\s*$)",
       "end": "(\\})",
       "beginCaptures": {
-        "1": { "name": "punctuation.definition.expression.begin.gsx" }
+        "1": { "name": "punctuation.definition.expression.begin.t2" }
       },
       "endCaptures": {
-        "1": { "name": "punctuation.definition.expression.end.gsx" }
+        "1": { "name": "punctuation.definition.expression.end.t2" }
       },
       "contentName": "meta.embedded.block.go",
       "patterns": [
@@ -394,19 +394,19 @@
     },
     "go-keywords": {
       "match": "\\b(range|nil|const|var|type|struct|interface|map|chan|func|return|if|else|for|switch|case|default|break|continue|go|defer|select|fallthrough)\\b",
-      "name": "keyword.control.go.gsx"
+      "name": "keyword.control.go.t2"
     },
     "go-constants": {
       "match": "\\b(true|false)\\b",
-      "name": "constant.language.go.gsx"
+      "name": "constant.language.go.t2"
     },
     "go-builtin-functions": {
       "match": "\\b(append|cap|close|complex|copy|delete|imag|len|make|new|panic|print|println|real|recover)\\b",
-      "name": "support.function.builtin.go.gsx"
+      "name": "support.function.builtin.go.t2"
     },
     "go-operators": {
       "match": "(:=|&&|\\|\\||<-|\\+\\+|--|==|!=|<=|>=|\\+=|-=|\\*=|/=|%=|&=|\\|=|\\^=|<<=|>>=|&\\^=|&\\^|<<|>>|[+\\-*/%&|^!<>=])",
-      "name": "keyword.operator.go.gsx"
+      "name": "keyword.operator.go.t2"
     },
     "go-function-call": {
       "patterns": [
@@ -414,14 +414,14 @@
           "comment": "Qualified function call: pkg.Func() - only Func is green",
           "match": "([a-zA-Z_][a-zA-Z0-9_]*)(\\.([a-zA-Z_][a-zA-Z0-9_]*))\\s*(?=\\()",
           "captures": {
-            "3": { "name": "entity.name.function.go.gsx" }
+            "3": { "name": "entity.name.function.go.t2" }
           }
         },
         {
           "comment": "Unqualified function call: Func() - Func is green",
           "match": "([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?=\\()",
           "captures": {
-            "1": { "name": "entity.name.function.go.gsx" }
+            "1": { "name": "entity.name.function.go.t2" }
           }
         }
       ]
@@ -430,59 +430,59 @@
       "comment": "State variable declaration: name := tui.NewState(value)",
       "match": "(tui)(\\.)(NewState)\\s*(?=\\()",
       "captures": {
-        "1": { "name": "variable.other.go.gsx" },
-        "2": { "name": "punctuation.delimiter.go.gsx" },
-        "3": { "name": "entity.name.function.go.gsx" }
+        "1": { "name": "variable.other.go.t2" },
+        "2": { "name": "punctuation.delimiter.go.t2" },
+        "3": { "name": "entity.name.function.go.t2" }
       }
     },
     "state-method-call": {
       "comment": "State method calls: .Get(), .Set(), .Update(), .Bind(), .Batch()",
       "match": "\\.(Get|Set|Update|Bind|Batch)\\s*(?=\\()",
       "captures": {
-        "1": { "name": "entity.name.function.go.gsx" }
+        "1": { "name": "entity.name.function.go.t2" }
       }
     },
     "go-identifiers": {
       "match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\b",
-      "name": "variable.other.go.gsx"
+      "name": "variable.other.go.t2"
     },
     "strings": {
       "patterns": [
         {
-          "name": "string.quoted.double.gsx",
+          "name": "string.quoted.double.t2",
           "begin": "\"",
           "end": "\"",
           "patterns": [
             {
-              "name": "constant.character.escape.gsx",
+              "name": "constant.character.escape.t2",
               "match": "\\\\."
             },
             {
               "comment": "Go format specifiers like %s, %d, %v, %.2f, %#x, etc.",
-              "name": "constant.other.placeholder.gsx",
+              "name": "constant.other.placeholder.t2",
               "match": "%[-+# 0]*(\\*|\\d+)?(\\.\\*|\\.\\d+)?[vTtbcdoqxXUeEfFgGsp%]"
             }
           ]
         },
         {
-          "name": "string.quoted.single.gsx",
+          "name": "string.quoted.single.t2",
           "begin": "'",
           "end": "'",
           "patterns": [
             {
-              "name": "constant.character.escape.gsx",
+              "name": "constant.character.escape.t2",
               "match": "\\\\."
             }
           ]
         },
         {
-          "name": "string.quoted.raw.gsx",
+          "name": "string.quoted.raw.t2",
           "begin": "`",
           "end": "`",
           "patterns": [
             {
               "comment": "Go format specifiers in raw strings too",
-              "name": "constant.other.placeholder.gsx",
+              "name": "constant.other.placeholder.t2",
               "match": "%[-+# 0]*(\\*|\\d+)?(\\.\\*|\\.\\d+)?[vTtbcdoqxXUeEfFgGsp%]"
             }
           ]
@@ -492,23 +492,23 @@
     "numbers": {
       "patterns": [
         {
-          "name": "constant.numeric.float.gsx",
+          "name": "constant.numeric.float.t2",
           "match": "\\b[0-9]+\\.[0-9]+([eE][+-]?[0-9]+)?\\b"
         },
         {
-          "name": "constant.numeric.hex.gsx",
+          "name": "constant.numeric.hex.t2",
           "match": "\\b0[xX][0-9a-fA-F]+\\b"
         },
         {
-          "name": "constant.numeric.octal.gsx",
+          "name": "constant.numeric.octal.t2",
           "match": "\\b0[oO]?[0-7]+\\b"
         },
         {
-          "name": "constant.numeric.binary.gsx",
+          "name": "constant.numeric.binary.t2",
           "match": "\\b0[bB][01]+\\b"
         },
         {
-          "name": "constant.numeric.integer.gsx",
+          "name": "constant.numeric.integer.t2",
           "match": "\\b[0-9]+\\b"
         }
       ]
@@ -517,15 +517,15 @@
       "patterns": [
         {
           "comment": "Method func: func (s *Type) Name(...) { ... }",
-          "name": "meta.function.method.gsx",
+          "name": "meta.function.method.t2",
           "begin": "^\\s*(func)\\s+\\(([a-zA-Z_][a-zA-Z0-9_]*)\\s+(\\*?)([a-zA-Z_][a-zA-Z0-9_.]*)\\)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*\\(",
           "end": "(?<=\\})",
           "beginCaptures": {
-            "1": { "name": "keyword.function.gsx" },
-            "2": { "name": "variable.parameter.receiver.gsx" },
-            "3": { "name": "keyword.operator.go.gsx" },
-            "4": { "name": "entity.name.type.gsx" },
-            "5": { "name": "entity.name.function.gsx" }
+            "1": { "name": "keyword.function.t2" },
+            "2": { "name": "variable.parameter.receiver.t2" },
+            "3": { "name": "keyword.operator.go.t2" },
+            "4": { "name": "entity.name.type.t2" },
+            "5": { "name": "entity.name.function.t2" }
           },
           "patterns": [
             { "include": "#parameter-list" },
@@ -535,12 +535,12 @@
         },
         {
           "comment": "Plain func: func Name(...) { ... }",
-          "name": "meta.function.gsx",
+          "name": "meta.function.t2",
           "begin": "^\\s*(func)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*\\(",
           "end": "(?<=\\})",
           "beginCaptures": {
-            "1": { "name": "keyword.function.gsx" },
-            "2": { "name": "entity.name.function.gsx" }
+            "1": { "name": "keyword.function.t2" },
+            "2": { "name": "entity.name.function.t2" }
           },
           "patterns": [
             { "include": "#parameter-list" },
@@ -554,17 +554,17 @@
       "patterns": [
         {
           "comment": "type struct/interface with body: type Name struct { ... }",
-          "name": "meta.declaration.type.gsx",
+          "name": "meta.declaration.type.t2",
           "begin": "^\\s*(type)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s+(struct|interface)\\s*(\\{)",
           "end": "(\\})",
           "beginCaptures": {
-            "1": { "name": "keyword.other.type.gsx" },
-            "2": { "name": "entity.name.type.gsx" },
-            "3": { "name": "keyword.other.gsx" },
-            "4": { "name": "punctuation.definition.block.begin.gsx" }
+            "1": { "name": "keyword.other.type.t2" },
+            "2": { "name": "entity.name.type.t2" },
+            "3": { "name": "keyword.other.t2" },
+            "4": { "name": "punctuation.definition.block.begin.t2" }
           },
           "endCaptures": {
-            "1": { "name": "punctuation.definition.block.end.gsx" }
+            "1": { "name": "punctuation.definition.block.end.t2" }
           },
           "patterns": [
             { "include": "#comments" },
@@ -575,20 +575,20 @@
         },
         {
           "comment": "type alias/definition: type Name = Type or type Name Type",
-          "name": "meta.declaration.type.gsx",
+          "name": "meta.declaration.type.t2",
           "match": "^\\s*(type)\\s+([a-zA-Z_][a-zA-Z0-9_]*)",
           "captures": {
-            "1": { "name": "keyword.other.type.gsx" },
-            "2": { "name": "entity.name.type.gsx" }
+            "1": { "name": "keyword.other.type.t2" },
+            "2": { "name": "entity.name.type.t2" }
           }
         },
         {
           "comment": "const/var grouped declaration: const ( ... ) or var ( ... )",
-          "name": "meta.declaration.grouped.gsx",
+          "name": "meta.declaration.grouped.t2",
           "begin": "^\\s*(const|var)\\s*\\(",
           "end": "\\)",
           "beginCaptures": {
-            "1": { "name": "keyword.other.gsx" }
+            "1": { "name": "keyword.other.t2" }
           },
           "patterns": [
             { "include": "#comments" },
@@ -599,11 +599,11 @@
         },
         {
           "comment": "const/var single declaration: const Name = ... or var Name Type",
-          "name": "meta.declaration.gsx",
+          "name": "meta.declaration.t2",
           "match": "^\\s*(const|var)\\s+([a-zA-Z_][a-zA-Z0-9_]*)",
           "captures": {
-            "1": { "name": "keyword.other.gsx" },
-            "2": { "name": "variable.other.gsx" }
+            "1": { "name": "keyword.other.t2" },
+            "2": { "name": "variable.other.t2" }
           }
         }
       ]
@@ -611,17 +611,17 @@
     "function-return-type": {
       "match": "\\)\\s*([\\[\\]\\*a-zA-Z0-9_.]+)\\s*(?=\\{)",
       "captures": {
-        "1": { "name": "entity.name.type.gsx" }
+        "1": { "name": "entity.name.type.t2" }
       }
     },
     "function-body": {
       "begin": "\\{",
       "end": "\\}",
       "beginCaptures": {
-        "0": { "name": "punctuation.definition.block.begin.gsx" }
+        "0": { "name": "punctuation.definition.block.begin.t2" }
       },
       "endCaptures": {
-        "0": { "name": "punctuation.definition.block.end.gsx" }
+        "0": { "name": "punctuation.definition.block.end.t2" }
       },
       "patterns": [
         { "include": "#comments" },

@@ -1,5 +1,5 @@
-// Package formatter provides a code formatter for .gsx template files.
+// Package formatter provides a code formatter for .t2 template files.
 //
-// It parses .gsx source, normalizes whitespace, indentation, and import
+// It parses .t2 source, normalizes whitespace, indentation, and import
 // ordering, then pretty-prints the result. Used by the "tui fmt" command.
 package formatter

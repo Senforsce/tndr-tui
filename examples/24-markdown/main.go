@@ -2,7 +2,7 @@
 //
 // To build and run:
 //
-//	go run ../../cmd/tui generate markdown.gsx
+//	go run ../../cmd/tui generate markdown.t2
 //	go run .
 package main
 
@@ -13,7 +13,7 @@ import (
 	tui "github.com/grindlemire/go-tui"
 )
 
-//go:generate go run ../../cmd/tui generate markdown.gsx
+//go:generate go run ../../cmd/tui generate markdown.t2
 
 // sampleDoc exercises every markdown construct the renderer supports, plus a few
 // edge cases. It lives here as plain Go (a double-quoted string can hold the
@@ -64,7 +64,7 @@ const sampleDoc = "# go-tui Markdown (ATX h1)\n" +
 	"\n" +
 	"```bash\n" +
 	"# Bash: comments, strings, $VARS, and keywords\n" +
-	"for f in *.gsx; do\n" +
+	"for f in *.t2; do\n" +
 	"  echo \"generating $f\"\n" +
 	"done\n" +
 	"```\n" +

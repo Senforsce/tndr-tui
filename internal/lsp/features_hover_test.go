@@ -15,15 +15,15 @@ func TestWorkspaceSymbolDirect(t *testing.T) {
 	tests := map[string]tc{
 		"empty query returns all": {
 			contents: map[string]string{
-				"file:///a.gsx": `package main
+				"file:///a.t2": `package main
 
-templ Hello() {
+t1 Hello() {
 	<span>Hello</span>
 }
 `,
-				"file:///b.gsx": `package main
+				"file:///b.t2": `package main
 
-templ World() {
+t1 World() {
 	<span>World</span>
 }
 `,
@@ -33,15 +33,15 @@ templ World() {
 		},
 		"filter by query": {
 			contents: map[string]string{
-				"file:///a.gsx": `package main
+				"file:///a.t2": `package main
 
-templ Hello() {
+t1 Hello() {
 	<span>Hello</span>
 }
 `,
-				"file:///b.gsx": `package main
+				"file:///b.t2": `package main
 
-templ World() {
+t1 World() {
 	<span>World</span>
 }
 `,
@@ -51,9 +51,9 @@ templ World() {
 		},
 		"case insensitive query": {
 			contents: map[string]string{
-				"file:///a.gsx": `package main
+				"file:///a.t2": `package main
 
-templ HelloWorld() {
+t1 HelloWorld() {
 	<span>Hello</span>
 }
 `,
@@ -179,7 +179,7 @@ func TestIsInClassAttribute(t *testing.T) {
 		"inside class attribute empty": {
 			content: `package main
 
-templ Hello() {
+t1 Hello() {
 	<div class="">
 	</div>
 }
@@ -192,7 +192,7 @@ templ Hello() {
 		"inside class attribute with prefix": {
 			content: `package main
 
-templ Hello() {
+t1 Hello() {
 	<div class="flex">
 	</div>
 }
@@ -205,7 +205,7 @@ templ Hello() {
 		"inside class attribute partial class after space": {
 			content: `package main
 
-templ Hello() {
+t1 Hello() {
 	<div class="flex-col gap">
 	</div>
 }
@@ -218,7 +218,7 @@ templ Hello() {
 		"inside class attribute at space": {
 			content: `package main
 
-templ Hello() {
+t1 Hello() {
 	<div class="flex-col ">
 	</div>
 }
@@ -231,7 +231,7 @@ templ Hello() {
 		"not in class attribute - in id": {
 			content: `package main
 
-templ Hello() {
+t1 Hello() {
 	<div id="test">
 	</div>
 }
@@ -244,7 +244,7 @@ templ Hello() {
 		"not in class attribute - outside quotes": {
 			content: `package main
 
-templ Hello() {
+t1 Hello() {
 	<div class="flex">
 	</div>
 }
@@ -257,7 +257,7 @@ templ Hello() {
 		"not in class attribute - different line": {
 			content: `package main
 
-templ Hello() {
+t1 Hello() {
 	<div class="flex">
 		<span>Hello</span>
 	</div>
@@ -273,8 +273,8 @@ templ Hello() {
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
 			server := NewServer(nil, nil)
-			server.docs.Open("file:///test.gsx", tt.content, 1)
-			doc := server.docs.Get("file:///test.gsx")
+			server.docs.Open("file:///test.t2", tt.content, 1)
+			doc := server.docs.Get("file:///test.t2")
 
 			gotInAttr, gotPrefix := server.isInClassAttribute(doc, Position{Line: tt.line, Character: tt.character})
 
@@ -365,7 +365,7 @@ func TestTailwindCompletionInCompletion(t *testing.T) {
 		"inside class attribute": {
 			content: `package main
 
-templ Hello() {
+t1 Hello() {
 	<div class="flex">
 	</div>
 }
@@ -377,7 +377,7 @@ templ Hello() {
 		"not inside class attribute": {
 			content: `package main
 
-templ Hello() {
+t1 Hello() {
 	<div id="test">
 	</div>
 }
@@ -392,11 +392,11 @@ templ Hello() {
 		t.Run(name, func(t *testing.T) {
 			server := NewServer(nil, nil)
 
-			doc := server.docs.Open("file:///test.gsx", tt.content, 1)
-			server.index.IndexDocument("file:///test.gsx", doc.AST)
+			doc := server.docs.Open("file:///test.t2", tt.content, 1)
+			server.index.IndexDocument("file:///test.t2", doc.AST)
 
 			completionParams := CompletionParams{
-				TextDocument: TextDocumentIdentifier{URI: "file:///test.gsx"},
+				TextDocument: TextDocumentIdentifier{URI: "file:///test.t2"},
 				Position:     Position{Line: tt.line, Character: tt.character},
 			}
 

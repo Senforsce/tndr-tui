@@ -10,7 +10,7 @@ func MyInput() *myInput {
 	return &myInput{}
 }
 
-templ (c *myInput) Render() {
+t1 (c *myInput) Render() {
 	<div class="flex-col gap-1">
 		<input placeholder="Type here..." value="hello" width={30} border={tui.BorderRounded} onSubmit={c.handleSubmit} />
 	</div>

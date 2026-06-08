@@ -7,11 +7,11 @@ import (
 
 func TestAnalyzer_DetectStateBindings_SimpleGet(t *testing.T) {
 	input := `package x
-templ Counter(count *tui.State[int]) {
+t1 Counter(count *tui.State[int]) {
 	<span>{count.Get()}</span>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -40,11 +40,11 @@ templ Counter(count *tui.State[int]) {
 
 func TestAnalyzer_DetectStateBindings_FormatString(t *testing.T) {
 	input := `package x
-templ Counter(count *tui.State[int]) {
+t1 Counter(count *tui.State[int]) {
 	<span>{fmt.Sprintf("Count: %d", count.Get())}</span>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -70,11 +70,11 @@ templ Counter(count *tui.State[int]) {
 
 func TestAnalyzer_DetectStateBindings_MultipleStates(t *testing.T) {
 	input := `package x
-templ Profile(firstName *tui.State[string], lastName *tui.State[string]) {
+t1 Profile(firstName *tui.State[string], lastName *tui.State[string]) {
 	<span>{fmt.Sprintf("%s %s", firstName.Get(), lastName.Get())}</span>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -111,11 +111,11 @@ templ Profile(firstName *tui.State[string], lastName *tui.State[string]) {
 
 func TestAnalyzer_DetectStateBindings_ExplicitDeps(t *testing.T) {
 	input := `package x
-templ UserCard(user *tui.State[*User]) {
+t1 UserCard(user *tui.State[*User]) {
 	<span deps={[user]}>{formatUser(user.Get())}</span>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -141,11 +141,11 @@ templ UserCard(user *tui.State[*User]) {
 
 func TestAnalyzer_DetectStateBindings_ExplicitDepsMultiple(t *testing.T) {
 	input := `package x
-templ Combined(count *tui.State[int], name *tui.State[string]) {
+t1 Combined(count *tui.State[int], name *tui.State[string]) {
 	<span deps={[count, name]}>{compute(count, name)}</span>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -171,11 +171,11 @@ templ Combined(count *tui.State[int], name *tui.State[string]) {
 
 func TestAnalyzer_DetectStateBindings_UnknownStateInDeps(t *testing.T) {
 	input := `package x
-templ Test(count *tui.State[int]) {
+t1 Test(count *tui.State[int]) {
 	<span deps={[unknown]}>{count.Get()}</span>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -198,11 +198,11 @@ templ Test(count *tui.State[int]) {
 
 func TestAnalyzer_DetectStateBindings_DynamicClass(t *testing.T) {
 	input := `package x
-templ Toggle(enabled *tui.State[bool]) {
+t1 Toggle(enabled *tui.State[bool]) {
 	<span class={enabled.Get() ? "text-green" : "text-red"}>Status</span>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -228,11 +228,11 @@ templ Toggle(enabled *tui.State[bool]) {
 
 func TestAnalyzer_DetectStateBindings_NoStateUsage(t *testing.T) {
 	input := `package x
-templ Static() {
+t1 Static() {
 	<span>{"Hello, World!"}</span>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -250,11 +250,11 @@ templ Static() {
 
 func TestAnalyzer_DetectStateBindings_WithRef(t *testing.T) {
 	input := `package x
-templ Counter(count *tui.State[int]) {
+t1 Counter(count *tui.State[int]) {
 	<span ref={label}>{count.Get()}</span>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -279,11 +279,11 @@ templ Counter(count *tui.State[int]) {
 func TestAnalyzer_DepsAttributeValid(t *testing.T) {
 	// Test that deps attribute is recognized as valid
 	input := `package x
-templ Test(count *tui.State[int]) {
+t1 Test(count *tui.State[int]) {
 	<span deps={[count]}>{count.Get()}</span>
 }`
 
-	_, err := AnalyzeFile("test.gsx", input)
+	_, err := AnalyzeFile("test.t2", input)
 	if err != nil {
 		t.Errorf("unexpected error: %v", err)
 	}
@@ -293,7 +293,7 @@ func TestAnalyzer_DetectStateBindings_ReactiveIfSkipsChildren(t *testing.T) {
 	// Elements inside a reactive if should NOT generate separate text bindings
 	// because the reactive update function rebuilds them entirely.
 	input := `package x
-templ Toggle() {
+t1 Toggle() {
 	count := tui.NewState(0)
 	<div>
 		if count.Get() == 0 {
@@ -304,7 +304,7 @@ templ Toggle() {
 	</div>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -328,7 +328,7 @@ func TestAnalyzer_DetectStateBindings_NonReactiveIfKeepsBindings(t *testing.T) {
 	// Elements inside a non-reactive if (no state in condition) should still
 	// generate text bindings normally.
 	input := `package x
-templ Toggle(count *tui.State[int]) {
+t1 Toggle(count *tui.State[int]) {
 	<div>
 		if true {
 			<span>{count.Get()}</span>
@@ -336,7 +336,7 @@ templ Toggle(count *tui.State[int]) {
 	</div>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -364,11 +364,11 @@ templ Toggle(count *tui.State[int]) {
 func TestAnalyzer_DetectStateBindings_DereferencedPointer(t *testing.T) {
 	// Test that (*count).Get() pattern is detected
 	input := `package x
-templ Counter(count *tui.State[int]) {
+t1 Counter(count *tui.State[int]) {
 	<span>{(*count).Get()}</span>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {

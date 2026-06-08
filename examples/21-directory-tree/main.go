@@ -2,7 +2,7 @@
 //
 // Usage:
 //
-//	go run ../../cmd/tui generate tree.gsx
+//	go run ../../cmd/tui generate tree.t2
 //	go run . [path]
 //
 // If no path is given, the current directory is used.
@@ -16,7 +16,7 @@ import (
 	tui "github.com/grindlemire/go-tui"
 )
 
-//go:generate go run ../../cmd/tui generate tree.gsx
+//go:generate go run ../../cmd/tui generate tree.t2
 
 func main() {
 	root := "."

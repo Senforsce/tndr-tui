@@ -18,7 +18,7 @@ func TestSemanticTokens_ComponentCalls(t *testing.T) {
 		"component call": {
 			content: `package main
 
-templ App() {
+t1 App() {
 	@Header("title")
 }
 `,
@@ -145,7 +145,7 @@ func TestSemanticTokens_Encoding(t *testing.T) {
 func TestSemanticTokens_NilAST(t *testing.T) {
 	sp := newTestSemanticProvider()
 	doc := &Document{
-		URI:     "file:///test.gsx",
+		URI:     "file:///test.t2",
 		Content: "",
 		Version: 1,
 		AST:     nil,
@@ -167,7 +167,7 @@ func TestSemanticTokens_Variables(t *testing.T) {
 	sp := newTestSemanticProvider()
 	doc := parseTestDoc(`package main
 
-templ Greeting(name string) {
+t1 Greeting(name string) {
 	<span>{name}</span>
 }
 `)
@@ -196,7 +196,7 @@ func TestSemanticTokens_RefAttr(t *testing.T) {
 		"simple ref attr": {
 			content: `package main
 
-templ Layout() {
+t1 Layout() {
 	<div ref={header} class="p-1">title</div>
 }
 `,
@@ -253,7 +253,7 @@ func TestSemanticTokens_EventHandlerAttributes(t *testing.T) {
 		"event handler vs regular attribute": {
 			content: `package main
 
-templ Button() {
+t1 Button() {
 	<button onFocus={handleFocus} class="p-1">Click</button>
 }
 `,
@@ -299,7 +299,7 @@ func TestSemanticTokens_StateVarDeclaration(t *testing.T) {
 		"state variable declaration": {
 			content: `package main
 
-templ Counter() {
+t1 Counter() {
 	count := tui.NewState(0)
 	<span>{count}</span>
 }
@@ -341,11 +341,11 @@ func TestSemanticTokens_MultipleComponents(t *testing.T) {
 	sp := newTestSemanticProvider()
 	doc := parseTestDoc(`package main
 
-templ Header(title string) {
+t1 Header(title string) {
 	<div>{title}</div>
 }
 
-templ Footer() {
+t1 Footer() {
 	<span>Footer</span>
 }
 `)
@@ -373,7 +373,7 @@ func TestSemanticTokens_StateModifierOnlyOnStateVar(t *testing.T) {
 	// not to all variables declared in the same GoCode block.
 	src := `package test
 
-templ Counter() {
+t1 Counter() {
 	count := tui.NewState(0)
 	<span>{count.Get()}</span>
 }
@@ -407,7 +407,7 @@ func TestSemanticTokens_NonStateVarNoReadonly(t *testing.T) {
 	// so we test with a state declaration to verify only it gets readonly.
 	src := `package test
 
-templ Example() {
+t1 Example() {
 	count := tui.NewState(0)
 	<span>{count.Get()}</span>
 }
@@ -525,11 +525,11 @@ func TestCollectTokensInGoCode_MultiByteChars(t *testing.T) {
 
 // TestSemanticTokens_GoFuncWithMultiByteChars tests the full LSP pipeline for a Go helper
 // function containing multi-byte UTF-8 characters in string literals. This reproduces the
-// exact scenario from example 21's tree.gsx nodeLabel function where "▶ " (3-byte char)
+// exact scenario from example 21's tree.t2 nodeLabel function where "▶ " (3-byte char)
 // was causing all subsequent tokens on the same line to be shifted by 2 positions.
 func TestSemanticTokens_GoFuncWithMultiByteChars(t *testing.T) {
 	// Exact replica of the nodeLabel function and surrounding context from
-	// examples/21-directory-tree/tree.gsx, including buildPrefix which also
+	// examples/21-directory-tree/tree.t2, including buildPrefix which also
 	// has multi-byte box-drawing characters.
 	src := `package main
 

@@ -33,37 +33,37 @@ func TestMain(m *testing.M) {
 }
 
 func TestCLI_Check(t *testing.T) {
-	gsxFiles, _ := filepath.Glob("testdata/*.gsx")
-	if len(gsxFiles) == 0 {
-		t.Skip("no testdata/*.gsx files found")
+	t2Files, _ := filepath.Glob("testdata/*.t2")
+	if len(t2Files) == 0 {
+		t.Skip("no testdata/*.t2 files found")
 	}
 
-	for _, gsxFile := range gsxFiles {
-		t.Run(filepath.Base(gsxFile), func(t *testing.T) {
-			cmd := exec.Command(testBin, "check", gsxFile)
+	for _, t2File := range t2Files {
+		t.Run(filepath.Base(t2File), func(t *testing.T) {
+			cmd := exec.Command(testBin, "check", t2File)
 			out, err := cmd.CombinedOutput()
 			if err != nil {
-				t.Errorf("check %s failed: %v\n%s", gsxFile, err, out)
+				t.Errorf("check %s failed: %v\n%s", t2File, err, out)
 			}
 		})
 	}
 }
 
 func TestCLI_Fmt_Stdout(t *testing.T) {
-	gsxFiles, _ := filepath.Glob("testdata/*.gsx")
-	if len(gsxFiles) == 0 {
-		t.Skip("no testdata/*.gsx files found")
+	t2Files, _ := filepath.Glob("testdata/*.t2")
+	if len(t2Files) == 0 {
+		t.Skip("no testdata/*.t2 files found")
 	}
 
-	for _, gsxFile := range gsxFiles {
-		t.Run(filepath.Base(gsxFile), func(t *testing.T) {
-			cmd := exec.Command(testBin, "fmt", "--stdout", gsxFile)
+	for _, t2File := range t2Files {
+		t.Run(filepath.Base(t2File), func(t *testing.T) {
+			cmd := exec.Command(testBin, "fmt", "--stdout", t2File)
 			out, err := cmd.CombinedOutput()
 			if err != nil {
-				t.Errorf("fmt --stdout %s failed: %v\n%s", gsxFile, err, out)
+				t.Errorf("fmt --stdout %s failed: %v\n%s", t2File, err, out)
 			}
 			if len(out) == 0 {
-				t.Errorf("fmt --stdout %s produced empty output", gsxFile)
+				t.Errorf("fmt --stdout %s produced empty output", t2File)
 			}
 		})
 	}

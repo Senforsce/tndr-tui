@@ -73,9 +73,9 @@ Returns the current value. Safe to call from any goroutine.
 current := count.Get()
 ```
 
-In `.gsx` render methods, call `Get()` inside expressions:
+In `.t2` render methods, call `Get()` inside expressions:
 
-```gsx
+```t2
 <span>{fmt.Sprintf("Count: %d", s.count.Get())}</span>
 ```
 
@@ -265,7 +265,7 @@ type MyComponent struct {
     count *tui.State[int]
 }
 
-templ (c *MyComponent) Render() { <span>{count}</span> }
+t1 (c *MyComponent) Render() { <span>{count}</span> }
 ```
 
 The generator also emits an unexported `bindAppFields(app *tui.App)` method on the receiver. If you override `BindApp` (for custom setup), call `bindAppFields` from inside your override so the `State` and `Events` delegations don't have to be maintained by hand:
@@ -283,10 +283,10 @@ A user-defined `BindApp` that skips `bindAppFields` will leave `State` fields un
 
 ### Derived display values
 
-Use Go expressions directly in `.gsx` to compute display strings from state:
+Use Go expressions directly in `.t2` to compute display strings from state:
 
-```gsx
-templ (c *counter) Render() {
+```t2
+t1 (c *counter) Render() {
     <span class="font-bold">{fmt.Sprintf("Count: %d", c.count.Get())}</span>
 }
 ```
@@ -295,8 +295,8 @@ templ (c *counter) Render() {
 
 The `:=` binding assigns an element to a name so you can reuse it in multiple places. It requires an element (starting with `<`), not a Go expression.
 
-```gsx
-templ (s *stateApp) Render() {
+```t2
+t1 (s *stateApp) Render() {
     countBadge := <span class="text-cyan font-bold">{fmt.Sprintf("%d", s.count.Get())}</span>
     <div class="flex-col gap-1">
         {countBadge}
@@ -306,8 +306,8 @@ templ (s *stateApp) Render() {
 
 ### Conditional rendering from state
 
-```gsx
-templ (a *myApp) Render() {
+```t2
+t1 (a *myApp) Render() {
     if a.loading.Get() {
         <span class="text-yellow">Loading...</span>
     } else {

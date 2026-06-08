@@ -72,7 +72,7 @@ var GoBuiltinTypes = map[string]bool{
 }
 
 // GoKeywords is the set of Go keywords that should be highlighted as keywords
-// when they appear in Go expressions inside .gsx files.
+// when they appear in Go expressions inside .t2 files.
 var GoKeywords = map[string]bool{
 	"func":        true,
 	"return":      true,
@@ -250,22 +250,22 @@ func (s *semanticTokensProvider) collectSemanticTokens(doc *Document) []Semantic
 	for _, comp := range ast.Components {
 		line := comp.Position.Line - 1
 
-		// Component keyword (templ)
+		// Component keyword (t1)
 		tokens = append(tokens, SemanticToken{
 			Line:      line,
 			StartChar: comp.Position.Column - 1,
-			Length:    len("templ"),
+			Length:    len("t1"),
 			TokenType: TokenTypeKeyword,
 			Modifiers: 0,
 		})
 
-		// Method receiver tokens (if method templ)
+		// Method receiver tokens (if method t1)
 		if comp.ReceiverName != "" && s.currentContent != "" {
 			srcLines := strings.Split(s.currentContent, "\n")
 			if line < len(srcLines) {
 				srcLine := srcLines[line]
-				// Find the opening paren of the receiver after "templ"
-				searchStart := comp.Position.Column - 1 + len("templ")
+				// Find the opening paren of the receiver after "t1"
+				searchStart := comp.Position.Column - 1 + len("t1")
 				parenIdx := strings.Index(srcLine[searchStart:], "(")
 				if parenIdx >= 0 {
 					recvStart := searchStart + parenIdx + 1 // after "("
@@ -290,12 +290,12 @@ func (s *semanticTokensProvider) collectSemanticTokens(doc *Document) []Semantic
 		}
 
 		// Component name — find position by searching source for "Name("
-		nameStart := comp.Position.Column - 1 + len("templ ")
+		nameStart := comp.Position.Column - 1 + len("t1 ")
 		if comp.ReceiverName != "" && s.currentContent != "" {
 			srcLines := strings.Split(s.currentContent, "\n")
 			if line < len(srcLines) {
 				srcLine := srcLines[line]
-				searchFrom := comp.Position.Column - 1 + len("templ")
+				searchFrom := comp.Position.Column - 1 + len("t1")
 				nameIdx := strings.Index(srcLine[searchFrom:], comp.Name+"(")
 				if nameIdx >= 0 {
 					nameStart = searchFrom + nameIdx
@@ -326,7 +326,7 @@ func (s *semanticTokensProvider) collectSemanticTokens(doc *Document) []Semantic
 
 		// Collect tokens from body — do NOT add receiver to paramNames so it gets
 		// default variable coloring in usage (TextMate fallback) while the declaration
-		// in the templ signature gets parameter highlighting.
+		// in the t1 signature gets parameter highlighting.
 		s.collectTokensFromNodes(comp.Body, comp.Params, &tokens)
 	}
 

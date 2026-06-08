@@ -60,10 +60,10 @@ async function promptInstall(): Promise<boolean> {
     if (selection === 'Install') {
         return installBinary();
     } else if (selection === 'Disable LSP') {
-        const config = vscode.workspace.getConfiguration('gsx.lsp');
+        const config = vscode.workspace.getConfiguration('t2.lsp');
         await config.update('enabled', false, vscode.ConfigurationTarget.Global);
         vscode.window.showInformationMessage(
-            'GSX LSP disabled. Re-enable in settings with gsx.lsp.enabled'
+            'GSX LSP disabled. Re-enable in settings with t2.lsp.enabled'
         );
     }
 
@@ -71,7 +71,7 @@ async function promptInstall(): Promise<boolean> {
 }
 
 export async function activate(context: vscode.ExtensionContext) {
-    const config = vscode.workspace.getConfiguration('gsx.lsp');
+    const config = vscode.workspace.getConfiguration('t2.lsp');
     const enabled = config.get<boolean>('enabled', true);
 
     if (!enabled) {
@@ -99,14 +99,14 @@ export async function activate(context: vscode.ExtensionContext) {
     };
 
     const clientOptions: LanguageClientOptions = {
-        documentSelector: [{ scheme: 'file', language: 'gsx' }],
+        documentSelector: [{ scheme: 'file', language: 't2' }],
         synchronize: {
-            fileEvents: vscode.workspace.createFileSystemWatcher('**/*.gsx'),
+            fileEvents: vscode.workspace.createFileSystemWatcher('**/*.t2'),
         },
     };
 
     client = new LanguageClient(
-        'gsxLanguageServer',
+        't2LanguageServer',
         'GSX Language Server',
         serverOptions,
         clientOptions

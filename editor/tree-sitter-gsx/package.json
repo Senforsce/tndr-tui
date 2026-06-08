@@ -1,5 +1,5 @@
 {
-  "name": "tree-sitter-gsx",
+  "name": "tree-sitter-t2",
   "version": "0.1.0",
   "description": "Tree-sitter grammar for GSX DSL files",
   "main": "bindings/node",
@@ -7,7 +7,7 @@
   "keywords": [
     "parser",
     "tree-sitter",
-    "gsx",
+    "t2",
     "go-tui",
     "dsl"
   ],
@@ -22,7 +22,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/grindlemire/go-tui.git",
-    "directory": "editor/tree-sitter-gsx"
+    "directory": "editor/tree-sitter-t2"
   },
   "author": "grindlemire",
   "license": "MIT",
@@ -51,9 +51,9 @@
   },
   "tree-sitter": [
     {
-      "scope": "source.gsx",
+      "scope": "source.t2",
       "file-types": [
-        "gsx"
+        "t2"
       ],
       "highlights": "queries/highlights.scm",
       "injections": "queries/injections.scm"

@@ -10,7 +10,7 @@ Add scrolling to any container with a Tailwind class or the `scrollable` attribu
 
 **Via class:**
 
-```gsx
+```t2
 <div class="overflow-y-scroll h-20">
     // content taller than 20 rows will scroll vertically
 </div>
@@ -26,7 +26,7 @@ Add scrolling to any container with a Tailwind class or the `scrollable` attribu
 
 **Via attribute:**
 
-```gsx
+```t2
 <div scrollable={tui.ScrollVertical} height={20}>
     // equivalent to overflow-y-scroll h-20
 </div>
@@ -40,7 +40,7 @@ When you enable scrolling on an element, the framework also makes it focusable s
 
 To move the scroll position in response to user input, you need a ref to the scrollable element. Attach a `*tui.Ref` in your render method and call scroll methods from your event handlers:
 
-```gsx
+```t2
 package main
 
 import (
@@ -67,7 +67,7 @@ func ScrollApp() *scrollApp {
     }
 }
 
-templ (s *scrollApp) Render() {
+t1 (s *scrollApp) Render() {
     <div class="flex-col p-1 border-rounded border-cyan">
         <span class="font-bold text-cyan">Scrollable List</span>
         <div class="overflow-y-scroll" height={15} ref={s.content}
@@ -198,7 +198,7 @@ atBottom := el.IsAtBottom()
 
 A common pattern for log viewers and chat apps: new content appears at the bottom, and the view follows along automatically unless the user has scrolled up to read older entries.
 
-```gsx
+```t2
 package main
 
 import (
@@ -280,7 +280,7 @@ func (l *logViewer) KeyMap() tui.KeyMap {
     }
 }
 
-templ (l *logViewer) Render() {
+t1 (l *logViewer) Render() {
     <div class="flex-col p-1 border-rounded border-cyan">
         <div class="flex justify-between">
             <span class="font-bold text-cyan">Log Viewer</span>
@@ -309,7 +309,7 @@ You can also use `ScrollToBottom()` on the element directly, which has built-in 
 
 The scrollbar track and thumb have default styles (BrightBlack track, White thumb). Customize them with Tailwind classes:
 
-```gsx
+```t2
 <div class="overflow-y-scroll scrollbar-cyan scrollbar-thumb-bright-white" height={15}>
     // cyan track, bright white thumb
 </div>
@@ -336,7 +336,7 @@ The scrollbar is a single column on the right edge of the scrollable area. The t
 
 To scroll without drawing a scrollbar, add the `scrollbar-hidden` class or set `hideScrollbar={true}`. The gutter column is reclaimed too, so content uses the full container width.
 
-```gsx
+```t2
 <div class="overflow-y-scroll scrollbar-hidden" height={15}>
     // scrolls, but the scrollbar column is reclaimed for content
 </div>
@@ -399,7 +399,7 @@ func (s *scrollApp) selectNext() {
 
 A scrollable list with keyboard navigation, mouse wheel support, and a styled scrollbar:
 
-```gsx
+```t2
 package main
 
 import (
@@ -498,7 +498,7 @@ func (f *fileList) HandleMouse(me tui.MouseEvent) bool {
     return false
 }
 
-templ (f *fileList) Render() {
+t1 (f *fileList) Render() {
     <div class="flex-col p-1 border-rounded border-cyan">
         <span class="text-gradient-cyan-magenta font-bold">Files</span>
         <div class="overflow-y-scroll scrollbar-cyan scrollbar-thumb-bright-cyan"

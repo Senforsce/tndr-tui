@@ -12,7 +12,7 @@ import (
 // stateNewStateRegex matches state declarations like: count := tui.NewState(0)
 var stateNewStateRegex = regexp.MustCompile(`(\w+)\s*:=\s*tui\.NewState\((.+)\)`)
 
-// GenerateVirtualGo generates a valid Go source file from a .gsx AST.
+// GenerateVirtualGo generates a valid Go source file from a .t2 AST.
 // It returns the generated source and a SourceMap for position translation.
 //
 // Position convention: tuigen positions are 1-indexed (Line and Column both start at 1).
@@ -37,7 +37,7 @@ type generator struct {
 	goCol     int // current column in generated Go (0-indexed)
 }
 
-// generate produces Go source from a .gsx AST.
+// generate produces Go source from a .t2 AST.
 func (g *generator) generate(file *tuigen.File) string {
 	// Package declaration
 	g.writeLine(fmt.Sprintf("package %s", file.Package))
@@ -116,7 +116,7 @@ func (g *generator) generateComponent(comp *tuigen.Component) {
 	// Add mappings for each parameter
 	for _, p := range comp.Params {
 		if p.Position.Line > 0 && p.Position.Column > 0 {
-			// Map the full parameter (name + space + type) from .gsx to .go
+			// Map the full parameter (name + space + type) from .t2 to .go
 			// so gopls can resolve types in component signatures
 			m := Mapping{
 				TuiLine: p.Position.Line - 1,
@@ -385,7 +385,7 @@ func (g *generator) generateLetBinding(binding *tuigen.LetBinding, indent string
 	}
 
 	// Add mapping for the variable name
-	// In .gsx: Position points to the variable name (for :=) or the "var" keyword (for var form)
+	// In .t2: Position points to the variable name (for :=) or the "var" keyword (for var form)
 	// In .go: "var varName any" - varName is at indent + len("var ")
 	tuiLine := binding.Position.Line - 1
 	var tuiCol int
@@ -481,7 +481,7 @@ func (g *generator) generateFunc(fn *tuigen.GoFunc) {
 
 	for i, line := range lines {
 		// Add mapping for each line of the function
-		// This maps the entire line from .gsx to .go
+		// This maps the entire line from .t2 to .go
 		g.sourceMap.AddMapping(Mapping{
 			TuiLine: tuiStartLine + i,
 			TuiCol:  tuiStartCol,

@@ -123,7 +123,7 @@ func (c *complexApp) HandleMouse(me tui.MouseEvent) bool {
 	)
 }
 
-templ (c *complexApp) Render() {
+t1 (c *complexApp) Render() {
 	<div class="flex-col gap-2 p-2 border-rounded border-cyan">
 		<span class="text-gradient-cyan-magenta font-bold">Complex Component Demo</span>
 
@@ -194,7 +194,7 @@ templ (c *complexApp) Render() {
 // =============================================================================
 
 // Let bindings
-templ LetBindingExample(count int, label string) {
+t1 LetBindingExample(count int, label string) {
 	formattedLabel := fmt.Sprintf("%s:", strings.ToUpper(label))
 	countText := <span class="font-bold">{fmt.Sprintf("%d", count)}</span>
 	<div class="flex-col gap-1 p-1">
@@ -204,7 +204,7 @@ templ LetBindingExample(count int, label string) {
 }
 
 // Refs - simple, loop, keyed, conditional
-templ RefsExample(items []string, users map[string]string, showWarning bool) {
+t1 RefsExample(items []string, users map[string]string, showWarning bool) {
 	container := tui.NewRef()
 	titleRef := tui.NewRef()
 	itemRefs := tui.NewRefList()
@@ -230,7 +230,7 @@ templ RefsExample(items []string, users map[string]string, showWarning bool) {
 }
 
 // Numeric values
-templ NumericValues() {
+t1 NumericValues() {
 	<div>
 		<span padding={10}>Integer:{42}</span>
 		<span>{3.14159}</span>
@@ -241,7 +241,7 @@ templ NumericValues() {
 }
 
 // String values
-templ StringValues() {
+t1 StringValues() {
 	<div>
 		<span>{"Hello, World!"}</span>
 		<span>{`Raw string with newlines`}</span>
@@ -250,7 +250,7 @@ templ StringValues() {
 }
 
 // Self-closing elements
-templ SelfClosing() {
+t1 SelfClosing() {
 	<div>
 		<hr />
 		<br />
@@ -258,7 +258,7 @@ templ SelfClosing() {
 }
 
 // Attributes with various types
-templ AttributeTypes(enabled bool, size int) {
+t1 AttributeTypes(enabled bool, size int) {
 	<div
 		border={tui.BorderDouble}
 		padding={2}

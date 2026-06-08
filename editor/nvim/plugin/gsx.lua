@@ -1,8 +1,8 @@
--- Minimal auto-setup: register the gsx filetype on load.
--- Users still need to call require("gsx").setup() from their config
+-- Minimal auto-setup: register the t2 filetype on load.
+-- Users still need to call require("t2").setup() from their config
 -- to enable tree-sitter parser registration and the LSP.
 vim.filetype.add({
 	extension = {
-		gsx = "gsx",
+		t2 = "t2",
 	},
 })

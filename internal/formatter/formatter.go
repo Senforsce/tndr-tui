@@ -1,11 +1,11 @@
-// Package formatter provides code formatting for .gsx files.
+// Package formatter provides code formatting for .t2 files.
 package formatter
 
 import (
 	"github.com/grindlemire/go-tui/internal/tuigen"
 )
 
-// Formatter formats .gsx source code.
+// Formatter formats .t2 source code.
 type Formatter struct {
 	// IndentString is the string used for indentation (default: tab).
 	IndentString string
@@ -21,7 +21,7 @@ func New() *Formatter {
 	}
 }
 
-// Format parses and reformats the given .gsx source code.
+// Format parses and reformats the given .t2 source code.
 // Returns the formatted code and any error encountered during parsing.
 func (f *Formatter) Format(filename, source string) (string, error) {
 	// Parse the source

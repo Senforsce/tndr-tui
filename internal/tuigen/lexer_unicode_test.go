@@ -51,7 +51,7 @@ func TestLexer_UnicodeSymbols(t *testing.T) {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			lexer := NewLexer("test.gsx", tt.source)
+			lexer := NewLexer("test.t2", tt.source)
 
 			var tokens []TokenType
 			for {
@@ -92,21 +92,21 @@ func TestParser_UnicodeTextContent(t *testing.T) {
 	tests := map[string]tc{
 		"arrows in span text": {
 			source: `package test
-templ Test() {
+t1 Test() {
 	<span>Use ↑/↓ to navigate</span>
 }`,
 			expectError: false,
 		},
 		"arrows in attribute string": {
 			source: `package test
-templ Test() {
+t1 Test() {
 	<span text="Use ↑/↓ to navigate"></span>
 }`,
 			expectError: false,
 		},
 		"emoji in text": {
 			source: `package test
-templ Test() {
+t1 Test() {
 	<div>
 		<span>Hello 👋</span>
 		<span>World 🌍</span>
@@ -116,7 +116,7 @@ templ Test() {
 		},
 		"unicode in multiple elements": {
 			source: `package test
-templ Test() {
+t1 Test() {
 	<div>
 		<span>← Previous</span>
 		<span>Next →</span>
@@ -128,7 +128,7 @@ templ Test() {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			lexer := NewLexer("test.gsx", tt.source)
+			lexer := NewLexer("test.t2", tt.source)
 			parser := NewParser(lexer)
 			_, _ = parser.ParseFile()
 

@@ -7,7 +7,8 @@ dist/
 # Ignore everything, then un-ignore source files and known subdirectories
 examples/*/*
 !examples/**/*.go
-!examples/**/*.gsx
+!examples/**/*.t2
+!examples/**/*.t2
 !examples/**/*.md
 !examples/**/*.mod
 !examples/**/*.sum
@@ -34,10 +35,10 @@ vendor/
 !editor/vscode/
 editor/vscode/out/
 editor/vscode/node_modules/
-editor/tree-sitter-gsx/build/
-editor/tree-sitter-gsx/node_modules/
-editor/zed-gsx/grammars/gsx/
-editor/zed-gsx/target/
+editor/tree-sitter-t2/build/
+editor/tree-sitter-t2/node_modules/
+editor/zed-t2/grammars/t2/
+editor/zed-t2/target/
 *.vsix
 extension.wasm
 

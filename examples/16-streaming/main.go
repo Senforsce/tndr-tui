@@ -2,7 +2,7 @@
 //
 // To build and run:
 //
-//	go run ../../cmd/tui generate streaming.gsx
+//	go run ../../cmd/tui generate streaming.t2
 //	go run .
 package main
 
@@ -15,7 +15,7 @@ import (
 	tui "github.com/grindlemire/go-tui"
 )
 
-//go:generate go run ../../cmd/tui generate streaming.gsx
+//go:generate go run ../../cmd/tui generate streaming.t2
 
 func main() {
 	dataCh := make(chan string, 100)

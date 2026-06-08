@@ -72,7 +72,7 @@ func (d *diagnosticsProvider) Diagnose(doc *Document) ([]Diagnostic, error) {
 		diag := Diagnostic{
 			Range:    rng,
 			Severity: DiagnosticSeverityError,
-			Source:   "gsx",
+			Source:   "t2",
 			Message:  err.Message,
 		}
 		if err.Hint != "" {

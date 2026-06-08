@@ -21,7 +21,7 @@ func TestFormat_EdgeCases(t *testing.T) {
 		"deeply nested elements": {
 			input: `package test
 
-templ Deep() {
+t1 Deep() {
 	<div>
 		<div>
 			<div>
@@ -37,11 +37,11 @@ templ Deep() {
 		"multiple components": {
 			input: `package test
 
-templ A() {
+t1 A() {
 	<span>A</span>
 }
 
-templ B() {
+t1 B() {
 	<span>B</span>
 }
 `,
@@ -49,7 +49,7 @@ templ B() {
 		"component with many attributes": {
 			input: `package test
 
-templ Styled() {
+t1 Styled() {
 	<div class="flex-col gap-2 p-2 border-rounded text-cyan bg-black">
 		<span>Styled</span>
 	</div>
@@ -61,7 +61,7 @@ templ Styled() {
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
 			f := New()
-			_, err := f.Format("test.gsx", tt.input)
+			_, err := f.Format("test.t2", tt.input)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("Format() error = %v, wantErr %v", err, tt.wantErr)
 			}

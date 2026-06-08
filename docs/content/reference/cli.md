@@ -6,7 +6,7 @@
 go install github.com/grindlemire/go-tui/cmd/tui@latest
 ```
 
-This installs the `tui` binary, which compiles `.gsx` files to Go, formats them, validates syntax, and runs the language server for editor integration.
+This installs the `tui` binary, which compiles `.t2` files to Go, formats them, validates syntax, and runs the language server for editor integration.
 
 ## Commands
 
@@ -16,9 +16,9 @@ This installs the `tui` binary, which compiles `.gsx` files to Go, formats them,
 tui generate [options] [path...]
 ```
 
-Compiles `.gsx` files into Go source files. Each `input.gsx` produces a corresponding `input_gsx.go` in the same directory. Hyphens in filenames are converted to underscores (e.g., `my-app.gsx` becomes `my_app_gsx.go`).
+Compiles `.t2` files into Go source files. Each `input.t2` produces a corresponding `input_t2.go` in the same directory. Hyphens in filenames are converted to underscores (e.g., `my-app.t2` becomes `my_app_t2.go`).
 
-Never hand-edit the generated `_gsx.go` files. They get overwritten on the next run.
+Never hand-edit the generated `_t2.go` files. They get overwritten on the next run.
 
 **Options:**
 
@@ -30,15 +30,15 @@ Never hand-edit the generated `_gsx.go` files. They get overwritten on the next 
 
 | Pattern | Behavior |
 |---------|----------|
-| `./...` | Recursively find all `.gsx` files |
-| `./components` | Process `.gsx` files in that directory (non-recursive) |
-| `header.gsx` | Process a single file |
+| `./...` | Recursively find all `.t2` files |
+| `./components` | Process `.t2` files in that directory (non-recursive) |
+| `header.t2` | Process a single file |
 | *(none)* | Defaults to current directory (`.`) |
 
 ```bash
-tui generate ./...              # all .gsx files recursively
+tui generate ./...              # all .t2 files recursively
 tui generate ./components       # one directory
-tui generate header.gsx         # one file
+tui generate header.t2         # one file
 tui generate -v ./...           # verbose
 ```
 
@@ -50,7 +50,7 @@ The command exits with code 1 if any file has errors. Error messages include the
 tui check [options] [path...]
 ```
 
-Parses and analyzes `.gsx` files without generating any output. Validates syntax, element names, attribute types, and imports. Same path formats as `generate`.
+Parses and analyzes `.t2` files without generating any output. Validates syntax, element names, attribute types, and imports. Same path formats as `generate`.
 
 **Options:**
 
@@ -60,7 +60,7 @@ Parses and analyzes `.gsx` files without generating any output. Validates syntax
 
 ```bash
 tui check ./...                 # check all files
-tui check header.gsx            # check one file
+tui check header.t2            # check one file
 ```
 
 Exits with code 0 if all files pass. Exits with code 1 and prints errors to stderr if any file has problems.
@@ -71,7 +71,7 @@ Exits with code 0 if all files pass. Exits with code 1 and prints errors to stde
 tui fmt [options] [path...]
 ```
 
-Formats `.gsx` files. By default, modifies files in place. Runs files in parallel for speed.
+Formats `.t2` files. By default, modifies files in place. Runs files in parallel for speed.
 
 **Options:**
 
@@ -83,7 +83,7 @@ Formats `.gsx` files. By default, modifies files in place. Runs files in paralle
 ```bash
 tui fmt ./...                   # format all files in place
 tui fmt --check ./...           # CI check: fail if any file isn't formatted
-tui fmt --stdout file.gsx       # preview formatted output
+tui fmt --stdout file.t2       # preview formatted output
 ```
 
 ### tui lsp
@@ -140,7 +140,7 @@ Install the official go-tui extension, which bundles the LSP client, syntax high
 - [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=grindlemire.go-tui)
 - [Open VSX](https://open-vsx.org/extension/grindlemire/go-tui) (for VS Code forks like Cursor)
 
-The extension automatically runs `tui lsp` for `.gsx` files. No manual configuration needed.
+The extension automatically runs `tui lsp` for `.t2` files. No manual configuration needed.
 
 ### Neovim
 
@@ -154,7 +154,7 @@ if not configs.tui then
     configs.tui = {
         default_config = {
             cmd = { 'tui', 'lsp' },
-            filetypes = { 'gsx' },
+            filetypes = { 't2' },
             root_dir = lspconfig.util.root_pattern('go.mod'),
         },
     }
@@ -163,12 +163,12 @@ end
 lspconfig.tui.setup({})
 ```
 
-You'll also want to associate `.gsx` files with a filetype:
+You'll also want to associate `.t2` files with a filetype:
 
 ```lua
 vim.filetype.add({
     extension = {
-        gsx = 'gsx',
+        t2 = 't2',
     },
 })
 ```
@@ -189,5 +189,5 @@ tail -f /tmp/tui-lsp.log
 
 ## Cross-References
 
-- [GSX Syntax Reference](gsx-syntax.md) — the file format that `tui generate` compiles
+- [GSX Syntax Reference](t2-syntax.md) — the file format that `tui generate` compiles
 - [Getting Started Guide](../guides/01-getting-started.md) — project setup walkthrough using the CLI

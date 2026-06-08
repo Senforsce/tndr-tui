@@ -47,7 +47,7 @@ func (s *searchBar) deactivate(ke tui.KeyEvent) {
 	s.query.Set("")
 }
 
-templ (s *searchBar) Render() {
+t1 (s *searchBar) Render() {
 	<div class="shrink-0">
 		if s.active.Get() {
 			<hr />
@@ -97,7 +97,7 @@ func (c *content) filteredFiles() []string {
 	return result
 }
 
-templ (c *content) Render() {
+t1 (c *content) Render() {
 	<div class="flex-col grow px-2 overflow-hidden">
 		<span class="font-bold text-cyan">{c.category.Get() + "/"}</span>
 		<hr />

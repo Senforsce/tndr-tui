@@ -24,7 +24,7 @@ func TestLexer_GoExpressions(t *testing.T) {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			l := NewLexer("test.gsx", tt.input)
+			l := NewLexer("test.t2", tt.input)
 			// First, consume the opening brace via Next()
 			// ReadGoExpr expects to be called after { was tokenized
 			brace := l.Next()
@@ -116,7 +116,7 @@ func TestLexer_ComponentCall(t *testing.T) {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			l := NewLexer("test.gsx", tt.input)
+			l := NewLexer("test.t2", tt.input)
 			tok := l.Next()
 
 			if tok.Type != tt.wantType {

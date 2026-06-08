@@ -224,7 +224,7 @@ func (c *chat) updateHeight() {
 	c.app.SetInlineHeight(h)
 }
 
-templ (c *chat) Render() {
+t1 (c *chat) Render() {
 	if c.showSettings.Get() {
 		@c.settingsView
 	} else {

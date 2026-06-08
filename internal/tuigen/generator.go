@@ -14,7 +14,7 @@ type Generator struct {
 	buf        bytes.Buffer
 	indent     int
 	varCounter int
-	sourceFile string // original .gsx filename for header comment
+	sourceFile string // original .t2 filename for header comment
 
 	// Refs tracking for current component
 	refs []RefInfo

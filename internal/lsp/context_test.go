@@ -6,14 +6,14 @@ import (
 	"github.com/grindlemire/go-tui/internal/tuigen"
 )
 
-// parseTestDoc parses a .gsx source string into a Document for testing.
+// parseTestDoc parses a .t2 source string into a Document for testing.
 func parseTestDoc(src string) *Document {
 	doc := &Document{
-		URI:     "file:///test.gsx",
+		URI:     "file:///test.t2",
 		Content: src,
 		Version: 1,
 	}
-	lexer := tuigen.NewLexer("test.gsx", src)
+	lexer := tuigen.NewLexer("test.t2", src)
 	parser := tuigen.NewParser(lexer)
 	ast, _ := parser.ParseFile()
 	doc.AST = ast
@@ -23,7 +23,7 @@ func parseTestDoc(src string) *Document {
 func TestResolveCursorContext_ComponentName(t *testing.T) {
 	src := `package test
 
-templ Header(title string) {
+t1 Header(title string) {
 	<div>{title}</div>
 }
 `
@@ -49,7 +49,7 @@ templ Header(title string) {
 func TestResolveCursorContext_Parameter(t *testing.T) {
 	src := `package test
 
-templ Header(title string) {
+t1 Header(title string) {
 	<div>{title}</div>
 }
 `
@@ -66,7 +66,7 @@ templ Header(title string) {
 func TestResolveCursorContext_ElementTag(t *testing.T) {
 	src := `package test
 
-templ Header(title string) {
+t1 Header(title string) {
 	<div>{title}</div>
 }
 `
@@ -84,7 +84,7 @@ templ Header(title string) {
 func TestResolveCursorContext_Attribute(t *testing.T) {
 	src := `package test
 
-templ Header(title string) {
+t1 Header(title string) {
 	<div class="p-1">{title}</div>
 }
 `
@@ -107,7 +107,7 @@ templ Header(title string) {
 func TestResolveCursorContext_EventHandler(t *testing.T) {
 	src := `package test
 
-templ Button(label string) {
+t1 Button(label string) {
 	<button onFocus={handleFocus}>{label}</button>
 }
 `
@@ -125,7 +125,7 @@ templ Button(label string) {
 func TestResolveCursorContext_RefAttr(t *testing.T) {
 	src := `package test
 
-templ Layout() {
+t1 Layout() {
 	<div ref={header} class="p-1">content</div>
 }
 `
@@ -155,7 +155,7 @@ templ Layout() {
 func TestResolveCursorContext_RefAttr_Multiline(t *testing.T) {
 	src := `package test
 
-templ Layout() {
+t1 Layout() {
 	<div
 		ref={header}
 		class="p-1">content</div>

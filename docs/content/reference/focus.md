@@ -9,7 +9,7 @@ Focus determines which element receives keyboard input. go-tui provides three la
 - **FocusGroup** -- a state-driven helper for Tab/Shift+Tab cycling between logical sections of your UI
 - **Modal focus trapping** -- when a modal is open with `trapFocus`, Tab/Shift+Tab only cycle through elements inside the modal overlay, and unhandled keys don't reach parent handlers
 
-Most applications use element-level focus through `.gsx` attributes and `App`-level navigation. `FocusGroup` is useful when you need to toggle between distinct panels or sections rather than individual elements. Modals with `trapFocus` enabled restrict both Tab navigation and keyboard input to the overlay content. With `trapFocus` disabled, keys pass through to parents normally.
+Most applications use element-level focus through `.t2` attributes and `App`-level navigation. `FocusGroup` is useful when you need to toggle between distinct panels or sections rather than individual elements. Modals with `trapFocus` enabled restrict both Tab navigation and keyboard input to the overlay content. With `trapFocus` disabled, keys pass through to parents normally.
 
 ## Focusable Interface
 
@@ -70,9 +70,9 @@ func WithFocusable(focusable bool) Option
 
 Sets whether the element can receive focus. Elements are not focusable by default.
 
-In `.gsx`:
+In `.t2`:
 
-```gsx
+```t2
 <div focusable={true}>
     <span>I can receive focus</span>
 </div>
@@ -86,9 +86,9 @@ func WithOnFocus(fn func(*Element)) Option
 
 Sets a callback that fires when the element gains focus. The callback receives the element itself. Implicitly sets `focusable = true`.
 
-In `.gsx`:
+In `.t2`:
 
-```gsx
+```t2
 <div onFocus={s.handleFocus}>
     <span>Focus me</span>
 </div>
@@ -102,9 +102,9 @@ func WithOnBlur(fn func(*Element)) Option
 
 Sets a callback that fires when the element loses focus. The callback receives the element itself. Implicitly sets `focusable = true`.
 
-In `.gsx`:
+In `.t2`:
 
-```gsx
+```t2
 <div onBlur={s.handleBlur}>
     <span>Blur me</span>
 </div>
@@ -120,7 +120,7 @@ func (e *Element) IsFocused() bool
 
 Returns whether this element currently has focus. Use in render methods to apply conditional styling.
 
-```gsx
+```t2
 // Helper function for focus-dependent styling
 func panelBorderStyle(ref *tui.Ref) tui.Style {
     if ref.El() != nil && ref.El().IsFocused() {
@@ -129,7 +129,7 @@ func panelBorderStyle(ref *tui.Ref) tui.Style {
     return tui.NewStyle().Foreground(tui.ANSIColor(tui.White))
 }
 
-templ (s *myComp) Render() {
+t1 (s *myComp) Render() {
     <div ref={s.panel} focusable={true} borderStyle={panelBorderStyle(s.panel)} class="border-rounded p-1">
         <span>Panel content</span>
     </div>
@@ -349,7 +349,7 @@ func (s *myApp) KeyMap() tui.KeyMap {
 
 A three-panel layout with FocusGroup-driven Tab cycling. Each panel highlights its border when active.
 
-```gsx
+```t2
 package main
 
 import (
@@ -401,7 +401,7 @@ func panelBorder(active bool) tui.Style {
     return tui.NewStyle().Foreground(tui.ANSIColor(tui.White))
 }
 
-templ (p *panels) Render() {
+t1 (p *panels) Render() {
     <div class="flex-row gap-1 p-1" height={20}>
         <Panel title="Panel A" active={p.panelA.Get()} />
         <Panel title="Panel B" active={p.panelB.Get()} />
@@ -409,7 +409,7 @@ templ (p *panels) Render() {
     </div>
 }
 
-templ Panel(title string, active bool) {
+t1 Panel(title string, active bool) {
     <div class="flex-col flex-1 border-rounded p-1" borderStyle={panelBorder(active)}>
         <span class={panelStyle(active)}>{title}</span>
         if active {

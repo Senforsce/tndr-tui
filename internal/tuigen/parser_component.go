@@ -229,7 +229,7 @@ func (p *Parser) captureRawGoFunc(startPos int, pos Position) *GoFunc {
 func (p *Parser) parseTempl() *Component {
 	pos := p.position()
 
-	if !p.expect(TokenTempl) {
+	if !p.expect(TokenT1) {
 		return nil
 	}
 

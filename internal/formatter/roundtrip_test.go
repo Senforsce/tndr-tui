@@ -13,7 +13,7 @@ func TestFormat_Idempotent(t *testing.T) {
 		"simple component": {
 			input: `package test
 
-templ Hello() {
+t1 Hello() {
 	<div class="flex-col">
 		<span>Hello</span>
 	</div>
@@ -25,7 +25,7 @@ templ Hello() {
 
 import "fmt"
 
-templ Hello(name string) {
+t1 Hello(name string) {
 	<span>{fmt.Sprintf("Hello %s", name)}</span>
 }
 `,
@@ -33,7 +33,7 @@ templ Hello(name string) {
 		"if else": {
 			input: `package test
 
-templ Cond(show bool) {
+t1 Cond(show bool) {
 	<div>
 		if show {
 			<span>Yes</span>
@@ -47,7 +47,7 @@ templ Cond(show bool) {
 		"for loop": {
 			input: `package test
 
-templ List(items []string) {
+t1 List(items []string) {
 	<div class="flex-col">
 		for _, item := range items {
 			<span>{item}</span>
@@ -59,7 +59,7 @@ templ List(items []string) {
 		"self-closing elements": {
 			input: `package test
 
-templ Divider() {
+t1 Divider() {
 	<div>
 		<hr />
 		<br />
@@ -72,7 +72,7 @@ templ Divider() {
 
 import "fmt"
 
-templ Counter(count int) {
+t1 Counter(count int) {
 	countText := <span>{fmt.Sprintf("Count: %d", count)}</span>
 	<div>{countText}</div>
 }
@@ -85,13 +85,13 @@ templ Counter(count int) {
 			f := New()
 
 			// First format
-			result1, err := f.Format("test.gsx", tt.input)
+			result1, err := f.Format("test.t2", tt.input)
 			if err != nil {
 				t.Fatalf("first format failed: %v", err)
 			}
 
 			// Second format (should be identical)
-			result2, err := f.Format("test.gsx", result1)
+			result2, err := f.Format("test.t2", result1)
 			if err != nil {
 				t.Fatalf("second format failed: %v", err)
 			}

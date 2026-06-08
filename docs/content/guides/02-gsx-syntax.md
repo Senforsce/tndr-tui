@@ -2,13 +2,13 @@
 
 ## Overview
 
-`.gsx` files are Go files extended with a templ-like syntax for declaring UI. They look like regular Go with the same package declarations, imports, and type definitions, but they add a `templ` keyword for defining components that return element trees. The `tui generate` command reads `.gsx` files and produces standard `_gsx.go` files that call the `tui` package API. You never need to edit the generated files.
+`.t2` files are Go files extended with a t1-like syntax for declaring UI. They look like regular Go with the same package declarations, imports, and type definitions, but they add a `t1` keyword for defining components that return element trees. The `tui generate` command reads `.t2` files and produces standard `_t2.go` files that call the `tui` package API. You never need to edit the generated files.
 
 ## Package and Imports
 
-A `.gsx` file starts with a package declaration and imports, just like any Go file:
+A `.t2` file starts with a package declaration and imports, just like any Go file:
 
-```gsx
+```t2
 package main
 
 import (
@@ -25,18 +25,18 @@ Everything else in the file (type declarations, constants, variables, helper fun
 
 ## Pure Components
 
-Pure components are stateless functions declared with the `templ` keyword. They take parameters, return an element tree, and have no lifecycle of their own.
+Pure components are stateless functions declared with the `t1` keyword. They take parameters, return an element tree, and have no lifecycle of their own.
 
-```gsx
-templ Greeting(name string) {
+```t2
+t1 Greeting(name string) {
     <span class="text-cyan font-bold">{"Hello, " + name}</span>
 }
 ```
 
-This generates a function called `Greeting` that accepts `name string` and returns a `GreetingView` containing the element tree. You call it from other templates using the `@` prefix with positional arguments:
+This generates a function called `Greeting` that accepts `name string` and returns a `GreetingView` containing the element tree. You call it from other t1ates using the `@` prefix with positional arguments:
 
-```gsx
-templ App() {
+```t2
+t1 App() {
     <div class="flex-col gap-1">
         @Greeting("Alice")
         @Greeting("Bob")
@@ -50,8 +50,8 @@ Both pure and struct components can accept nested content via the `{children...}
 
 In a pure component, children arrive as a function parameter:
 
-```gsx
-templ Card(title string) {
+```t2
+t1 Card(title string) {
     <div class="border-rounded p-1 flex-col gap-1">
         <span class="text-gradient-cyan-magenta font-bold">{title}</span>
         <hr class="border-single" />
@@ -62,8 +62,8 @@ templ Card(title string) {
 
 The caller passes children by nesting elements inside the component call:
 
-```gsx
-templ Dashboard() {
+```t2
+t1 Dashboard() {
     @Card("System Info") {
         <span>Version: 1.2.0</span>
         <span>Uptime: 3d 14h</span>
@@ -73,7 +73,7 @@ templ Dashboard() {
 
 Struct components use the same `{children...}` syntax. Add a `children []*tui.Element` field to the struct and accept it in the constructor:
 
-```gsx
+```t2
 type panel struct {
     title    string
     children []*tui.Element
@@ -83,7 +83,7 @@ func NewPanel(title string, children []*tui.Element) *panel {
     return &panel{title: title, children: children}
 }
 
-templ (p *panel) Render() {
+t1 (p *panel) Render() {
     <div class="border-rounded p-1 flex-col gap-1">
         <span class="font-bold">{p.title}</span>
         {children...}
@@ -93,8 +93,8 @@ templ (p *panel) Render() {
 
 The caller syntax is the same as with pure components:
 
-```gsx
-templ (a *myApp) Render() {
+```t2
+t1 (a *myApp) Render() {
     @NewPanel("Items") {
         <span>First</span>
         <span>Second</span>
@@ -110,9 +110,9 @@ Use pure components for reusable visual elements that don't need their own state
 
 ## Struct Components
 
-Struct components carry state, handle input, and support lifecycle hooks. They're defined in three parts: a struct, a constructor, and a `templ` render method.
+Struct components carry state, handle input, and support lifecycle hooks. They're defined in three parts: a struct, a constructor, and a `t1` render method.
 
-```gsx
+```t2
 package main
 
 import (
@@ -143,7 +143,7 @@ func (c *counter) KeyMap() tui.KeyMap {
     }
 }
 
-templ (c *counter) Render() {
+t1 (c *counter) Render() {
     <div class="flex-col items-center justify-center h-full gap-1">
         <span class="font-bold text-cyan">{fmt.Sprintf("Count: %d", c.count.Get())}</span>
         <span class="font-dim">Press + / - to change, Esc to quit</span>
@@ -151,11 +151,11 @@ templ (c *counter) Render() {
 }
 ```
 
-The `templ (c *counter) Render()` syntax declares a method on the struct that returns a `*tui.Element`. The method name must be `Render`. In the `.gsx` file you write no parameters, but the generated Go code adds `app *tui.App` automatically.
+The `t1 (c *counter) Render()` syntax declares a method on the struct that returns a `*tui.Element`. The method name must be `Render`. In the `.t2` file you write no parameters, but the generated Go code adds `app *tui.App` automatically.
 
 ### The Component Interface
 
-At minimum, a struct component must implement `Render(app *App) *Element`. The `templ` method syntax generates this for you. Beyond that, several optional interfaces add behavior:
+At minimum, a struct component must implement `Render(app *App) *Element`. The `t1` method syntax generates this for you. Beyond that, several optional interfaces add behavior:
 
 | Interface | Method | Purpose |
 |-----------|--------|---------|
@@ -199,7 +199,7 @@ These must use the `/>` closing syntax and cannot have children:
 
 Elements nest naturally:
 
-```gsx
+```t2
 <div class="flex-col gap-1 p-1">
     <div class="flex justify-between">
         <span class="font-bold">Title</span>
@@ -221,7 +221,7 @@ Attributes set element properties. There are three forms:
 
 Quoted strings for `class`, `id`, and other string-typed properties:
 
-```gsx
+```t2
 <div class="flex-col gap-2" id="main-panel">
     <span class="font-bold text-cyan">Title</span>
 </div>
@@ -231,7 +231,7 @@ Quoted strings for `class`, `id`, and other string-typed properties:
 
 Curly braces for any Go expression:
 
-```gsx
+```t2
 <div width={42} height={10} flexGrow={1.5}>
     <span textStyle={tui.NewStyle().Bold().Foreground(tui.ANSIColor(tui.Cyan))}>
         Styled text
@@ -245,7 +245,7 @@ This works for integers, floats, booleans, function calls, struct literals, or a
 
 A bare attribute name is shorthand for `true`:
 
-```gsx
+```t2
 <button disabled>Can't click</button>
 // equivalent to:
 <button disabled={true}>Can't click</button>
@@ -255,7 +255,7 @@ A bare attribute name is shorthand for `true`:
 
 Bind an element to a reference variable for later access (scroll control, click detection, etc.):
 
-```gsx
+```t2
 <div ref={myRef} class="flex-col">
     content
 </div>
@@ -295,7 +295,7 @@ Curly braces embed Go expressions as text content or attribute values.
 
 Any Go expression inside `{...}` is rendered as text:
 
-```gsx
+```t2
 <span>{fmt.Sprintf("Count: %d", c.count.Get())}</span>
 <span>{"Hello, " + name}</span>
 <span>{len(items)}</span>
@@ -305,7 +305,7 @@ Any Go expression inside `{...}` is rendered as text:
 
 Classes can be built from Go expressions too:
 
-```gsx
+```t2
 <span class={statusClass(isOnline)}>Status</span>
 ```
 
@@ -324,7 +324,7 @@ func statusClass(online bool) string {
 
 Call methods on the receiver or on state variables:
 
-```gsx
+```t2
 <span textStyle={s.getHeaderStyle()}>{s.count.Get()}</span>
 ```
 
@@ -336,7 +336,7 @@ Three directives control rendering logic: `if`, `for`, and `:=` bindings.
 
 Conditionally render elements based on a Go boolean expression:
 
-```gsx
+```t2
 if s.count.Get() > 0 {
     <span class="text-green">Positive</span>
 } else {
@@ -346,7 +346,7 @@ if s.count.Get() > 0 {
 
 You can chain conditions with `else if`:
 
-```gsx
+```t2
 if s.count.Get() > 10 {
     <span class="text-green font-bold">High</span>
 } else if s.count.Get() > 0 {
@@ -360,7 +360,7 @@ if s.count.Get() > 10 {
 
 Loop over slices, maps, or any Go iterable with `range`:
 
-```gsx
+```t2
 for i, item := range items {
     <span>{fmt.Sprintf("%d. %s", i+1, item)}</span>
 }
@@ -368,7 +368,7 @@ for i, item := range items {
 
 You can ignore the index with `_`:
 
-```gsx
+```t2
 for _, item := range items {
     <span>{item}</span>
 }
@@ -376,7 +376,7 @@ for _, item := range items {
 
 Loops and conditionals nest freely:
 
-```gsx
+```t2
 for i, item := range items {
     if i == s.selected.Get() {
         <span class="text-cyan font-bold">{"> " + item}</span>
@@ -390,7 +390,7 @@ for i, item := range items {
 
 Bind an element to a local variable to avoid repeating complex expressions:
 
-```gsx
+```t2
 countText := <span class="font-bold">{fmt.Sprintf("%d", s.count.Get())}</span>
 <div class="flex gap-1">
     <span>Count:</span>
@@ -402,9 +402,9 @@ This is useful when you want to compute an element once and reuse it. The variab
 
 ## Helper Functions
 
-Regular Go functions in `.gsx` files work exactly as they do in `.go` files. They're useful for formatting, style computation, and shared logic:
+Regular Go functions in `.t2` files work exactly as they do in `.go` files. They're useful for formatting, style computation, and shared logic:
 
-```gsx
+```t2
 package main
 
 import "fmt"
@@ -423,12 +423,12 @@ func keyStyle(pressed bool) string {
     return "font-dim"
 }
 
-templ KeyIndicator(name string, pressed bool) {
+t1 KeyIndicator(name string, pressed bool) {
     <span class={keyStyle(pressed)}>{keyLabel(name, pressed)}</span>
 }
 ```
 
-The distinction between a helper function and a component is the `templ` keyword. A `templ` declaration produces an element tree. A `func` declaration is plain Go.
+The distinction between a helper function and a component is the `t1` keyword. A `t1` declaration produces an element tree. A `func` declaration is plain Go.
 
 ## Calling Components
 
@@ -436,12 +436,12 @@ Components are called with the `@` prefix. Parameters are passed as positional a
 
 ### Pure Components
 
-```gsx
-templ Badge(label string) {
+```t2
+t1 Badge(label string) {
     <span class="bg-cyan text-black px-1 font-bold">{label}</span>
 }
 
-templ StatusLine(label string, value string) {
+t1 StatusLine(label string, value string) {
     <div class="flex gap-1">
         <span class="font-dim">{label}</span>
         <span>{value}</span>
@@ -449,7 +449,7 @@ templ StatusLine(label string, value string) {
 }
 
 // Usage:
-templ Header() {
+t1 Header() {
     <div class="flex-col gap-1">
         @Badge("v1.0")
         @StatusLine("Status:", "Running")
@@ -459,10 +459,10 @@ templ Header() {
 
 ### Struct Components
 
-Struct components are instantiated through their constructor and passed to the template with `@`:
+Struct components are instantiated through their constructor and passed to the t1ate with `@`:
 
-```gsx
-templ (a *app) Render() {
+```t2
+t1 (a *app) Render() {
     <div class="flex h-full">
         @Sidebar(a.category)
         @Content(a.category, a.query)
@@ -474,13 +474,13 @@ Where `Sidebar` and `Content` are constructors that return struct component inst
 
 ## Code Generation
 
-After writing or editing `.gsx` files, run the code generator to produce the corresponding Go files:
+After writing or editing `.t2` files, run the code generator to produce the corresponding Go files:
 
 ```bash
 tui generate ./...
 ```
 
-This processes all `.gsx` files recursively and writes `_gsx.go` files alongside them. For example, `hello.gsx` produces `hello_gsx.go`. Hyphens in filenames become underscores (`my-app.gsx` becomes `my_app_gsx.go`).
+This processes all `.t2` files recursively and writes `_t2.go` files alongside them. For example, `hello.t2` produces `hello_t2.go`. Hyphens in filenames become underscores (`my-app.t2` becomes `my_app_t2.go`).
 
 The generated files should not be edited by hand. They're overwritten on every run of `tui generate`.
 
@@ -488,21 +488,21 @@ The generated files should not be edited by hand. They're overwritten on every r
 
 | Command | Purpose |
 |---------|---------|
-| `tui generate [path...]` | Generate Go code from `.gsx` files |
-| `tui check [path...]` | Validate `.gsx` files without writing output |
-| `tui fmt [path...]` | Format `.gsx` files (like `gofmt` for `.gsx`) |
+| `tui generate [path...]` | Generate Go code from `.t2` files |
+| `tui check [path...]` | Validate `.t2` files without writing output |
+| `tui fmt [path...]` | Format `.t2` files (like `gofmt` for `.t2`) |
 | `tui fmt --check [path...]` | Check formatting without modifying files |
 | `tui fmt --stdout [path...]` | Write formatted output to stdout |
 
-Path arguments accept specific files (`hello.gsx`), directories (`./examples/`), or recursive patterns (`./...`).
+Path arguments accept specific files (`hello.t2`), directories (`./examples/`), or recursive patterns (`./...`).
 
 See the CLI section above for the full command reference.
 
 ## Putting It All Together
 
-Here's a complete `.gsx` file that uses most of the syntax covered above: pure components, a struct component with state, control flow, helper functions, and children slots:
+Here's a complete `.t2` file that uses most of the syntax covered above: pure components, a struct component with state, control flow, helper functions, and children slots:
 
-```gsx
+```t2
 package main
 
 import (
@@ -529,7 +529,7 @@ func itemClass(selected bool) string {
 }
 
 // Pure component with children slot
-templ Panel(title string) {
+t1 Panel(title string) {
     <div class="border-rounded p-1 flex-col gap-1" width={32}>
         <span class="font-bold text-gradient-cyan-magenta">{title}</span>
         <hr />
@@ -572,7 +572,7 @@ func (l *listApp) KeyMap() tui.KeyMap {
     }
 }
 
-templ (l *listApp) Render() {
+t1 (l *listApp) Render() {
     <div class="flex-col items-center justify-center h-full">
         @Panel("Select an Item") {
             for i, item := range l.items {

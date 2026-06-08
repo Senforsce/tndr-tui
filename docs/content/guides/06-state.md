@@ -8,7 +8,7 @@ go-tui uses a reactive model: when state changes, the UI re-renders automaticall
 
 State lives as fields on your struct component. Declare each piece of state as a `*tui.State[T]` where `T` is whatever type you need, then initialize it in the constructor with `tui.NewState`:
 
-```gsx
+```t2
 package main
 
 import tui "github.com/grindlemire/go-tui"
@@ -36,8 +36,8 @@ func MyApp() *myApp {
 
 Call `.Get()` to read the current value. Use it directly in your render method, inside Go expressions, or in control flow conditions:
 
-```gsx
-templ (m *myApp) Render() {
+```t2
+t1 (m *myApp) Render() {
     <div class="flex-col gap-1 p-1">
         <span class="text-cyan font-bold">{fmt.Sprintf("Count: %d", m.count.Get())}</span>
         <span>{"Hello, " + m.name.Get()}</span>
@@ -96,8 +96,8 @@ Both `.Set()` and `.Update()` must be called from the main event loop (key handl
 
 `if` and `else` let you show or hide elements based on state. The condition is a Go boolean expression, evaluated fresh on each render:
 
-```gsx
-templ (m *myApp) Render() {
+```t2
+t1 (m *myApp) Render() {
     <div class="flex-col gap-1 p-1 border-rounded">
         <span class="font-bold">Status</span>
         <div class="flex gap-1">
@@ -129,7 +129,7 @@ Chain `else if` for multiple branches. These conditions are re-evaluated on ever
 
 `for` with `range` renders a collection. Combine it with state to build dynamic lists where the data or selection can change:
 
-```gsx
+```t2
 package main
 
 import (
@@ -172,7 +172,7 @@ func (l *listApp) KeyMap() tui.KeyMap {
     }
 }
 
-templ (l *listApp) Render() {
+t1 (l *listApp) Render() {
     <div class="flex-col p-1 border-rounded border-cyan">
         <span class="font-bold text-gradient-cyan-magenta">Pick a Language</span>
         <br />
@@ -194,7 +194,7 @@ The `selected` state tracks which item has the cursor. Pressing `j` and `k` move
 
 For lists stored in state (e.g. `*tui.State[[]string]`), call `.Get()` in the range expression:
 
-```gsx
+```t2
 for i, msg := range m.messages.Get() {
     <span>{fmt.Sprintf("[%d] %s", i, msg)}</span>
 }
@@ -204,8 +204,8 @@ for i, msg := range m.messages.Get() {
 
 Inside a `templ` body you can write regular Go variable assignments. This is useful when you want to compute a value once and reference it in multiple places:
 
-```gsx
-templ (m *myApp) Render() {
+```t2
+t1 (m *myApp) Render() {
     label := fmt.Sprintf("Count: %d", m.count.Get())
     status := statusText(m.count.Get())
     <div class="flex-col gap-1 p-1">
@@ -238,8 +238,8 @@ These are normal Go short variable declarations. They're re-evaluated on each re
 
 Element bindings are different from Go variable assignments. They bind an **element** to a name so you can reuse it in multiple places:
 
-```gsx
-templ (m *myApp) Render() {
+```t2
+t1 (m *myApp) Render() {
     badge := <span class="bg-cyan text-black px-1 font-bold">{fmt.Sprintf("%d", m.count.Get())}</span>
     <div class="flex-col gap-1 p-1">
         <div class="flex gap-1">
@@ -308,7 +308,7 @@ Most of the time you won't need manual bindings. The render method already reads
 
 Modal visibility is controlled by a `*State[bool]`. Set it to `true` to open, `false` to close:
 
-```gsx
+```t2
 package main
 
 import tui "github.com/grindlemire/go-tui"
@@ -342,7 +342,7 @@ func (c *confirmApp) onCancel() {
     c.status.Set("Cancelled")
 }
 
-templ (c *confirmApp) Render() {
+t1 (c *confirmApp) Render() {
     <div class="flex-col p-1 border-rounded border-cyan">
         <span class="font-bold text-cyan">Modal Demo</span>
         <span class="font-dim">{c.status.Get()}</span>
@@ -369,7 +369,7 @@ If you need to update multiple values when the modal closes, use batching (see [
 
 A counter, status display, selectable list, and a reset confirmation modal that uses batching:
 
-```gsx
+```t2
 package main
 
 import (
@@ -460,7 +460,7 @@ func signClass(n int) string {
     return "text-blue font-bold"
 }
 
-templ (d *demoApp) Render() {
+t1 (d *demoApp) Render() {
     <div class="flex-col p-1 border-rounded border-cyan">
         <span class="text-gradient-cyan-magenta font-bold">State Demo</span>
 

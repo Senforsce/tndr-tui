@@ -68,7 +68,7 @@ func randomPeople() []person {
 	return people
 }
 
-templ ReportCard(people []person) {
+t1 ReportCard(people []person) {
 	<div class="flex justify-center">
 		<div class="flex-col border-rounded w-3/4 px-1" borderStyle={tui.NewStyle().Foreground(tui.BrightCyan)}>
 			<span class="font-bold text-bright-magenta">Streaming Report</span>
@@ -158,7 +158,7 @@ func (s *streamDemo) statusText() string {
 	return "Enter to stream  |  Tab to stream with element  |  Esc to quit"
 }
 
-templ (s *streamDemo) Render() {
+t1 (s *streamDemo) Render() {
 	<div class="border-rounded border-cyan items-center justify-center">
 		<span class="text-cyan">{s.statusText()}</span>
 	</div>

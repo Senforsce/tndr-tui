@@ -37,7 +37,7 @@ func valueStyle(v int) tui.Style {
 	return tui.NewStyle().Dim()
 }
 
-templ (s *statusApp) Render() {
+t1 (s *statusApp) Render() {
 	<div class="flex-col items-center justify-center h-full gap-1">
 		<span textStyle={valueStyle(s.value.Get())}>{fmt.Sprintf("Value: %d", s.value.Get())}</span>
 		<span class="font-dim">Press + / - to change, Esc to quit</span>

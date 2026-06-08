@@ -14,7 +14,7 @@ func TestDocumentManager(t *testing.T) {
 		"open single": {
 			operations: []func(dm *DocumentManager){
 				func(dm *DocumentManager) {
-					dm.Open("file:///a.gsx", "package main", 1)
+					dm.Open("file:///a.t2", "package main", 1)
 				},
 			},
 			wantDocs: 1,
@@ -22,10 +22,10 @@ func TestDocumentManager(t *testing.T) {
 		"open multiple": {
 			operations: []func(dm *DocumentManager){
 				func(dm *DocumentManager) {
-					dm.Open("file:///a.gsx", "package main", 1)
+					dm.Open("file:///a.t2", "package main", 1)
 				},
 				func(dm *DocumentManager) {
-					dm.Open("file:///b.gsx", "package main", 1)
+					dm.Open("file:///b.t2", "package main", 1)
 				},
 			},
 			wantDocs: 2,
@@ -33,10 +33,10 @@ func TestDocumentManager(t *testing.T) {
 		"open and close": {
 			operations: []func(dm *DocumentManager){
 				func(dm *DocumentManager) {
-					dm.Open("file:///a.gsx", "package main", 1)
+					dm.Open("file:///a.t2", "package main", 1)
 				},
 				func(dm *DocumentManager) {
-					dm.Close("file:///a.gsx")
+					dm.Close("file:///a.t2")
 				},
 			},
 			wantDocs: 0,
@@ -44,10 +44,10 @@ func TestDocumentManager(t *testing.T) {
 		"update": {
 			operations: []func(dm *DocumentManager){
 				func(dm *DocumentManager) {
-					dm.Open("file:///a.gsx", "package main", 1)
+					dm.Open("file:///a.t2", "package main", 1)
 				},
 				func(dm *DocumentManager) {
-					dm.Update("file:///a.gsx", "package updated", 2)
+					dm.Update("file:///a.t2", "package updated", 2)
 				},
 			},
 			wantDocs: 1,

@@ -66,7 +66,7 @@ func (a *myApp) Watchers() []tui.Watcher {
 	return a.textarea.Watchers()
 }
 
-templ (a *myApp) Render() {
+t1 (a *myApp) Render() {
 	if a.showSettings.Get() {
 		<div class="flex-col h-full p-1 border-rounded border-cyan">
 			<span class="font-bold text-cyan">Settings</span>

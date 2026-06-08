@@ -178,7 +178,7 @@ func (a *animationApp) animate() {
 	// Progress: computed from wall clock in render, no state needed
 }
 
-templ (a *animationApp) Render() {
+t1 (a *animationApp) Render() {
 	<div class="flex-col gap-1 p-1">
 		<span class="font-bold text-gradient-cyan-magenta">Animation Patterns</span>
 

@@ -10,7 +10,7 @@ func TestDiagnostics_NoErrors(t *testing.T) {
 	dp := NewDiagnosticsProvider()
 	doc := parseTestDoc(`package main
 
-templ Hello() {
+t1 Hello() {
 	<span>Hello</span>
 }
 `)
@@ -27,7 +27,7 @@ templ Hello() {
 func TestDiagnostics_NilAST(t *testing.T) {
 	dp := NewDiagnosticsProvider()
 	doc := &Document{
-		URI:     "file:///test.gsx",
+		URI:     "file:///test.t2",
 		Content: "",
 		Version: 1,
 		AST:     nil,
@@ -79,7 +79,7 @@ func TestDiagnostics_SingleError(t *testing.T) {
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
 			doc := &Document{
-				URI:     "file:///test.gsx",
+				URI:     "file:///test.t2",
 				Content: "package main\n",
 				Version: 1,
 				AST:     nil,
@@ -98,8 +98,8 @@ func TestDiagnostics_SingleError(t *testing.T) {
 			if diag.Severity != DiagnosticSeverityError {
 				t.Errorf("expected severity Error, got %d", diag.Severity)
 			}
-			if diag.Source != "gsx" {
-				t.Errorf("expected source 'gsx', got %q", diag.Source)
+			if diag.Source != "t2" {
+				t.Errorf("expected source 't2', got %q", diag.Source)
 			}
 			if tt.wantMsg != "" && !containsStr(diag.Message, tt.wantMsg) {
 				t.Errorf("message %q does not contain %q", diag.Message, tt.wantMsg)
@@ -139,7 +139,7 @@ func TestDiagnostics_PositionMapping(t *testing.T) {
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
 			doc := &Document{
-				URI:     "file:///test.gsx",
+				URI:     "file:///test.t2",
 				Content: "package main\n",
 				Version: 1,
 				AST:     nil,
@@ -169,7 +169,7 @@ func TestDiagnostics_RangeBasedHighlighting(t *testing.T) {
 	dp := NewDiagnosticsProvider()
 
 	doc := &Document{
-		URI:     "file:///test.gsx",
+		URI:     "file:///test.t2",
 		Content: "package main\n",
 		Version: 1,
 		AST:     nil,
@@ -207,7 +207,7 @@ func TestDiagnostics_MultipleErrors(t *testing.T) {
 	dp := NewDiagnosticsProvider()
 
 	doc := &Document{
-		URI:     "file:///test.gsx",
+		URI:     "file:///test.t2",
 		Content: "package main\n",
 		Version: 1,
 		AST:     nil,
@@ -290,7 +290,7 @@ func TestDiagnostics_ErrorHighlightWidth(t *testing.T) {
 	// Regression: error highlights should use message content, not hardcoded width.
 	dp := NewDiagnosticsProvider()
 	doc := &Document{
-		URI:     "file:///test.gsx",
+		URI:     "file:///test.t2",
 		Content: "package main\n",
 		Version: 1,
 		AST:     nil,

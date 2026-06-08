@@ -6,18 +6,18 @@ import (
 )
 
 // Pure components
-templ Badge(label string, color string) {
+t1 Badge(label string, color string) {
 	<span class={color + " font-bold px-1"}>{label}</span>
 }
 
-templ StatusLine(label string, value string) {
+t1 StatusLine(label string, value string) {
 	<div class="flex gap-1">
 		<span class="font-dim">{label}</span>
 		<span class="text-cyan font-bold">{value}</span>
 	</div>
 }
 
-templ Card(title string) {
+t1 Card(title string) {
 	<div class="border-rounded p-1 flex-col gap-1 w-full" flexGrow={1.0}>
 		<span class="text-gradient-cyan-magenta font-bold">{title}</span>
 		<hr class="border-single" />
@@ -26,7 +26,7 @@ templ Card(title string) {
 }
 
 // Tab content components
-templ OverviewTab() {
+t1 OverviewTab() {
 	<div class="flex gap-1">
 		@Card("System") {
 			@StatusLine("CPU:", "42%")
@@ -41,7 +41,7 @@ templ OverviewTab() {
 	</div>
 }
 
-templ MetricsTab() {
+t1 MetricsTab() {
 	<div class="flex gap-1">
 		@Card("Performance") {
 			@StatusLine("Requests:", "1.2k/s")
@@ -56,7 +56,7 @@ templ MetricsTab() {
 	</div>
 }
 
-templ LogsTab() {
+t1 LogsTab() {
 	<div class="flex gap-1">
 		@Card("Application") {
 			@StatusLine("Level:", "INFO")
@@ -95,7 +95,7 @@ func (d *dashboard) KeyMap() tui.KeyMap {
 	}
 }
 
-templ (d *dashboard) Render() {
+t1 (d *dashboard) Render() {
 	<div class="flex-col p-1 gap-1 border-rounded border-cyan">
 		<div class="flex gap-2">
 			for i, tab := range d.tabs {

@@ -54,7 +54,7 @@ A few things change when inline mode is active:
 
 Inline mode becomes most useful when you print content above the widget. As your app runs, you push lines upward into the terminal's scrollback:
 
-```gsx
+```t2
 package main
 
 import (
@@ -103,7 +103,7 @@ func (c *chatInput) Watchers() []tui.Watcher {
     return c.textarea.Watchers()
 }
 
-templ (c *chatInput) Render() {
+t1 (c *chatInput) Render() {
     @c.textarea
 }
 ```
@@ -129,7 +129,7 @@ go func() {
 }()
 ```
 
-For inserting fully rendered elements (tables, styled cards, templ component output) into the scrollback, use `PrintAboveElement`. See the [Inline Streaming Guide](/guides/inline-streaming#inserting-elements-mid-stream) for details.
+For inserting fully rendered elements (tables, styled cards, t1 component output) into the scrollback, use `PrintAboveElement`. See the [Inline Streaming Guide](/guides/inline-streaming#inserting-elements-mid-stream) for details.
 
 ## Dynamic Height
 
@@ -204,7 +204,7 @@ A common pattern is running your main UI inline while using the alternate screen
 
 The key idea: track whether the overlay is showing with a `State[bool]`, and toggle between modes with a key binding:
 
-```gsx
+```t2
 package main
 
 import (
@@ -275,7 +275,7 @@ func (a *myApp) Watchers() []tui.Watcher {
     return a.textarea.Watchers()
 }
 
-templ (a *myApp) Render() {
+t1 (a *myApp) Render() {
     if a.showSettings.Get() {
         <div class="flex-col h-full p-1 border-rounded border-cyan">
             <span class="font-bold text-cyan">Settings</span>

@@ -7,7 +7,7 @@ import (
 	"github.com/grindlemire/go-tui/internal/tuigen"
 )
 
-// Document represents an open .gsx file with its parsed state.
+// Document represents an open .t2 file with its parsed state.
 type Document struct {
 	URI     string
 	Content string

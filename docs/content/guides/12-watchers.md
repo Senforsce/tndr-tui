@@ -33,7 +33,7 @@ The handler runs on the main event loop every time the interval elapses. It keep
 
 Here's a stopwatch that counts seconds while running:
 
-```gsx
+```t2
 package main
 
 import (
@@ -80,7 +80,7 @@ func (s *stopwatch) KeyMap() tui.KeyMap {
     }
 }
 
-templ (s *stopwatch) Render() {
+t1 (s *stopwatch) Render() {
     <div class="flex-col p-1 gap-1 border-rounded border-cyan items-center">
         <span class="font-bold text-gradient-cyan-magenta">Stopwatch</span>
         m := s.seconds.Get() / 60
@@ -110,7 +110,7 @@ The watcher reads from the channel in its own goroutine. When a value arrives, i
 
 Create a channel, start a producer goroutine, and let a channel watcher deliver the results:
 
-```gsx
+```t2
 package main
 
 import (
@@ -153,7 +153,7 @@ func (f *feedApp) KeyMap() tui.KeyMap {
     }
 }
 
-templ (f *feedApp) Render() {
+t1 (f *feedApp) Render() {
     <div class="flex-col p-1 gap-1 border-rounded border-cyan">
         <span class="font-bold text-gradient-cyan-magenta">Live Feed</span>
         for _, msg := range f.messages.Get() {
@@ -234,7 +234,7 @@ The event bus must be bound to the app before `Emit` is called. The framework ha
 
 The typical pattern: components independently create buses with the same topic string. One component emits, the other subscribes. Neither component knows about the other and no bus passing is needed.
 
-```gsx
+```t2
 package main
 
 import (
@@ -267,7 +267,7 @@ func (c *controls) KeyMap() tui.KeyMap {
     }
 }
 
-templ (c *controls) Render() {
+t1 (c *controls) Render() {
     <div class="flex-col border-rounded p-1 gap-1">
         <span class="font-bold">Controls</span>
         <span class="font-dim">[1] build  [2] test  [3] deploy  [esc] quit</span>
@@ -301,7 +301,7 @@ func (e *eventLog) onEvent(msg string) {
     e.messages.Set(append(current, entry))
 }
 
-templ (e *eventLog) Render() {
+t1 (e *eventLog) Render() {
     <div class="flex-col border-rounded p-1 gap-1">
         <span class="font-bold">Event Log</span>
         for _, msg := range e.messages.Get() {
@@ -319,7 +319,7 @@ type app struct{}
 
 func App() *app { return &app{} }
 
-templ (a *app) Render() {
+t1 (a *app) Render() {
     <div class="flex-col p-1 gap-1 border-rounded border-cyan">
         <span class="text-gradient-cyan-magenta font-bold">Event Bus Demo</span>
         @Controls()
@@ -364,7 +364,7 @@ The handler runs synchronously during `State.Set()`, so it doesn't go through th
 
 A single component can return multiple watchers. Return them all from `Watchers()`:
 
-```gsx
+```t2
 package main
 
 import (
@@ -450,7 +450,7 @@ func (d *dashboard) KeyMap() tui.KeyMap {
     }
 }
 
-templ (d *dashboard) Render() {
+t1 (d *dashboard) Render() {
     <div class="flex-col p-1 gap-1 border-rounded border-cyan">
         <span class="font-bold text-gradient-cyan-magenta">Dashboard</span>
         <div class="flex gap-2">
@@ -548,7 +548,7 @@ Forgetting to call `bindAppFields` leaves `State` fields unbound: `Set` will eit
 
 This app combines a stopwatch timer with a channel-fed message stream. The timer ticks every second and conditionally increments the stopwatch. The channel watcher appends messages from a background producer. An `OnChange` watcher on the messages state keeps the feed scrolled to the bottom automatically.
 
-```gsx
+```t2
 package main
 
 import (
@@ -676,7 +676,7 @@ func formatDuration(seconds int) string {
     return fmt.Sprintf("%02d:%02d", m, s)
 }
 
-templ (w *watcherApp) Render() {
+t1 (w *watcherApp) Render() {
     <div class="flex-col p-1 gap-1 border-rounded border-cyan">
         <span class="text-gradient-cyan-magenta font-bold">Timers & Watchers</span>
 

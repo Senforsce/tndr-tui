@@ -15,28 +15,28 @@ func TestAnalyzer_UnknownElementTag(t *testing.T) {
 	tests := map[string]tc{
 		"known tag div": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<div></div>
 }`,
 			wantError: false,
 		},
 		"known tag span": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<span>hello</span>
 }`,
 			wantError: false,
 		},
 		"known tag ul": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<ul><li /></ul>
 }`,
 			wantError: false,
 		},
 		"unknown tag": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<unknownTag></unknownTag>
 }`,
 			wantError:     true,
@@ -44,7 +44,7 @@ templ Test() {
 		},
 		"unknown tag foobar": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<foobar />
 }`,
 			wantError:     true,
@@ -52,14 +52,14 @@ templ Test() {
 		},
 		"textarea self-closing": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<textarea />
 }`,
 			wantError: false,
 		},
 		"textarea with children is error": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<textarea>text</textarea>
 }`,
 			wantError:     true,
@@ -69,7 +69,7 @@ templ Test() {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			_, err := AnalyzeFile("test.gsx", tt.input)
+			_, err := AnalyzeFile("test.t2", tt.input)
 
 			if tt.wantError {
 				if err == nil {
@@ -98,21 +98,21 @@ func TestAnalyzer_UnknownAttribute(t *testing.T) {
 	tests := map[string]tc{
 		"known attribute width": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<div width=100></div>
 }`,
 			wantError: false,
 		},
 		"known attribute direction": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<div direction={layout.Column}></div>
 }`,
 			wantError: false,
 		},
 		"unknown attribute": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<div unknownAttr=123></div>
 }`,
 			wantError:     true,
@@ -120,7 +120,7 @@ templ Test() {
 		},
 		"typo colour": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<div colour="red"></div>
 }`,
 			wantError:     true,
@@ -130,7 +130,7 @@ templ Test() {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			_, err := AnalyzeFile("test.gsx", tt.input)
+			_, err := AnalyzeFile("test.t2", tt.input)
 
 			if tt.wantError {
 				if err == nil {
@@ -158,7 +158,7 @@ func TestAnalyzer_ImportInsertion(t *testing.T) {
 	tests := map[string]tc{
 		"adds root tui import": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<div></div>
 }`,
 			wantImports: []string{
@@ -167,7 +167,7 @@ templ Test() {
 		},
 		"adds root import when layout used": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<div direction={tui.Column}></div>
 }`,
 			wantImports: []string{
@@ -176,7 +176,7 @@ templ Test() {
 		},
 		"adds root import when tui used": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<div border={tui.BorderSingle}></div>
 }`,
 			wantImports: []string{
@@ -186,7 +186,7 @@ templ Test() {
 		"preserves existing imports": {
 			input: `package x
 import "fmt"
-templ Test() {
+t1 Test() {
 	<span>hello</span>
 }`,
 			wantImports: []string{
@@ -197,7 +197,7 @@ templ Test() {
 		"does not duplicate existing root import": {
 			input: `package x
 import tui "github.com/grindlemire/go-tui"
-templ Test() {
+t1 Test() {
 	<div></div>
 }`,
 			wantImports: []string{
@@ -208,7 +208,7 @@ templ Test() {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			file, err := AnalyzeFile("test.gsx", tt.input)
+			file, err := AnalyzeFile("test.t2", tt.input)
 			if err != nil {
 				t.Fatalf("unexpected error: %v", err)
 			}
@@ -360,7 +360,7 @@ type card struct {
 	children []*tui.Element
 }
 
-templ (c *card) Render() {
+t1 (c *card) Render() {
 	<div>
 		{children...}
 	</div>
@@ -374,7 +374,7 @@ type card struct {
 	title string
 }
 
-templ (c *card) Render() {
+t1 (c *card) Render() {
 	<div>
 		{children...}
 	</div>
@@ -389,7 +389,7 @@ type panel struct {
 	title string
 }
 
-templ (p *panel) Render() {
+t1 (p *panel) Render() {
 	<div></div>
 }`,
 			wantError: false,
@@ -398,7 +398,7 @@ templ (p *panel) Render() {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			_, err := AnalyzeFile("test.gsx", tt.input)
+			_, err := AnalyzeFile("test.t2", tt.input)
 
 			if tt.wantError {
 				if err == nil {

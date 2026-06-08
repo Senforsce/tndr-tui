@@ -8,11 +8,11 @@ import (
 func TestAnalyzer_DepsStringLiteralError(t *testing.T) {
 	// Test that deps="string" produces an error
 	input := `package x
-templ Test(count *tui.State[int]) {
+t1 Test(count *tui.State[int]) {
 	<span deps="not-valid">{count.Get()}</span>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -35,11 +35,11 @@ templ Test(count *tui.State[int]) {
 func TestAnalyzer_DepsMissingBracketsError(t *testing.T) {
 	// Test that deps={count} (missing brackets) produces an error
 	input := `package x
-templ Test(count *tui.State[int]) {
+t1 Test(count *tui.State[int]) {
 	<span deps={count}>{count.Get()}</span>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -62,11 +62,11 @@ templ Test(count *tui.State[int]) {
 func TestAnalyzer_DepsEmptyArrayWarning(t *testing.T) {
 	// Test that deps={[]} (empty) produces a warning
 	input := `package x
-templ Test(count *tui.State[int]) {
+t1 Test(count *tui.State[int]) {
 	<span deps={[]}>{count.Get()}</span>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -89,12 +89,12 @@ templ Test(count *tui.State[int]) {
 func TestAnalyzer_MultipleErrors(t *testing.T) {
 	// Test that multiple errors are collected
 	input := `package x
-templ Test() {
+t1 Test() {
 	<unknownTag1 />
 	<unknownTag2 />
 }`
 
-	_, err := AnalyzeFile("test.gsx", input)
+	_, err := AnalyzeFile("test.t2", input)
 	if err == nil {
 		t.Fatal("expected errors, got nil")
 	}
@@ -112,11 +112,11 @@ templ Test() {
 
 func TestAnalyzer_ErrorHint(t *testing.T) {
 	input := `package x
-templ Test() {
+t1 Test() {
 	<div colour="red"></div>
 }`
 
-	_, err := AnalyzeFile("test.gsx", input)
+	_, err := AnalyzeFile("test.t2", input)
 	if err == nil {
 		t.Fatal("expected error, got nil")
 	}

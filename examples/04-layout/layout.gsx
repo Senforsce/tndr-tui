@@ -57,7 +57,7 @@ func (l *layoutApp) KeyMap() tui.KeyMap {
 }
 
 // Sidebar and main content
-templ SidebarLayout() {
+t1 SidebarLayout() {
 	<div class="flex h-full">
 		<div class="w-20 border-single flex-col p-1">
 			<span class="font-bold">Sidebar</span>
@@ -72,7 +72,7 @@ templ SidebarLayout() {
 }
 
 // Centered card
-templ CenteredCard() {
+t1 CenteredCard() {
 	<div class="flex items-center justify-center h-full">
 		<div class="border-rounded p-2 flex-col gap-1 w-40">
 			<span class="font-bold text-cyan">Welcome</span>
@@ -83,7 +83,7 @@ templ CenteredCard() {
 }
 
 // Dashboard grid
-templ Dashboard() {
+t1 Dashboard() {
 	<div class="flex-col h-full gap-1 p-1">
 		<div class="flex gap-1 grow">
 			<div class="grow border-rounded p-1 flex-col">
@@ -117,7 +117,7 @@ func wrapLabels() []string {
 }
 
 // Flex-wrap: items wrap to new lines when they overflow
-templ FlexWrapGrid(mode alignMode) {
+t1 FlexWrapGrid(mode alignMode) {
 	<div class="flex-col h-full p-1">
 		<div class="flex flex-wrap gap-1 grow" alignContent={mode.content}>
 			for _, label := range wrapLabels() {
@@ -132,7 +132,7 @@ templ FlexWrapGrid(mode alignMode) {
 	</div>
 }
 
-templ ViewHeader(viewIndex int) {
+t1 ViewHeader(viewIndex int) {
 	<div class="flex gap-1 p-1 border-single">
 		for i, name := range viewNames() {
 			if i == viewIndex {
@@ -144,13 +144,13 @@ templ ViewHeader(viewIndex int) {
 	</div>
 }
 
-templ ViewFooter() {
+t1 ViewFooter() {
 	<div class="p-1 border-single">
 		<span class="font-dim">{"tab/shift+tab: switch view | q: quit"}</span>
 	</div>
 }
 
-templ (l *layoutApp) Render() {
+t1 (l *layoutApp) Render() {
 	<div class="flex-col h-full w-full" deps={l.viewIndex, l.modeIndex}>
 		@ViewHeader(l.viewIndex.Get())
 		<div class="grow flex-col">

@@ -20,8 +20,8 @@ func MyApp() *myApp {
 }
 ```
 
-```gsx
-templ (a *myApp) Render() {
+```t2
+t1 (a *myApp) Render() {
     <button ref={a.saveBtn} class="px-2">Save</button>
 }
 ```
@@ -65,7 +65,7 @@ func MyApp() *myApp {
 
 **2. Bind refs** in your template:
 
-```gsx
+```t2
 <button ref={a.saveBtn} class="px-2">Save</button>
 <button ref={a.cancelBtn} class="px-2">Cancel</button>
 ```
@@ -116,7 +116,7 @@ func ListApp() *listApp {
 }
 ```
 
-```gsx
+```t2
 for _, item := range a.items {
     <span ref={a.itemRefs} class="p-1">{item}</span>
 }
@@ -134,7 +134,7 @@ type tabApp struct {
 }
 ```
 
-```gsx
+```t2
 for _, p := range presets {
     <button ref={a.presetBtns} key={p.name} class="px-1">{p.name}</button>
 }
@@ -194,7 +194,7 @@ Both input methods call the same `adjust*` methods, so the behavior stays consis
 
 Modals handle mouse clicks internally. You don't need refs or `HandleMouse` for buttons inside a modal. Use the `onActivate` attribute on focusable elements instead:
 
-```gsx
+```t2
 <modal open={s.showDialog} class="justify-center items-center">
     <div class="border-rounded p-2 flex-col gap-1 w-40">
         <span class="font-bold">Delete Item?</span>
@@ -216,7 +216,7 @@ Outside of modals, use refs and `HandleClicks` for click targets. Inside modals,
 
 This color mixer uses ref-based click handling for the +/- buttons and presets, plus a modal confirmation dialog for the reset action. Each color channel has a visual bar, a value readout, and clickable buttons. Preset colors use `RefMap` with `key`:
 
-```gsx
+```t2
 package main
 
 import (
@@ -371,7 +371,7 @@ func colorBar(value int) string {
     return bar
 }
 
-templ (c *colorMixer) Render() {
+t1 (c *colorMixer) Render() {
     <div class="flex-col p-1 border-rounded border-cyan">
         <span class="text-gradient-cyan-magenta font-bold">Color Mixer</span>
 

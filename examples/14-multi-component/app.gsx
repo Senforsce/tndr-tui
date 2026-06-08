@@ -31,7 +31,7 @@ func (a *myApp) KeyMap() tui.KeyMap {
 	return km
 }
 
-templ (a *myApp) Render() {
+t1 (a *myApp) Render() {
 	<div class="flex-col h-full border-rounded border-cyan">
 		<div class="flex justify-center px-1 shrink-0">
 			<span class="text-gradient-cyan-magenta font-bold">File Explorer</span>

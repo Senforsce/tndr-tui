@@ -2,18 +2,18 @@
 
 ## Overview
 
-Not every program needs an interactive event loop. Sometimes you want to render a styled table, a progress summary, or a formatted report once and exit. go-tui's `Print`, `Sprint`, and `Fprint` functions do exactly that: take a `Viewable`, run the flexbox layout engine, and emit ANSI-styled text to a writer. Same `.gsx` components you'd use in a full app.
+Not every program needs an interactive event loop. Sometimes you want to render a styled table, a progress summary, or a formatted report once and exit. go-tui's `Print`, `Sprint`, and `Fprint` functions do exactly that: take a `Viewable`, run the flexbox layout engine, and emit ANSI-styled text to a writer. Same `.t2` components you'd use in a full app.
 
 ## Quick Start
 
-Write a component in a `.gsx` file just like you normally would:
+Write a component in a `.t2` file just like you normally would:
 
-```gsx
+```t2
 package main
 
 import "fmt"
 
-templ BuildReport(project string, status string, duration string, tests int, passed int) {
+t1 BuildReport(project string, status string, duration string, tests int, passed int) {
     <div class="flex-row justify-center">
         <div class="flex-col border-rounded border-cyan p-1 w-1/2">
             <div class="flex-row justify-between">
@@ -33,7 +33,7 @@ templ BuildReport(project string, status string, duration string, tests int, pas
 Generate the Go code:
 
 ```bash
-tui generate report.gsx
+tui generate report.t2
 ```
 
 Then call `tui.Print` from your `main()`:
@@ -43,7 +43,7 @@ package main
 
 import tui "github.com/grindlemire/go-tui"
 
-//go:generate go run ../../cmd/tui generate report.gsx
+//go:generate go run ../../cmd/tui generate report.t2
 
 func main() {
     tui.Print(BuildReport("myapp", "PASS", "2.3s", 42, 42))
@@ -93,7 +93,7 @@ tui.Fprint(f, view, tui.WithPrintWidth(80))
 
 ## Reusing Components
 
-The `.gsx` components you write for single-frame printing also work with `App.Run()`:
+The `.t2` components you write for single-frame printing also work with `App.Run()`:
 
 ```go
 // Non-interactive: print and exit

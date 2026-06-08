@@ -6,12 +6,12 @@ import (
 
 func TestParser_LetBinding(t *testing.T) {
 	input := `package x
-templ Test() {
+t1 Test() {
 	myText := <span>Hello</span>
 	<div></div>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -52,7 +52,7 @@ func TestParser_ForLoop(t *testing.T) {
 	tests := map[string]tc{
 		"index and value": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	for i, item := range items {
 		<span>Hello</span>
 	}
@@ -63,7 +63,7 @@ templ Test() {
 		},
 		"underscore index": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	for _, item := range items {
 		<span>Hello</span>
 	}
@@ -74,7 +74,7 @@ templ Test() {
 		},
 		"value only": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	for item := range items {
 		<span>Hello</span>
 	}
@@ -87,7 +87,7 @@ templ Test() {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			l := NewLexer("test.gsx", tt.input)
+			l := NewLexer("test.t2", tt.input)
 			p := NewParser(l)
 			file, err := p.ParseFile()
 			if err != nil {
@@ -125,7 +125,7 @@ func TestParser_IfStatement(t *testing.T) {
 	tests := map[string]tc{
 		"simple if": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	if showHeader {
 		<span>Header</span>
 	}
@@ -135,7 +135,7 @@ templ Test() {
 		},
 		"if with else": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	if isLoading {
 		<span>Loading</span>
 	} else {
@@ -147,7 +147,7 @@ templ Test() {
 		},
 		"complex condition": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	if err != nil {
 		<span>Error</span>
 	}
@@ -159,7 +159,7 @@ templ Test() {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			l := NewLexer("test.gsx", tt.input)
+			l := NewLexer("test.t2", tt.input)
 			p := NewParser(l)
 			file, err := p.ParseFile()
 			if err != nil {
@@ -189,7 +189,7 @@ templ Test() {
 
 func TestParser_IfElseIf(t *testing.T) {
 	input := `package x
-templ Test() {
+t1 Test() {
 	if a {
 		<span>A</span>
 	} else if b {
@@ -199,7 +199,7 @@ templ Test() {
 	}
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -237,7 +237,7 @@ templ Test() {
 
 func TestParser_ControlFlowInChildren(t *testing.T) {
 	input := `package x
-templ Test(items []string) {
+t1 Test(items []string) {
 	<div>
 		for _, item := range items {
 			<span>{item}</span>
@@ -248,7 +248,7 @@ templ Test(items []string) {
 	</div>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -286,7 +286,7 @@ func TestParser_RawGoStatements(t *testing.T) {
 	tests := map[string]tc{
 		"simple assignment": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	x := 1
 	<span>{x}</span>
 }`,
@@ -294,7 +294,7 @@ templ Test() {
 		},
 		"function call": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	fmt.Println("hello")
 	<span>world</span>
 }`,
@@ -302,7 +302,7 @@ templ Test() {
 		},
 		"multi-line statement": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	result := compute(
 		arg1,
 		arg2,
@@ -313,7 +313,7 @@ templ Test() {
 		},
 		"multiple statements": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	x := 1
 	y := 2
 	z := x + y
@@ -323,7 +323,7 @@ templ Test() {
 		},
 		"typed var declaration": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	var count int = 0
 	<span>{count}</span>
 }`,
@@ -331,7 +331,7 @@ templ Test() {
 		},
 		"var without initializer": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	var err error
 	<span>{err}</span>
 }`,
@@ -339,7 +339,7 @@ templ Test() {
 		},
 		"defer statement": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	defer cleanup()
 	<span>running</span>
 }`,
@@ -347,7 +347,7 @@ templ Test() {
 		},
 		"go statement": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	go doWork()
 	<span>spawned</span>
 }`,
@@ -355,7 +355,7 @@ templ Test() {
 		},
 		"for loop statement": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	for i := 0; i < 10; i++ { sum += i }
 	<span>{sum}</span>
 }`,
@@ -363,7 +363,7 @@ templ Test() {
 		},
 		"switch statement": {
 			input: `package x
-templ Test(x int) {
+t1 Test(x int) {
 	switch x { case 1: y = "one"; case 2: y = "two" }
 	<span>{y}</span>
 }`,
@@ -373,7 +373,7 @@ templ Test(x int) {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			l := NewLexer("test.gsx", tt.input)
+			l := NewLexer("test.t2", tt.input)
 			p := NewParser(l)
 			file, err := p.ParseFile()
 			if err != nil {
@@ -413,13 +413,13 @@ func TestParser_GoStatementStopsAtClosingBrace(t *testing.T) {
 	// This tests the raw parsing of a body containing "log.Error(err) }"
 	// where } belongs to the parent, not the statement.
 	input := `package x
-templ Test() {
+t1 Test() {
 	if condition {
 		log.Error(err)
 	}
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -448,12 +448,12 @@ func TestParser_GoStatementMultilineBraces(t *testing.T) {
 	// Verify that multiline Go statements with braces (switch, select, etc.)
 	// are NOT prematurely truncated by the depth-0 } stop.
 	input := `package x
-templ Test(x int) {
+t1 Test(x int) {
 	switch x { case 1: y = "one"; case 2: y = "two" }
 	<span>{y}</span>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -481,25 +481,25 @@ func TestParser_ShortBinding(t *testing.T) {
 
 	tests := map[string]tc{
 		"short element binding": {
-			input:       "package x\ntempl Test() {\n\tlabel := <span>Hello</span>\n\t<div></div>\n}",
+			input:       "package x\nt1 Test() {\n\tlabel := <span>Hello</span>\n\t<div></div>\n}",
 			wantName:    "label",
 			wantElement: "span",
 			wantShort:   true,
 		},
 		"short component binding": {
-			input:     "package x\ntempl Test() {\n\tfoo := @MyComponent()\n\t<div></div>\n}",
+			input:     "package x\nt1 Test() {\n\tfoo := @MyComponent()\n\t<div></div>\n}",
 			wantName:  "foo",
 			wantCall:  "MyComponent",
 			wantShort: true,
 		},
 		"var element binding": {
-			input:       "package x\ntempl Test() {\n\tvar label = <span>Hello</span>\n\t<div></div>\n}",
+			input:       "package x\nt1 Test() {\n\tvar label = <span>Hello</span>\n\t<div></div>\n}",
 			wantName:    "label",
 			wantElement: "span",
 			wantShort:   false,
 		},
 		"var component binding": {
-			input:     "package x\ntempl Test() {\n\tvar foo = @MyComponent()\n\t<div></div>\n}",
+			input:     "package x\nt1 Test() {\n\tvar foo = @MyComponent()\n\t<div></div>\n}",
 			wantName:  "foo",
 			wantCall:  "MyComponent",
 			wantShort: false,
@@ -508,7 +508,7 @@ func TestParser_ShortBinding(t *testing.T) {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			l := NewLexer("test.gsx", tt.input)
+			l := NewLexer("test.t2", tt.input)
 			p := NewParser(l)
 			file, err := p.ParseFile()
 			if err != nil {
@@ -548,13 +548,13 @@ func TestParser_ShortBinding(t *testing.T) {
 
 func TestParser_BareIfStatement(t *testing.T) {
 	input := `package x
-templ Test() {
+t1 Test() {
 	if showHeader {
 		<span>Header</span>
 	}
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -572,7 +572,7 @@ templ Test() {
 
 func TestParser_BareElseIf(t *testing.T) {
 	input := `package x
-templ Test() {
+t1 Test() {
 	if a {
 		<span>A</span>
 	} else if b {
@@ -582,7 +582,7 @@ templ Test() {
 	}
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -613,13 +613,13 @@ templ Test() {
 
 func TestParser_BareForLoop(t *testing.T) {
 	input := `package x
-templ Test() {
+t1 Test() {
 	for i, item := range items {
 		<span>{item}</span>
 	}
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -643,12 +643,12 @@ templ Test() {
 
 func TestParser_CStyleForLoopStaysGoCode(t *testing.T) {
 	input := `package x
-templ Test() {
+t1 Test() {
 	for i := 0; i < 10; i++ { sum += i }
 	<span>{sum}</span>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -667,12 +667,12 @@ templ Test() {
 func TestParser_ShortBindingGoExprStaysGoCode(t *testing.T) {
 	// name := goExpr should still be parsed as GoCode, not LetBinding
 	input := `package x
-templ Test() {
+t1 Test() {
 	formatted := fmt.Sprintf("%d", count)
 	<span>{formatted}</span>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -689,7 +689,7 @@ templ Test() {
 func TestParser_RawGoStatementsWithElements(t *testing.T) {
 	// Test that Go statements and elements can be mixed in component body
 	input := `package x
-templ Counter(count int) {
+t1 Counter(count int) {
 	formattedCount := fmt.Sprintf("%d", count)
 	log.Printf("Rendering counter")
 	<div>
@@ -697,7 +697,7 @@ templ Counter(count int) {
 	</div>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {

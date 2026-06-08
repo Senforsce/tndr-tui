@@ -9,11 +9,11 @@ func TestParser_CommentAttachment_LeadingCommentOnComponent(t *testing.T) {
 
 // This is a doc comment for Header
 // It spans multiple lines
-templ Header() {
+t1 Header() {
 	<span>Hello</span>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -44,11 +44,11 @@ templ Header() {
 func TestParser_CommentAttachment_TrailingCommentOnComponent(t *testing.T) {
 	input := `package x
 
-templ Header() { // trailing comment on brace
+t1 Header() { // trailing comment on brace
 	<span>Hello</span>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -72,12 +72,12 @@ templ Header() { // trailing comment on brace
 func TestParser_CommentAttachment_OrphanCommentInComponentBody(t *testing.T) {
 	input := `package x
 
-templ Header() {
+t1 Header() {
 	// orphan comment in body
 	<span>Hello</span>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -112,12 +112,12 @@ templ Header() {
 func TestParser_CommentAttachment_OrphanCommentWithNoFollowingNode(t *testing.T) {
 	input := `package x
 
-templ Header() {
+t1 Header() {
 	<span>Hello</span>
 	// trailing orphan comment
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -143,13 +143,13 @@ templ Header() {
 func TestParser_CommentAttachment_OrphanCommentInFile(t *testing.T) {
 	input := `package x
 
-templ Header() {
+t1 Header() {
 	<span>Hello</span>
 }
 
 // orphan comment at end of file`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -170,11 +170,11 @@ func TestParser_CommentAttachment_LeadingCommentBeforePackage(t *testing.T) {
 // License info
 package x
 
-templ Header() {
+t1 Header() {
 	<span>Hello</span>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {

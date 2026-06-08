@@ -89,7 +89,7 @@ func signClass(n int) string {
 	return "text-blue font-bold"
 }
 
-templ (d *demoApp) Render() {
+t1 (d *demoApp) Render() {
 	<div class="flex-col p-1 border-rounded border-cyan">
 		<span class="text-gradient-cyan-magenta font-bold">State Demo</span>
 

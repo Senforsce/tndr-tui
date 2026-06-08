@@ -8,7 +8,7 @@ import (
 func TestAnalyzer_NestedElements(t *testing.T) {
 	// Test that nested elements are all validated
 	input := `package x
-templ Test() {
+t1 Test() {
 	<div>
 		<div>
 			<unknownTag />
@@ -16,7 +16,7 @@ templ Test() {
 	</div>
 }`
 
-	_, err := AnalyzeFile("test.gsx", input)
+	_, err := AnalyzeFile("test.t2", input)
 	if err == nil {
 		t.Error("expected error for nested unknown tag")
 		return
@@ -37,7 +37,7 @@ func TestAnalyzer_ControlFlowValidation(t *testing.T) {
 	tests := map[string]tc{
 		"valid for loop": {
 			input: `package x
-templ Test(items []string) {
+t1 Test(items []string) {
 	<div>
 		for _, item := range items {
 			<span>{item}</span>
@@ -48,7 +48,7 @@ templ Test(items []string) {
 		},
 		"invalid element in for loop": {
 			input: `package x
-templ Test(items []string) {
+t1 Test(items []string) {
 	<div>
 		for _, item := range items {
 			<badTag />
@@ -60,7 +60,7 @@ templ Test(items []string) {
 		},
 		"valid if statement": {
 			input: `package x
-templ Test(show bool) {
+t1 Test(show bool) {
 	<div>
 		if show {
 			<span>visible</span>
@@ -71,7 +71,7 @@ templ Test(show bool) {
 		},
 		"invalid element in if then": {
 			input: `package x
-templ Test(show bool) {
+t1 Test(show bool) {
 	<div>
 		if show {
 			<badTag />
@@ -83,7 +83,7 @@ templ Test(show bool) {
 		},
 		"invalid element in if else": {
 			input: `package x
-templ Test(show bool) {
+t1 Test(show bool) {
 	<div>
 		if show {
 			<span>yes</span>
@@ -99,7 +99,7 @@ templ Test(show bool) {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			_, err := AnalyzeFile("test.gsx", tt.input)
+			_, err := AnalyzeFile("test.t2", tt.input)
 
 			if tt.wantError {
 				if err == nil {
@@ -136,10 +136,10 @@ func TestAnalyzer_AllKnownAttributes(t *testing.T) {
 	for _, attr := range attributes {
 		t.Run(attr, func(t *testing.T) {
 			input := `package x
-templ Test() {
+t1 Test() {
 	<div ` + attr + `=1></div>
 }`
-			_, err := AnalyzeFile("test.gsx", input)
+			_, err := AnalyzeFile("test.t2", input)
 			if err != nil {
 				t.Errorf("attribute %q should be valid, got error: %v", attr, err)
 			}
@@ -158,10 +158,10 @@ func TestAnalyzer_AllKnownTags(t *testing.T) {
 	for _, tag := range tags {
 		t.Run(tag, func(t *testing.T) {
 			input := `package x
-templ Test() {
+t1 Test() {
 	<` + tag + ` />
 }`
-			_, err := AnalyzeFile("test.gsx", input)
+			_, err := AnalyzeFile("test.t2", input)
 			if err != nil {
 				t.Errorf("tag %q should be valid, got error: %v", tag, err)
 			}
@@ -178,7 +178,7 @@ func TestAnalyzer_HRValid(t *testing.T) {
 	tests := map[string]tc{
 		"hr self-closing": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<div>
 		<hr/>
 	</div>
@@ -187,7 +187,7 @@ templ Test() {
 		},
 		"hr with class": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<div>
 		<hr class="border-double"/>
 	</div>
@@ -198,7 +198,7 @@ templ Test() {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			_, err := AnalyzeFile("test.gsx", tt.input)
+			_, err := AnalyzeFile("test.t2", tt.input)
 
 			if tt.wantError {
 				if err == nil {
@@ -222,7 +222,7 @@ func TestAnalyzer_BRValid(t *testing.T) {
 	tests := map[string]tc{
 		"br self-closing": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<div>
 		<br/>
 	</div>
@@ -233,7 +233,7 @@ templ Test() {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			_, err := AnalyzeFile("test.gsx", tt.input)
+			_, err := AnalyzeFile("test.t2", tt.input)
 
 			if tt.wantError {
 				if err == nil {
@@ -258,21 +258,21 @@ func TestAnalyzer_MarkdownValid(t *testing.T) {
 	tests := map[string]tc{
 		"markdown self-closing with source/width": {
 			input: `package x
-templ (c *view) Render() {
+t1 (c *view) Render() {
 	<markdown source={c.readme} width={80} />
 }`,
 			wantError: false,
 		},
 		"markdown with state attr": {
 			input: `package x
-templ (c *view) Render() {
+t1 (c *view) Render() {
 	<markdown state={c.md} />
 }`,
 			wantError: false,
 		},
 		"markdown is void": {
 			input: `package x
-templ (c *view) Render() {
+t1 (c *view) Render() {
 	<markdown source={c.readme}>oops</markdown>
 }`,
 			wantError:     true,
@@ -282,7 +282,7 @@ templ (c *view) Render() {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			_, err := AnalyzeFile("test.gsx", tt.input)
+			_, err := AnalyzeFile("test.t2", tt.input)
 			if tt.wantError {
 				if err == nil {
 					t.Fatal("expected error, got nil")
@@ -307,7 +307,7 @@ func TestAnalyzer_VoidWithChildren(t *testing.T) {
 	tests := map[string]tc{
 		"hr with text child": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<div>
 		<hr>text</hr>
 	</div>
@@ -317,7 +317,7 @@ templ Test() {
 		},
 		"hr with element child": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<div>
 		<hr><span>nested</span></hr>
 	</div>
@@ -327,7 +327,7 @@ templ Test() {
 		},
 		"br with text child": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<div>
 		<br>text</br>
 	</div>
@@ -337,7 +337,7 @@ templ Test() {
 		},
 		"input with child": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<div>
 		<input>text</input>
 	</div>
@@ -349,7 +349,7 @@ templ Test() {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			_, err := AnalyzeFile("test.gsx", tt.input)
+			_, err := AnalyzeFile("test.t2", tt.input)
 
 			if tt.wantError {
 				if err == nil {
@@ -379,42 +379,42 @@ func TestAnalyzer_TailwindClassValidation(t *testing.T) {
 	tests := map[string]tc{
 		"valid tailwind classes": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<div class="flex-col gap-2 p-4"></div>
 }`,
 			wantError: false,
 		},
 		"valid width and height classes": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<div class="w-full h-1/2"></div>
 }`,
 			wantError: false,
 		},
 		"valid individual padding classes": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<div class="pt-2 pb-4 pl-1"></div>
 }`,
 			wantError: false,
 		},
 		"valid border color classes": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<div class="border border-red"></div>
 }`,
 			wantError: false,
 		},
 		"valid text alignment classes": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<div class="text-center"></div>
 }`,
 			wantError: false,
 		},
 		"unknown tailwind class": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<div class="flex-columns"></div>
 }`,
 			wantError:     true,
@@ -423,7 +423,7 @@ templ Test() {
 		},
 		"unknown tailwind class without suggestion": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<div class="xyz-completely-invalid"></div>
 }`,
 			wantError:     true,
@@ -431,7 +431,7 @@ templ Test() {
 		},
 		"multiple unknown classes": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<div class="flex-columns badclass"></div>
 }`,
 			wantError:     true,
@@ -439,7 +439,7 @@ templ Test() {
 		},
 		"mix of valid and invalid classes": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<div class="flex-col gap-2 badclass p-4"></div>
 }`,
 			wantError:     true,
@@ -449,7 +449,7 @@ templ Test() {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			_, err := AnalyzeFile("test.gsx", tt.input)
+			_, err := AnalyzeFile("test.t2", tt.input)
 
 			if tt.wantError {
 				if err == nil {
@@ -474,11 +474,11 @@ templ Test() {
 func TestAnalyzer_TailwindClassErrorPosition(t *testing.T) {
 	// Test that the error position correctly points to the invalid class
 	input := `package x
-templ Test() {
+t1 Test() {
 	<div class="flex-col badclass p-2"></div>
 }`
 
-	_, err := AnalyzeFile("test.gsx", input)
+	_, err := AnalyzeFile("test.t2", input)
 	if err == nil {
 		t.Fatal("expected error, got nil")
 	}

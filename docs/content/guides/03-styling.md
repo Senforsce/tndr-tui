@@ -8,7 +8,7 @@ go-tui uses a Tailwind-inspired class system for styling. You set colors, text d
 
 Text decorations are applied through classes on any element that renders text:
 
-```gsx
+```t2
 <div class="flex-col gap-1">
     <span class="font-bold">Bold text</span>
     <span class="font-dim">Dimmed text</span>
@@ -36,7 +36,7 @@ The full set of text style classes:
 
 go-tui supports the standard 16 ANSI terminal colors. Each has a `text-` prefixed class:
 
-```gsx
+```t2
 <div class="flex-col">
     <span class="text-red">Red</span>
     <span class="text-green">Green</span>
@@ -51,7 +51,7 @@ go-tui supports the standard 16 ANSI terminal colors. Each has a `text-` prefixe
 
 Each color has a bright variant:
 
-```gsx
+```t2
 <div class="flex-col">
     <span class="text-bright-red">Bright red</span>
     <span class="text-bright-green">Bright green</span>
@@ -68,7 +68,7 @@ Each color has a bright variant:
 
 For colors beyond the 16 ANSI palette, use the bracket syntax with a hex value:
 
-```gsx
+```t2
 <span class="text-[#FF6B35]">Custom orange</span>
 <span class="text-[#A3F]">Short-form hex (expands to #AA33FF)</span>
 ```
@@ -79,7 +79,7 @@ Both `#RRGGBB` (6-digit) and `#RGB` (3-digit shorthand) formats work. These prod
 
 The same color set is available with the `bg-` prefix:
 
-```gsx
+```t2
 <div class="flex-col gap-1">
     <span class="bg-red text-white p-1">Red background</span>
     <span class="bg-cyan text-black p-1">Cyan background</span>
@@ -94,7 +94,7 @@ Every named color and bright variant that works with `text-` also works with `bg
 
 Multiple classes compose. List them space-separated in the `class` attribute:
 
-```gsx
+```t2
 <span class="font-bold text-cyan bg-black underline">
     Bold, cyan, on black, underlined
 </span>
@@ -102,7 +102,7 @@ Multiple classes compose. List them space-separated in the `class` attribute:
 
 Styles on parent elements do not cascade to children. Each element's `class` applies only to that element:
 
-```gsx
+```t2
 <div class="text-cyan">
     <span>This text is NOT cyan. It uses the default color</span>
     <span class="text-cyan">This text IS cyan</span>
@@ -122,7 +122,7 @@ Borders wrap an element in box-drawing characters. Four styles are available:
 | `border-rounded` | Rounded corners | `╭─╮│╰─╯` |
 | `border-thick` | Heavy line | `┏━┓┃┗━┛` |
 
-```gsx
+```t2
 <div class="flex gap-2">
     <div class="border-single p-1">
         <span>Single</span>
@@ -143,7 +143,7 @@ Borders wrap an element in box-drawing characters. Four styles are available:
 
 Color the border with `border-{color}`:
 
-```gsx
+```t2
 <div class="border-rounded border-cyan p-1">
     <span>Cyan bordered box</span>
 </div>
@@ -155,7 +155,7 @@ All 16 named colors and their bright variants work: `border-red`, `border-bright
 
 The `borderTitle` attribute draws a label centered in the top border line:
 
-```gsx
+```t2
 <div class="border-rounded p-1" borderTitle=" Status ">
     <span>All systems normal</span>
 </div>
@@ -190,7 +190,7 @@ Where:
 
 ### Text Gradients
 
-```gsx
+```t2
 <div class="flex-col gap-1">
     <span class="text-gradient-cyan-magenta">Horizontal gradient (default)</span>
     <span class="text-gradient-red-yellow-h">Explicit horizontal</span>
@@ -202,7 +202,7 @@ Where:
 
 ### Background Gradients
 
-```gsx
+```t2
 <div class="bg-gradient-blue-cyan-h p-1">
     <span class="text-white">Blue-to-cyan background</span>
 </div>
@@ -210,7 +210,7 @@ Where:
 
 ### Border Gradients
 
-```gsx
+```t2
 <div class="border-rounded border-gradient-cyan-magenta p-1">
     <span>Gradient border</span>
 </div>
@@ -289,10 +289,10 @@ style := tui.NewStyle().Foreground(tui.Cyan).Bold()
 
 ### Applying Styles to Elements
 
-Pass styles through element attributes in `.gsx`:
+Pass styles through element attributes in `.t2`:
 
-```gsx
-templ (s *myApp) Render() {
+```t2
+t1 (s *myApp) Render() {
     <div borderStyle={tui.NewStyle().Foreground(tui.Magenta)} class="border-rounded p-1">
         <span textStyle={tui.NewStyle().Bold().Foreground(tui.Cyan)}>Dynamic style</span>
     </div>
@@ -311,7 +311,7 @@ Style attributes you can set:
 
 Class-based styling handles most cases. Programmatic styles are useful when the style depends on runtime values, like coloring a number red when negative and green when positive, or when you need 256-palette indices or RGB colors computed at runtime.
 
-```gsx
+```t2
 package main
 
 import (
@@ -352,7 +352,7 @@ func valueStyle(v int) tui.Style {
     return tui.NewStyle().Dim()
 }
 
-templ (s *statusApp) Render() {
+t1 (s *statusApp) Render() {
     <div class="flex-col items-center justify-center h-full gap-1">
         <span textStyle={valueStyle(s.value.Get())}>{fmt.Sprintf("Value: %d", s.value.Get())}</span>
         <span class="font-dim">Press + / - to change, Esc to quit</span>

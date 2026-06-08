@@ -20,7 +20,7 @@ func TestDefinition_ComponentCall(t *testing.T) {
 	index.components["Header"] = &ComponentInfo{
 		Name: "Header",
 		Location: Location{
-			URI: "file:///test.gsx",
+			URI: "file:///test.t2",
 			Range: Range{
 				Start: Position{Line: 2, Character: 0},
 				End:   Position{Line: 2, Character: 17},
@@ -32,11 +32,11 @@ func TestDefinition_ComponentCall(t *testing.T) {
 
 	src := `package test
 
-templ Page() {
+t1 Page() {
 	@Header("title")
 }
 
-templ Header(title string) {
+t1 Header(title string) {
 	<div>{title}</div>
 }
 `
@@ -53,8 +53,8 @@ templ Header(title string) {
 	if len(result) == 0 {
 		t.Fatal("expected definition location")
 	}
-	if result[0].URI != "file:///test.gsx" {
-		t.Errorf("expected URI file:///test.gsx, got %s", result[0].URI)
+	if result[0].URI != "file:///test.t2" {
+		t.Errorf("expected URI file:///test.t2, got %s", result[0].URI)
 	}
 }
 
@@ -64,7 +64,7 @@ func TestDefinition_FunctionByWord(t *testing.T) {
 		Name:      "helper",
 		Signature: "func helper(s string) string",
 		Location: Location{
-			URI: "file:///test.gsx",
+			URI: "file:///test.t2",
 			Range: Range{
 				Start: Position{Line: 5, Character: 0},
 				End:   Position{Line: 5, Character: 15},
@@ -96,7 +96,7 @@ func TestDefinition_Parameter(t *testing.T) {
 		Type:          "string",
 		ComponentName: "Header",
 		Location: Location{
-			URI: "file:///test.gsx",
+			URI: "file:///test.t2",
 			Range: Range{
 				Start: Position{Line: 2, Character: 13},
 				End:   Position{Line: 2, Character: 18},
@@ -108,7 +108,7 @@ func TestDefinition_Parameter(t *testing.T) {
 
 	src := `package test
 
-templ Header(title string) {
+t1 Header(title string) {
 	<div>{title}</div>
 }
 `
@@ -135,7 +135,7 @@ func TestDefinition_LetBinding(t *testing.T) {
 
 	src := `package test
 
-templ Example() {
+t1 Example() {
 	header := <div>title</div>
 	{header}
 }
@@ -160,7 +160,7 @@ func TestDefinition_ForLoopVariable(t *testing.T) {
 
 	src := `package test
 
-templ List(items []string) {
+t1 List(items []string) {
 	<div>
 		for _, item := range items {
 			<span>{item}</span>
@@ -186,7 +186,7 @@ func TestDefinition_NilDocument(t *testing.T) {
 	index := newStubIndex()
 	dp := newTestDefinitionProvider(index)
 
-	doc := &Document{URI: "file:///test.gsx", Content: "", Version: 1}
+	doc := &Document{URI: "file:///test.t2", Content: "", Version: 1}
 	ctx := makeCtx(doc, NodeKindUnknown, "")
 
 	result, err := dp.Definition(ctx)
@@ -204,7 +204,7 @@ func TestDefinition_RefAttr(t *testing.T) {
 
 	src := `package test
 
-templ Layout() {
+t1 Layout() {
 	<div ref={header} class="p-1">title</div>
 }
 `
@@ -240,7 +240,7 @@ func TestDefinition_RefAttr_Usage(t *testing.T) {
 
 	src := `package test
 
-templ Layout() {
+t1 Layout() {
 	<div
 		ref={content}
 		class="p-1">title</div>
@@ -281,7 +281,7 @@ func TestDefinition_RefAttr_WithDeclaration(t *testing.T) {
 
 	src := `package test
 
-templ StreamApp() {
+t1 StreamApp() {
 	content := tui.NewRef()
 	<div ref={content} class="p-1">title</div>
 }
@@ -316,7 +316,7 @@ func TestDefinition_RefAttr_Multiline(t *testing.T) {
 
 	src := `package test
 
-templ Layout() {
+t1 Layout() {
 	<div
 		ref={header}
 		class="p-1">title</div>
@@ -351,7 +351,7 @@ func TestDefinition_StateDecl(t *testing.T) {
 
 	src := `package test
 
-templ Counter() {
+t1 Counter() {
 	count := tui.NewState(0)
 	<span>{count.Get()}</span>
 }
@@ -382,7 +382,7 @@ func TestDefinition_StateAccess(t *testing.T) {
 
 	src := `package test
 
-templ Counter() {
+t1 Counter() {
 	count := tui.NewState(0)
 	<span>{count.Get()}</span>
 }

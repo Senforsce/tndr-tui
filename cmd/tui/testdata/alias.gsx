@@ -12,7 +12,7 @@ func (foo aliasHelper) State() string {
 	return "not tui state"
 }
 
-templ Alias(counter *gui.State[int]) {
+t1 Alias(counter *gui.State[int]) {
 	label := gui.NewState("alias state")
 	foo := aliasHelper{}
 

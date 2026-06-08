@@ -8,7 +8,7 @@ func DocView(readme string) *docView {
 	return &docView{readme: readme}
 }
 
-templ (c *docView) Render() {
+t1 (c *docView) Render() {
 	<div class="flex-col overflow-y-scroll">
 		<markdown source={c.readme} width={80} />
 	</div>

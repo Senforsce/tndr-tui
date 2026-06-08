@@ -512,7 +512,7 @@ func wrapIndex(idx, length int) int {
 	return idx
 }
 
-templ (s *SettingsApp) Render() {
+t1 (s *SettingsApp) Render() {
 	<div class="flex-col h-full p-1 gap-0">
 		<div class="flex-col items-center shrink-0 border-double border-gradient-cyan-blue p-1">
 			<span class="text-gradient-bright-cyan-bright-yellow font-bold">{"Claude Settings"}</span>

@@ -15,7 +15,7 @@ func (h *helloApp) KeyMap() tui.KeyMap {
 	}
 }
 
-templ (h *helloApp) Render() {
+t1 (h *helloApp) Render() {
 	<div class="flex-col items-center justify-center h-full">
 		<div class="border-rounded border-cyan p-2 gap-1 flex-col items-center">
 			<span class="text-cyan font-bold">Hello, Terminal!</span>

@@ -9,14 +9,14 @@ func TestFormat_FixesIndentation(t *testing.T) {
 
 	src := `package test
 
-templ Hello() {
+t1 Hello() {
 <div class="p-1">
 <span>Hello</span>
 </div>
 }
 `
 	doc := &Document{
-		URI:     "file:///test.gsx",
+		URI:     "file:///test.t2",
 		Content: src,
 		Version: 1,
 	}
@@ -46,14 +46,14 @@ func TestFormat_ReturnsFullDocumentEdit(t *testing.T) {
 
 	src := `package test
 
-templ Hello() {
+t1 Hello() {
 <div class="p-1">
 <span>Hello</span>
 </div>
 }
 `
 	doc := &Document{
-		URI:     "file:///test.gsx",
+		URI:     "file:///test.t2",
 		Content: src,
 		Version: 1,
 	}

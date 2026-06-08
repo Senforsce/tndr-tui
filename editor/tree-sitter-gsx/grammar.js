@@ -1,9 +1,9 @@
 /**
- * Tree-sitter grammar for GSX DSL (.gsx files)
+ * Tree-sitter grammar for GSX DSL (.t2 files)
  */
 
 module.exports = grammar({
-  name: "gsx",
+  name: "t2",
 
   extras: ($) => [/\s/, $.comment],
 
@@ -51,13 +51,13 @@ module.exports = grammar({
     component_declaration: ($) =>
       choice(
         seq(
-          "templ",
+          "t1",
           field("name", $.identifier),
           field("parameters", $.parameter_list),
           field("body", $.component_body),
         ),
         seq(
-          "templ",
+          "t1",
           field("receiver", $.receiver),
           field("name", $.identifier),
           "(",

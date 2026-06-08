@@ -71,7 +71,7 @@ func (v *viewer) mdWidth(app *tui.App) int {
 	return w
 }
 
-templ (v *viewer) Render() {
+t1 (v *viewer) Render() {
 	<div class="flex-col">
 		<span class="text-gradient-cyan-magenta font-bold">Markdown Viewer</span>
 		<div

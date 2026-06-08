@@ -4,7 +4,7 @@ Renders a markdown document with the `<markdown>` element inside a scrollable
 container.
 
 ```bash
-go run ../../cmd/tui generate markdown.gsx
+go run ../../cmd/tui generate markdown.t2
 go run .
 ```
 

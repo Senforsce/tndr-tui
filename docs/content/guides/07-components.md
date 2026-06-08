@@ -2,9 +2,9 @@
 
 ## Overview
 
-go-tui has two kinds of components: pure templ functions and struct components.
+go-tui has two kinds of components: pure t1 functions and struct components.
 
-Pure templ functions are stateless. They take parameters, return elements, and that's it. Use them for reusable visual pieces like cards, badges, and headers.
+Pure t1 functions are stateless. They take parameters, return elements, and that's it. Use them for reusable visual pieces like cards, badges, and headers.
 
 Struct components carry state. They own `State[T]` fields, handle keyboard input, run timers, and manage their own lifecycle. Use them for anything interactive or anything that changes over time.
 
@@ -14,22 +14,22 @@ Both kinds compose freely. A struct component's render method can call pure comp
 
 A pure component is a `templ` function. It takes parameters and returns a chunk of UI:
 
-```gsx
+```t2
 package main
 
 import tui "github.com/grindlemire/go-tui"
 
-templ Badge(label string) {
+t1 Badge(label string) {
     <span class="text-cyan font-bold px-1">{label}</span>
 }
 
-templ Header(title string) {
+t1 Header(title string) {
     <div class="border-rounded p-1 flex justify-center">
         <span class="text-gradient-cyan-magenta font-bold">{title}</span>
     </div>
 }
 
-templ StatusLine(label string, value string) {
+t1 StatusLine(label string, value string) {
     <div class="flex gap-1">
         <span class="font-dim">{label}</span>
         <span class="text-cyan font-bold">{value}</span>
@@ -39,8 +39,8 @@ templ StatusLine(label string, value string) {
 
 Call them from other templates just like HTML elements, using `@`:
 
-```gsx
-templ (a *myApp) Render() {
+```t2
+t1 (a *myApp) Render() {
     <div class="flex-col gap-1 p-1">
         @Header("Dashboard")
         @Badge("v1.0")
@@ -55,8 +55,8 @@ Parameters can be any Go type: strings, ints, booleans, slices, custom structs. 
 
 Pure components can accept nested content through the `{children...}` slot. This lets you build wrapper components that add layout, borders, or styling around arbitrary content:
 
-```gsx
-templ Card(title string) {
+```t2
+t1 Card(title string) {
     <div class="border-rounded p-1 flex-col gap-1">
         <span class="text-gradient-cyan-magenta font-bold">{title}</span>
         <hr class="border-single" />
@@ -67,8 +67,8 @@ templ Card(title string) {
 
 Pass children by nesting elements inside the component call:
 
-```gsx
-templ (a *myApp) Render() {
+```t2
+t1 (a *myApp) Render() {
     <div class="flex gap-2">
         @Card("System Info") {
             @StatusLine("Version:", "1.2.0")
@@ -103,7 +103,7 @@ If you find yourself wanting to add a `*tui.State` field, you need a struct comp
 
 Struct components are Go structs with a `templ` render method. They hold state, handle input, and manage their own lifecycle:
 
-```gsx
+```t2
 package main
 
 import (
@@ -134,7 +134,7 @@ func (c *counter) KeyMap() tui.KeyMap {
     }
 }
 
-templ (c *counter) Render() {
+t1 (c *counter) Render() {
     <div class="flex-col p-1 border-rounded border-cyan items-center gap-1">
         <span class="font-bold">Counter</span>
         <span class="text-cyan font-bold">{fmt.Sprintf("%d", c.count.Get())}</span>
@@ -143,15 +143,15 @@ templ (c *counter) Render() {
 }
 ```
 
-There are three parts: the struct with state fields, a constructor function that initializes it, and the render method using `templ (receiver) Render()` syntax.
+There are three parts: the struct with state fields, a constructor function that initializes it, and the render method using `t1 (receiver) Render()` syntax.
 
-The render method works exactly like a pure templ function, but it has access to the struct's fields through the receiver. The generated code turns it into a `Render(app *App) *Element` method, which satisfies the `Component` interface.
+The render method works exactly like a pure t1 function, but it has access to the struct's fields through the receiver. The generated code turns it into a `Render(app *App) *Element` method, which satisfies the `Component` interface.
 
 ### Children Slot
 
 Struct components can also accept children using `{children...}`. Add a `children []*tui.Element` field to the struct and accept it in the constructor:
 
-```gsx
+```t2
 type panel struct {
     title    string
     children []*tui.Element
@@ -161,7 +161,7 @@ func NewPanel(title string, children []*tui.Element) *panel {
     return &panel{title: title, children: children}
 }
 
-templ (p *panel) Render() {
+t1 (p *panel) Render() {
     <div class="border-rounded p-1 flex-col gap-1">
         <span class="font-bold text-gradient-cyan-magenta">{p.title}</span>
         {children...}
@@ -171,8 +171,8 @@ templ (p *panel) Render() {
 
 Callers use the same block syntax as pure components:
 
-```gsx
-templ (a *myApp) Render() {
+```t2
+t1 (a *myApp) Render() {
     @NewPanel("Items") {
         <span>First item</span>
         <span>Second item</span>
@@ -194,7 +194,7 @@ type Component interface {
 }
 ```
 
-You don't write `Render(app *App) *Element` by hand. The `templ` keyword handles the signature. You write `templ (c *counter) Render()` and `tui generate` produces the correct Go method.
+You don't write `Render(app *App) *Element` by hand. The `templ` keyword handles the signature. You write `t1 (c *counter) Render()` and `tui generate` produces the correct Go method.
 
 ## Component Interfaces
 
@@ -333,7 +333,7 @@ Components compose by nesting. Call a pure component with `@`, and it inlines it
 
 The most common pattern. A struct component's render method calls pure components for layout and display:
 
-```gsx
+```t2
 package main
 
 import (
@@ -342,18 +342,18 @@ import (
     tui "github.com/grindlemire/go-tui"
 )
 
-templ Badge(label string, style string) {
+t1 Badge(label string, style string) {
     <span class={style + " font-bold px-1"}>{label}</span>
 }
 
-templ InfoRow(label string, value string) {
+t1 InfoRow(label string, value string) {
     <div class="flex gap-1">
         <span class="font-dim">{label}</span>
         <span class="text-cyan font-bold">{value}</span>
     </div>
 }
 
-templ Card(title string) {
+t1 Card(title string) {
     <div class="border-rounded p-1 flex-col gap-1">
         <span class="text-gradient-cyan-magenta font-bold">{title}</span>
         <hr class="border-single" />
@@ -377,7 +377,7 @@ func (u *userProfile) KeyMap() tui.KeyMap {
     }
 }
 
-templ (u *userProfile) Render() {
+t1 (u *userProfile) Render() {
     <div class="flex-col gap-1 p-1">
         @Card("User Profile") {
             <div class="flex-col gap-1">
@@ -398,7 +398,7 @@ templ (u *userProfile) Render() {
 
 When one struct component renders another struct component, the framework uses `app.Mount` to cache the child instance. This means the child keeps its state across parent re-renders:
 
-```gsx
+```t2
 package main
 
 import tui "github.com/grindlemire/go-tui"
@@ -426,7 +426,7 @@ func (s *sidebar) KeyMap() tui.KeyMap {
     }
 }
 
-templ (s *sidebar) Render() {
+t1 (s *sidebar) Render() {
     <div class="flex-col border-single p-1" width={20}>
         <span class="font-bold text-cyan">Sidebar</span>
         // ... sidebar content ...
@@ -449,7 +449,7 @@ func (a *myApp) KeyMap() tui.KeyMap {
     }
 }
 
-templ (a *myApp) Render() {
+t1 (a *myApp) Render() {
     <div class="flex h-full">
         @Sidebar(a.category)
         <div class="flex-col flex-1 p-1">
@@ -475,7 +475,7 @@ The sidebar's `selected` state persists even when the parent re-renders, because
 
 Parent and child components can share state by passing `*tui.State` values through constructors. Changes from either side trigger a re-render:
 
-```gsx
+```t2
 type myApp struct {
     category *tui.State[string]
 }
@@ -486,7 +486,7 @@ func MyApp() *myApp {
     }
 }
 
-templ (a *myApp) Render() {
+t1 (a *myApp) Render() {
     <div class="flex h-full">
         @Sidebar(a.category)
         @Content(a.category)
@@ -502,8 +502,8 @@ Both `Sidebar` and `Content` receive the same `category` state. When the sidebar
 
 A pure component that wraps content in a consistent layout:
 
-```gsx
-templ PageLayout(title string) {
+```t2
+t1 PageLayout(title string) {
     <div class="flex-col h-full">
         <div class="flex justify-center p-1 border-single">
             <span class="text-gradient-cyan-magenta font-bold">{title}</span>
@@ -522,15 +522,15 @@ templ PageLayout(title string) {
 
 Pure components for showing key-value data:
 
-```gsx
-templ KeyValue(key string, value string) {
+```t2
+t1 KeyValue(key string, value string) {
     <div class="flex gap-1">
         <span class="font-dim">{key + ":"}</span>
         <span class="text-cyan">{value}</span>
     </div>
 }
 
-templ Section(title string) {
+t1 Section(title string) {
     <div class="flex-col border-rounded p-1 gap-1">
         <span class="font-bold">{title}</span>
         <hr class="border-single" />
@@ -543,8 +543,8 @@ templ Section(title string) {
 
 A reusable scrollable panel:
 
-```gsx
-templ ScrollPanel(title string, height int) {
+```t2
+t1 ScrollPanel(title string, height int) {
     <div class="flex-col border-rounded" height={height}>
         <div class="flex p-1">
             <span class="font-bold text-cyan">{title}</span>
@@ -560,7 +560,7 @@ templ ScrollPanel(title string, height int) {
 
 A full app with pure components, a struct component, and composition:
 
-```gsx
+```t2
 package main
 
 import (
@@ -571,18 +571,18 @@ import (
 
 // Pure components
 
-templ Badge(label string, color string) {
+t1 Badge(label string, color string) {
     <span class={color + " font-bold px-1"}>{label}</span>
 }
 
-templ StatusLine(label string, value string) {
+t1 StatusLine(label string, value string) {
     <div class="flex gap-1">
         <span class="font-dim">{label}</span>
         <span class="text-cyan font-bold">{value}</span>
     </div>
 }
 
-templ Card(title string) {
+t1 Card(title string) {
     <div class="border-rounded p-1 flex-col gap-1 w-full" flexGrow={1.0}>
         <span class="text-gradient-cyan-magenta font-bold">{title}</span>
         <hr class="border-single" />
@@ -592,7 +592,7 @@ templ Card(title string) {
 
 // Tab content components
 
-templ OverviewTab() {
+t1 OverviewTab() {
     <div class="flex gap-1">
         @Card("System") {
             @StatusLine("CPU:", "42%")
@@ -607,7 +607,7 @@ templ OverviewTab() {
     </div>
 }
 
-templ MetricsTab() {
+t1 MetricsTab() {
     <div class="flex gap-1">
         @Card("Performance") {
             @StatusLine("Requests:", "1.2k/s")
@@ -622,7 +622,7 @@ templ MetricsTab() {
     </div>
 }
 
-templ LogsTab() {
+t1 LogsTab() {
     <div class="flex gap-1">
         @Card("Application") {
             @StatusLine("Level:", "INFO")
@@ -662,7 +662,7 @@ func (d *dashboard) KeyMap() tui.KeyMap {
     }
 }
 
-templ (d *dashboard) Render() {
+t1 (d *dashboard) Render() {
     <div class="flex-col p-1 gap-1 border-rounded border-cyan">
         <div class="flex gap-2">
             for i, tab := range d.tabs {

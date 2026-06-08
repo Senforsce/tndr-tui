@@ -199,7 +199,7 @@ func produceEvents(ch chan<- string, stopCh <-chan struct{}) {
 	}
 }
 
-templ (d *dashboardApp) Render() {
+t1 (d *dashboardApp) Render() {
 	<div class="flex-col p-1 gap-1 h-full border-rounded border-cyan">
 		<div class="flex justify-center shrink-0">
 			<span class="text-gradient-cyan-magenta font-bold">Dashboard</span>

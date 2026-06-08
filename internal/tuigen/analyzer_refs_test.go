@@ -15,7 +15,7 @@ func TestAnalyzer_LetBindingValidation(t *testing.T) {
 	tests := map[string]tc{
 		"valid let binding": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	myText := <span>hello</span>
 	<div></div>
 }`,
@@ -23,7 +23,7 @@ templ Test() {
 		},
 		"let binding with invalid element": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	myText := <badTag />
 	<div></div>
 }`,
@@ -32,7 +32,7 @@ templ Test() {
 		},
 		"let binding with invalid attribute": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	myText := <span badAttr="value">hello</span>
 	<div></div>
 }`,
@@ -43,7 +43,7 @@ templ Test() {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			_, err := AnalyzeFile("test.gsx", tt.input)
+			_, err := AnalyzeFile("test.t2", tt.input)
 
 			if tt.wantError {
 				if err == nil {
@@ -72,28 +72,28 @@ func TestAnalyzer_RefValidation(t *testing.T) {
 	tests := map[string]tc{
 		"valid ref name": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<div ref={content}></div>
 }`,
 			wantError: false,
 		},
 		"valid ref name with digits": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<div ref={content2}></div>
 }`,
 			wantError: false,
 		},
 		"valid ref name with underscore": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<div ref={my_Content}></div>
 }`,
 			wantError: false,
 		},
 		"reserved name Root": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<div ref={root}></div>
 }`,
 			wantError:     true,
@@ -101,7 +101,7 @@ templ Test() {
 		},
 		"duplicate ref name": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<div ref={content}></div>
 	<div ref={content}></div>
 }`,
@@ -110,7 +110,7 @@ templ Test() {
 		},
 		"duplicate ref name across branches": {
 			input: `package x
-templ Test(show bool) {
+t1 Test(show bool) {
 	if show {
 		<div ref={content}></div>
 	} else {
@@ -124,7 +124,7 @@ templ Test(show bool) {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			_, err := AnalyzeFile("test.gsx", tt.input)
+			_, err := AnalyzeFile("test.t2", tt.input)
 
 			if tt.wantError {
 				if err == nil {
@@ -153,7 +153,7 @@ func TestAnalyzer_RefInLoop(t *testing.T) {
 	tests := map[string]tc{
 		"ref in loop is valid": {
 			input: `package x
-templ Test(items []string) {
+t1 Test(items []string) {
 	<ul>
 		for _, item := range items {
 			<li ref={items}>{item}</li>
@@ -164,7 +164,7 @@ templ Test(items []string) {
 		},
 		"ref with key in loop is valid": {
 			input: `package x
-templ Test(items []Item) {
+t1 Test(items []Item) {
 	<ul>
 		for _, item := range items {
 			<li ref={items} key={item.ID}>{item.Name}</li>
@@ -175,7 +175,7 @@ templ Test(items []Item) {
 		},
 		"ref with key outside loop is invalid": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<div ref={content} key={someKey}></div>
 }`,
 			wantError:     true,
@@ -185,7 +185,7 @@ templ Test() {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			_, err := AnalyzeFile("test.gsx", tt.input)
+			_, err := AnalyzeFile("test.t2", tt.input)
 
 			if tt.wantError {
 				if err == nil {
@@ -206,7 +206,7 @@ templ Test() {
 
 func TestAnalyzer_RefInConditional(t *testing.T) {
 	input := `package x
-templ Test(show bool) {
+t1 Test(show bool) {
 	<div>
 		if show {
 			<span ref={label}>hello</span>
@@ -214,7 +214,7 @@ templ Test(show bool) {
 	</div>
 }`
 
-	_, err := AnalyzeFile("test.gsx", input)
+	_, err := AnalyzeFile("test.t2", input)
 	if err != nil {
 		t.Errorf("unexpected error: %v", err)
 	}
@@ -223,7 +223,7 @@ templ Test(show bool) {
 
 func TestAnalyzer_CollectRefs(t *testing.T) {
 	input := `package x
-templ Test(items []Item, show bool) {
+t1 Test(items []Item, show bool) {
 	<div>
 		<div ref={header}></div>
 		if show {
@@ -235,7 +235,7 @@ templ Test(items []Item, show bool) {
 	</div>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {

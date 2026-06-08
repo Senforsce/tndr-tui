@@ -1,6 +1,6 @@
 # go-tui Project Guidelines
 
-A declarative terminal UI framework for Go with templ-like syntax and flexbox layout.
+A declarative terminal UI framework for Go with tndr-like syntax and flexbox layout.
 
 ## Git Commits IMPORTANT
 
@@ -67,16 +67,16 @@ We enforce strict formatting, linting, and language modernization standards for 
   ```bash
   golangci-lint run
   ```
-- **Template Formatting**: Format custom `.gsx` template files using:
+- **Template Formatting**: Format custom `.t2` template files using:
   ```bash
   tui fmt [path...]
   ```
 
 ## Project Overview
 
-go-tui allows defining UIs in `.gsx` files that compile to type-safe Go code. The framework provides:
+go-tui allows defining UIs in `.t2` files that compile to type-safe Go code. The framework provides:
 
-- Declarative component syntax (similar to templ/JSX)
+- Declarative component syntax (similar to tndr/JSX)
 - Pure Go flexbox layout engine (no CGO)
 - Minimal external dependencies (golang.org/x/{mod,sync,sys,tools})
 - Composable widget system
@@ -86,10 +86,10 @@ go-tui allows defining UIs in `.gsx` files that compile to type-safe Go code. Th
 ## Architecture
 
 ```
-.gsx files (declarative syntax)
+.t2 files (declarative syntax)
         │ tui generate (internal/tuigen)
         ▼
-Generated Go code (*_gsx.go)
+Generated Go code (*_t2.go)
         │ imports tui "github.com/grindlemire/go-tui"
         ▼
 Widget Tree + Layout Engine (internal/layout)
@@ -199,7 +199,7 @@ Use this section to quickly find the right files for a given change.
 - `app_inline_startup.go` — Inline screen mode initialization and startup policy
 - `mount.go` — Component caching with mark-and-sweep lifecycle (Mount, PropsUpdater)
 
-### Changing the .gsx compiler (code generation)
+### Changing the .t2 compiler (code generation)
 
 The compiler pipeline is: **Lexer → Parser → Analyzer → Generator**
 
@@ -237,7 +237,7 @@ The compiler pipeline is: **Lexer → Parser → Analyzer → Generator**
 ### Changing the formatter
 
 - `internal/formatter/formatter.go` — Formatter struct, New(), Format(), FormatWithResult()
-- `internal/formatter/printer.go` — printer struct: generates formatted .gsx from AST
+- `internal/formatter/printer.go` — printer struct: generates formatted .t2 from AST
 - `internal/formatter/printer_comments.go` — Comment formatting (leading/trailing/orphan)
 - `internal/formatter/printer_control.go` — Control structure formatting (if, for, let/:= bindings)
 - `internal/formatter/printer_elements.go` — Element/attribute formatting, multi-line layout
@@ -249,7 +249,7 @@ The compiler pipeline is: **Lexer → Parser → Analyzer → Generator**
   - `server.go` — Server struct, JSON-RPC communication, document management
   - `router.go` — Request dispatch to handlers and providers
   - `handler.go` — LSP lifecycle: initialize, shutdown, exit
-  - `document.go` — Document/DocumentManager for open .gsx file tracking
+  - `document.go` — Document/DocumentManager for open .t2 file tracking
   - `context.go` — CursorContext: resolved AST info at cursor position
   - `context_resolve.go` — Cursor position resolution logic
   - `index.go` — ComponentIndex: workspace-level symbol indexing
@@ -271,11 +271,11 @@ The compiler pipeline is: **Lexer → Parser → Analyzer → Generator**
 - **gopls proxy** (`internal/lsp/gopls/`):
   - `proxy.go` — GoplsProxy: subprocess communication over JSON-RPC
   - `proxy_requests.go` — JSON-RPC request types
-  - `mapping.go` — SourceMap: position translation between .gsx and generated .go
-  - `generate.go` / `generate_state.go` — Generate virtual Go from .gsx AST for gopls
+  - `mapping.go` — SourceMap: position translation between .t2 and generated .go
+  - `generate.go` / `generate_state.go` — Generate virtual Go from .t2 AST for gopls
 - **Schema** (`internal/lsp/schema/`):
   - `schema.go` — Element definitions (div, span, p, ul, li, button, input, table, progress, hr, br)
-  - `keywords.go` — Keyword definitions (templ, for, if, else, :=)
+  - `keywords.go` — Keyword definitions (tndr, for, if, else, :=)
   - `tailwind.go` — Tailwind class documentation and matching
 - **Logging** (`internal/lsp/log/`):
   - `log.go` — Logging with component prefixes (Server, Gopls, Generate, Mapping)
@@ -325,7 +325,7 @@ The compiler pipeline is: **Lexer → Parser → Analyzer → Generator**
   NewHighlighter (built-in), builtinHighlighter; maps internal/highlight tokens to colored TextSpans
 - `internal/highlight/` -- zero-dependency syntax tokenizer (no tui import): Tokenize returns
   [][]Token per line; per-language lexers for Go, JSON, Bash, JS/TS; unknown languages fall back to plain
-- **gsx integration:** `internal/tuigen/generator_element.go` (isComponentElement, componentConstructor, markdownAttributeToOption), `internal/tuigen/analyzer.go` (knownTags, voidElements, knownAttributes: source/state/theme), `internal/lsp/schema/schema.go` (markdownAttrs)
+- **t2 integration:** `internal/tuigen/generator_element.go` (isComponentElement, componentConstructor, markdownAttributeToOption), `internal/tuigen/analyzer.go` (knownTags, voidElements, knownAttributes: source/state/theme), `internal/lsp/schema/schema.go` (markdownAttrs)
 - **Note:** `<markdown>` is self-closing; content comes from `source`/`state` expression attributes (the generator cannot type-discriminate, so source and state are distinct attributes). The component owns no scroll/keys; wrap it in a scrollable container.
 - **Note:** Fenced code blocks are syntax-highlighted by default for Go, JSON, Bash, and
   JS/TS via the theme's `CodeHighlighter`. Set `theme.CodeHighlighter = nil` to
@@ -337,14 +337,14 @@ The compiler pipeline is: **Lexer → Parser → Analyzer → Generator**
 
 - `mock_terminal.go` — MockTerminal: captures operations, maintains internal cell buffer
 - `mock_reader.go` — MockEventReader: returns queued events in order
-- `cmd/tui/testdata/` — .gsx fixtures and their expected generated .go output
+- `cmd/tui/testdata/` — .t2 fixtures and their expected generated .go output
 
 ## CLI Commands
 
 ```bash
-tui generate [path...]       # Generate Go code from .gsx files
-tui check [path...]          # Check .gsx files without generating
-tui fmt [path...]            # Format .gsx files
+tui generate [path...]       # Generate Go code from .t2 files
+tui check [path...]          # Check .t2 files without generating
+tui fmt [path...]            # Format .t2 files
 tui fmt --check [path...]    # Check formatting without modifying
 tui fmt --stdout [path...]   # Write formatted output to stdout
 tui lsp                      # Start language server (stdio)
@@ -353,9 +353,9 @@ tui version                  # Print version
 tui help                     # Show help
 ```
 
-## .gsx File Syntax
+## .t2 File Syntax
 
-```gsx
+```t2
 package mypackage
 
 import (
@@ -363,14 +363,14 @@ import (
 )
 
 // Component definition (returns Element)
-templ Header(title string) {
+t1 Header(title string) {
     <div class="border-single p-1">
         <span class="font-bold">{title}</span>
     </div>
 }
 
 // Conditionals
-templ Conditional(show bool) {
+t1 Conditional(show bool) {
     <div class="flex-col">
         if show {
             <span>Visible</span>
@@ -381,7 +381,7 @@ templ Conditional(show bool) {
 }
 
 // Loops
-templ List(items []string) {
+t1 List(items []string) {
     <div class="flex-col gap-1">
         for i, item := range items {
             <span>{fmt.Sprintf("%d: %s", i, item)}</span>
@@ -390,13 +390,13 @@ templ List(items []string) {
 }
 
 // Local bindings (element references)
-templ Counter(count int) {
+t1 Counter(count int) {
     label := <span class="font-bold">{fmt.Sprintf("Count: %d", count)}</span>
     <div>{label}</div>
 }
 
 // Component calls
-templ App() {
+t1 App() {
     <div class="flex-col">
         @Header("Hello")
         @Counter(0)
@@ -552,7 +552,7 @@ on capable terminals).
 
 Use the `class` attribute for styling:
 
-```gsx
+```t2
 <div class="flex-col gap-2 p-2 border-rounded">
     <span class="font-bold text-cyan">Title</span>
     <span class="font-dim">Subtitle</span>

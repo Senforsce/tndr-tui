@@ -7,11 +7,11 @@ import (
 func TestDocumentSymbols_Components(t *testing.T) {
 	src := `package test
 
-templ Header(title string) {
+t1 Header(title string) {
 	<div>{title}</div>
 }
 
-templ Footer() {
+t1 Footer() {
 	<span>footer</span>
 }
 `
@@ -78,7 +78,7 @@ func helper(s string) string {
 func TestDocumentSymbols_LetBindingChildren(t *testing.T) {
 	src := `package test
 
-templ Page() {
+t1 Page() {
 	header := <div>Header</div>
 	{header}
 }
@@ -119,7 +119,7 @@ templ Page() {
 
 func TestDocumentSymbols_NilAST(t *testing.T) {
 	doc := &Document{
-		URI:     "file:///test.gsx",
+		URI:     "file:///test.t2",
 		Content: "invalid content",
 	}
 	sp := NewDocumentSymbolProvider()
@@ -139,7 +139,7 @@ func TestWorkspaceSymbols_NameMatching(t *testing.T) {
 	index.components["Header"] = &ComponentInfo{
 		Name: "Header",
 		Location: Location{
-			URI: "file:///test.gsx",
+			URI: "file:///test.t2",
 			Range: Range{
 				Start: Position{Line: 2, Character: 0},
 				End:   Position{Line: 2, Character: 20},
@@ -149,7 +149,7 @@ func TestWorkspaceSymbols_NameMatching(t *testing.T) {
 	index.components["Footer"] = &ComponentInfo{
 		Name: "Footer",
 		Location: Location{
-			URI: "file:///test.gsx",
+			URI: "file:///test.t2",
 			Range: Range{
 				Start: Position{Line: 10, Character: 0},
 				End:   Position{Line: 10, Character: 20},
@@ -187,7 +187,7 @@ func TestWorkspaceSymbols_FunctionSearch(t *testing.T) {
 		Name:      "formatLabel",
 		Signature: "func formatLabel(s string) string",
 		Location: Location{
-			URI: "file:///test.gsx",
+			URI: "file:///test.t2",
 			Range: Range{
 				Start: Position{Line: 5, Character: 0},
 				End:   Position{Line: 5, Character: 30},

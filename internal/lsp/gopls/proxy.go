@@ -19,12 +19,12 @@ import (
 )
 
 // DiagnosticCallback is called when gopls publishes diagnostics.
-// The URI is the original .gsx file URI, and diagnostics have translated positions.
+// The URI is the original .t2 file URI, and diagnostics have translated positions.
 type DiagnosticCallback func(uri string, diagnostics []GoplsDiagnostic)
 
 // SourceMapLookup is called to retrieve a source map for position translation.
-// Returns goLine, goCol -> gsxLine, gsxCol translation function, or nil if not found.
-type SourceMapLookup func(gsxURI string) func(goLine, goCol int) (gsxLine, gsxCol int, found bool)
+// Returns goLine, goCol -> t2Line, t2Col translation function, or nil if not found.
+type SourceMapLookup func(t2URI string) func(goLine, goCol int) (t2Line, t2Col int, found bool)
 
 // GoplsDiagnostic represents a diagnostic from gopls with translated positions.
 type GoplsDiagnostic struct {
@@ -67,7 +67,7 @@ type GoplsProxy struct {
 	cancel context.CancelFunc
 }
 
-// VirtualFile represents a generated .go file from a .gsx file.
+// VirtualFile represents a generated .go file from a .t2 file.
 type VirtualFile struct {
 	URI       string
 	Content   string
@@ -387,8 +387,8 @@ func (p *GoplsProxy) handleNotification(notif *Notification) {
 		log.Gopls("  [%d] %s: %s", i, d.Range, d.Message)
 	}
 
-	// Only process diagnostics from real generated files (_gsx.go)
-	// Skip virtual files (_gsx_generated.go) - they exist only for hover/completion
+	// Only process diagnostics from real generated files (_t2.go)
+	// Skip virtual files (_t2_generated.go) - they exist only for hover/completion
 	// and having both can confuse gopls with duplicate type definitions
 	if IsVirtualGoFile(params.URI) {
 		log.Gopls("Skipping virtual file diagnostics: %s", params.URI)
@@ -396,23 +396,23 @@ func (p *GoplsProxy) handleNotification(notif *Notification) {
 	}
 
 	if !IsGeneratedGoFile(params.URI) {
-		log.Gopls("Skipping - not a generated _gsx.go file: %s", params.URI)
+		log.Gopls("Skipping - not a generated _t2.go file: %s", params.URI)
 		return
 	}
 
-	// Real generated file (counter_gsx.go) - needs goimports offset
-	gsxURI := GeneratedGoURIToTuiURI(params.URI)
+	// Real generated file (counter_t2.go) - needs goimports offset
+	t2URI := GeneratedGoURIToTuiURI(params.URI)
 	lineOffset := 1 // goimports adds 1 blank line between import groups
-	log.Gopls("Real file diagnostics for %s (offset=%d)", gsxURI, lineOffset)
-	log.Gopls("Mapped to gsxURI=%s", gsxURI)
+	log.Gopls("Real file diagnostics for %s (offset=%d)", t2URI, lineOffset)
+	log.Gopls("Mapped to t2URI=%s", t2URI)
 
 	// Get source map lookup function
-	var translatePos func(goLine, goCol int) (gsxLine, gsxCol int, found bool)
+	var translatePos func(goLine, goCol int) (t2Line, t2Col int, found bool)
 	if p.sourceMapLookup != nil {
-		translatePos = p.sourceMapLookup(gsxURI)
+		translatePos = p.sourceMapLookup(t2URI)
 	}
 	if translatePos == nil {
-		log.Gopls("No source map available for %s", gsxURI)
+		log.Gopls("No source map available for %s", t2URI)
 		return
 	}
 
@@ -420,10 +420,10 @@ func (p *GoplsProxy) handleNotification(notif *Notification) {
 	var translated []GoplsDiagnostic
 	for _, diag := range params.Diagnostics {
 		// Skip errors caused by our virtual/generated file setup.
-		// Gopls sees both virtual files and real _gsx.go files, causing conflicts.
+		// Gopls sees both virtual files and real _t2.go files, causing conflicts.
 		// Filter redeclaration and unknown field errors that reference generated files.
 		isRedeclaration := strings.Contains(diag.Message, "redeclared") || strings.Contains(diag.Message, "already declared")
-		referencesGeneratedFile := strings.Contains(diag.Message, "_gsx.go")
+		referencesGeneratedFile := strings.Contains(diag.Message, "_t2.go")
 		isBlockRedeclaration := strings.Contains(diag.Message, "redeclared in this block")
 		if isRedeclaration && (referencesGeneratedFile || isBlockRedeclaration) {
 			log.Gopls("Skipping redeclaration error: %s", diag.Message)
@@ -437,10 +437,10 @@ func (p *GoplsProxy) handleNotification(notif *Notification) {
 		// Translate positions using source map
 		// For real files, goimports adds blank lines that shift positions
 		adjustedStartLine := max(diag.Range.Start.Line-lineOffset, 0)
-		gsxStartLine, gsxStartCol, startFound := translatePos(adjustedStartLine, diag.Range.Start.Character)
+		t2StartLine, t2StartCol, startFound := translatePos(adjustedStartLine, diag.Range.Start.Character)
 
 		adjustedEndLine := max(diag.Range.End.Line-lineOffset, 0)
-		gsxEndLine, gsxEndCol, endFound := translatePos(adjustedEndLine, diag.Range.End.Character)
+		t2EndLine, t2EndCol, endFound := translatePos(adjustedEndLine, diag.Range.End.Character)
 
 		if !startFound || !endFound {
 			log.Gopls("Could not translate diagnostic position: line=%d col=%d msg=%s",
@@ -448,14 +448,14 @@ func (p *GoplsProxy) handleNotification(notif *Notification) {
 			continue
 		}
 
-		log.Gopls("Translated: go=%d:%d -> gsx=%d:%d msg=%s",
+		log.Gopls("Translated: go=%d:%d -> t2=%d:%d msg=%s",
 			diag.Range.Start.Line, diag.Range.Start.Character,
-			gsxStartLine, gsxStartCol, diag.Message)
+			t2StartLine, t2StartCol, diag.Message)
 
 		translated = append(translated, GoplsDiagnostic{
 			Range: Range{
-				Start: Position{Line: gsxStartLine, Character: gsxStartCol},
-				End:   Position{Line: gsxEndLine, Character: gsxEndCol},
+				Start: Position{Line: t2StartLine, Character: t2StartCol},
+				End:   Position{Line: t2EndLine, Character: t2EndCol},
 			},
 			Severity: diag.Severity,
 			Message:  diag.Message,
@@ -469,7 +469,7 @@ func (p *GoplsProxy) handleNotification(notif *Notification) {
 	p.diagnosticMu.RUnlock()
 
 	if cb != nil && len(translated) > 0 {
-		cb(gsxURI, translated)
+		cb(t2URI, translated)
 	}
 }
 
@@ -509,50 +509,50 @@ func (p *GoplsProxy) readMessage() ([]byte, error) {
 	return content, nil
 }
 
-// TuiURIToGoURI converts a .gsx file URI to a virtual .go file URI.
+// TuiURIToGoURI converts a .t2 file URI to a virtual .go file URI.
 func TuiURIToGoURI(tuiURI string) string {
-	// Replace .gsx extension with _gsx_generated.go
-	if before, ok := strings.CutSuffix(tuiURI, ".gsx"); ok {
-		return before + "_gsx_generated.go"
+	// Replace .t2 extension with _t2_generated.go
+	if before, ok := strings.CutSuffix(tuiURI, ".t2"); ok {
+		return before + "_t2_generated.go"
 	}
 	return tuiURI + "_generated.go"
 }
 
-// GoURIToTuiURI converts a virtual .go file URI back to the .gsx file URI.
+// GoURIToTuiURI converts a virtual .go file URI back to the .t2 file URI.
 func GoURIToTuiURI(goURI string) string {
-	if before, ok := strings.CutSuffix(goURI, "_gsx_generated.go"); ok {
-		return before + ".gsx"
+	if before, ok := strings.CutSuffix(goURI, "_t2_generated.go"); ok {
+		return before + ".t2"
 	}
 	return goURI
 }
 
 // IsVirtualGoFile returns true if the URI is a virtual .go file.
 func IsVirtualGoFile(uri string) bool {
-	return strings.HasSuffix(uri, "_gsx_generated.go")
+	return strings.HasSuffix(uri, "_t2_generated.go")
 }
 
 // GetVirtualFilePath returns the path where a virtual .go file would be created.
-func GetVirtualFilePath(gsxPath string) string {
-	dir := filepath.Dir(gsxPath)
-	base := filepath.Base(gsxPath)
-	if before, ok := strings.CutSuffix(base, ".gsx"); ok {
-		base = before + "_gsx_generated.go"
+func GetVirtualFilePath(t2Path string) string {
+	dir := filepath.Dir(t2Path)
+	base := filepath.Base(t2Path)
+	if before, ok := strings.CutSuffix(base, ".t2"); ok {
+		base = before + "_t2_generated.go"
 	} else {
 		base = base + "_generated.go"
 	}
 	return filepath.Join(dir, base)
 }
 
-// IsGeneratedGoFile returns true if the URI is a real generated _gsx.go file (on disk).
+// IsGeneratedGoFile returns true if the URI is a real generated _t2.go file (on disk).
 func IsGeneratedGoFile(uri string) bool {
-	// Match files like counter_gsx.go but NOT counter_gsx_generated.go (virtual)
-	return strings.HasSuffix(uri, "_gsx.go") && !strings.HasSuffix(uri, "_gsx_generated.go")
+	// Match files like counter_t2.go but NOT counter_t2_generated.go (virtual)
+	return strings.HasSuffix(uri, "_t2.go") && !strings.HasSuffix(uri, "_t2_generated.go")
 }
 
-// GeneratedGoURIToTuiURI converts a real generated _gsx.go file URI to the .gsx file URI.
+// GeneratedGoURIToTuiURI converts a real generated _t2.go file URI to the .t2 file URI.
 func GeneratedGoURIToTuiURI(goURI string) string {
-	if before, ok := strings.CutSuffix(goURI, "_gsx.go"); ok {
-		return before + ".gsx"
+	if before, ok := strings.CutSuffix(goURI, "_t2.go"); ok {
+		return before + ".t2"
 	}
 	return goURI
 }

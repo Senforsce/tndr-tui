@@ -2,9 +2,9 @@
 
 ## Overview
 
-`.gsx` files are Go source files extended with a template syntax for declaring UIs. The `tui generate` command reads `.gsx` files and produces `_gsx.go` files containing standard Go code. You never edit the generated files by hand.
+`.t2` files are Go source files extended with a template syntax for declaring UIs. The `tui generate` command reads `.t2` files and produces `_t2.go` files containing standard Go code. You never edit the generated files by hand.
 
-A `.gsx` file can contain:
+A `.t2` file can contain:
 
 - A `package` declaration and `import` block (standard Go)
 - Type declarations and regular Go functions (`type`, `func`)
@@ -15,9 +15,9 @@ A `.gsx` file can contain:
 
 ## File structure
 
-Every `.gsx` file starts with a standard Go package and import block:
+Every `.t2` file starts with a standard Go package and import block:
 
-```gsx
+```t2
 package mypackage
 
 import (
@@ -35,16 +35,16 @@ The rest of the file can mix Go declarations (types, functions, variables) with 
 
 A pure component is a stateless function that takes parameters and returns UI elements. Define one with the `templ` keyword:
 
-```gsx
-templ Greeting(name string) {
+```t2
+t1 Greeting(name string) {
     <span class="text-cyan">{"Hello, " + name}</span>
 }
 ```
 
 Parameters use standard Go function parameter syntax. Any valid Go type works:
 
-```gsx
-templ UserList(users []string, maxVisible int) {
+```t2
+t1 UserList(users []string, maxVisible int) {
     <div class="flex-col">
         for i, u := range users {
             if i < maxVisible {
@@ -59,8 +59,8 @@ templ UserList(users []string, maxVisible int) {
 
 Pure components can accept nested content from their caller using `{children...}`:
 
-```gsx
-templ Card(title string) {
+```t2
+t1 Card(title string) {
     <div class="border-rounded p-1">
         <span class="font-bold">{title}</span>
         {children...}
@@ -70,7 +70,7 @@ templ Card(title string) {
 
 Call it with children:
 
-```gsx
+```t2
 <Card title="Status">
     <span class="text-green">All systems operational</span>
 </Card>
@@ -82,7 +82,7 @@ Call it with children:
 
 A struct component has its own state and lifecycle. Define the render method with `templ` using a receiver:
 
-```gsx
+```t2
 type counter struct {
     count *tui.State[int]
 }
@@ -93,7 +93,7 @@ func Counter() *counter {
     }
 }
 
-templ (c *counter) Render() {
+t1 (c *counter) Render() {
     <div class="flex gap-2">
         <span class="font-bold">{fmt.Sprintf("Count: %d", c.count.Get())}</span>
     </div>
@@ -106,7 +106,7 @@ The method name must be `Render` and it takes no parameters. The receiver can be
 
 Call a pure component like an element, passing parameters as attributes:
 
-```gsx
+```t2
 <Greeting name="World" />
 <Card title="Info">
     <span>Some content</span>
@@ -117,9 +117,9 @@ Component names must start with an uppercase letter to distinguish them from bui
 
 ### Regular Go functions
 
-Standard Go functions work normally in `.gsx` files:
+Standard Go functions work normally in `.t2` files:
 
-```gsx
+```t2
 func formatPercent(v, max int) string {
     if max == 0 {
         return "0%"
@@ -138,7 +138,7 @@ These elements can have children and support flexbox layout attributes.
 
 **`<div>`** -- Block container, and the main layout element. Default direction is row.
 
-```gsx
+```t2
 <div class="flex-col gap-1 p-1 border-rounded">
     <span>First</span>
     <span>Second</span>
@@ -147,7 +147,7 @@ These elements can have children and support flexbox layout attributes.
 
 **`<ul>`** -- Unordered list container. Use with `<li>` children.
 
-```gsx
+```t2
 <ul class="flex-col">
     <li>Item one</li>
     <li>Item two</li>
@@ -164,7 +164,7 @@ These hold text content and support text styling but not flex container attribut
 
 **`<span>`** -- Inline text container for styled text content.
 
-```gsx
+```t2
 <span class="font-bold text-cyan">Status: OK</span>
 ```
 
@@ -174,25 +174,25 @@ These hold text content and support text styling but not flex container attribut
 
 **`<button>`** -- Clickable element. Supports text and event attributes. Attach a ref for click handling:
 
-```gsx
+```t2
 <button ref={s.myBtn} class="px-2 border-rounded text-green">{" Save "}</button>
 ```
 
 **`<input />`** -- Single-line text input. Self-closing. Bind `value` to a `*State[string]` for two-way binding. Also accepts `placeholder`, `width`, `border`, `focusColor`, `borderGradient`, `focusGradient`, `onSubmit`, and `onChange`.
 
-```gsx
+```t2
 <input value={s.text} placeholder="Type here..." width={30} border={tui.BorderRounded} />
 ```
 
 **`<textarea />`** -- Multi-line text input with word wrapping. Self-closing. Bind `value` to a `*State[string]` for two-way binding. Also accepts `placeholder`, `width`, `maxHeight`, `border`, `focusColor`, `borderGradient`, `focusGradient`, `submitKey`, and `onSubmit`.
 
-```gsx
+```t2
 <textarea value={s.note} placeholder="Write here..." width={40} maxHeight={6} border={tui.BorderRounded} />
 ```
 
 **`<modal>`** -- Full-screen overlay dialog. Bind `open` to a `*State[bool]` for visibility. Accepts children for the dialog content. Supports `backdrop`, `closeOnEscape`, `closeOnBackdropClick`, `trapFocus`, `keyMap`, and `class` for positioning.
 
-```gsx
+```t2
 <modal open={s.showDialog} class="justify-center items-center">
     <div class="border-rounded p-2 flex-col gap-1 w-40">
         <span class="font-bold">Title</span>
@@ -205,25 +205,25 @@ These hold text content and support text styling but not flex container attribut
 
 **`<markdown />`** -- Renders a markdown string into the widget tree. Self-closing. Provide content through `source` (a string expression) or `state` (a `*State[string]` that re-renders on change). Also accepts `width` and `theme`. Owns no scroll or keys, so wrap it in a scrollable container for long documents.
 
-```gsx
+```t2
 <markdown source={s.doc} width={80} />
 ```
 
 **`<progress />`** -- Progress bar. Self-closing. Accepts `value`, `max`, and `width`.
 
-```gsx
+```t2
 <progress value={75} max={100} width={20} />
 ```
 
 **`<hr />`** -- Horizontal rule. Self-closing. Accepts only `id` and `class`.
 
-```gsx
+```t2
 <hr />
 ```
 
 **`<br />`** -- Line break. Self-closing. Accepts only `id` and `class`.
 
-```gsx
+```t2
 <br />
 ```
 
@@ -237,7 +237,7 @@ These hold text content and support text styling but not flex container attribut
 
 Pass string values with double quotes:
 
-```gsx
+```t2
 <div class="flex-col gap-1" id="header">
     <span text="Hello" />
 </div>
@@ -247,7 +247,7 @@ Pass string values with double quotes:
 
 Pass numbers directly without braces:
 
-```gsx
+```t2
 <div width={40} height={10} gap={2}>
     <div flexGrow={1.5} />
 </div>
@@ -257,7 +257,7 @@ Pass numbers directly without braces:
 
 Pass `true` or `false`, or use the shorthand (attribute name alone means `true`):
 
-```gsx
+```t2
 <div focusable={true} />
 <div focusable />          // equivalent
 <div disabled={false} />
@@ -267,7 +267,7 @@ Pass `true` or `false`, or use the shorthand (attribute name alone means `true`)
 
 Pass any Go expression inside braces:
 
-```gsx
+```t2
 <div
     width={computeWidth()}
     textStyle={tui.NewStyle().Bold().Foreground(tui.ANSIColor(tui.Cyan))}
@@ -280,7 +280,7 @@ Pass any Go expression inside braces:
 
 Bind an element to a ref for later access in handlers:
 
-```gsx
+```t2
 <div ref={s.myRef} class="border-single p-1" />
 ```
 
@@ -290,7 +290,7 @@ See the [Refs Reference](refs.md) for `Ref`, `RefList`, and `RefMap` details.
 
 Inside `for` loops, the `key` attribute tells the framework how to identify elements for `RefMap`:
 
-```gsx
+```t2
 for _, name := range items {
     <div ref={s.itemRefs} key={name}>{name}</div>
 }
@@ -450,7 +450,7 @@ Available on: `div`, `ul`, `li`, `table`.
 
 Embed Go expressions inside braces to produce text:
 
-```gsx
+```t2
 <span>{fmt.Sprintf("Count: %d", count)}</span>
 <span>{"literal string"}</span>
 <span>{s.name.Get()}</span>
@@ -460,7 +460,7 @@ Embed Go expressions inside braces to produce text:
 
 Use braces for dynamic attribute values:
 
-```gsx
+```t2
 <div width={s.computeWidth()} textStyle={s.getActiveStyle()} />
 ```
 
@@ -468,7 +468,7 @@ Use braces for dynamic attribute values:
 
 Call components with the `@` prefix or as XML-like tags:
 
-```gsx
+```t2
 <Card title={fmt.Sprintf("Item %d", i)}>
     <span>{content}</span>
 </Card>
@@ -480,7 +480,7 @@ Call components with the `@` prefix or as XML-like tags:
 
 Conditionally render elements:
 
-```gsx
+```t2
 if s.loading.Get() {
     <span class="text-yellow">Loading...</span>
 } else {
@@ -490,7 +490,7 @@ if s.loading.Get() {
 
 Chain conditions:
 
-```gsx
+```t2
 if count > 10 {
     <span class="text-red">High</span>
 } else if count > 5 {
@@ -506,7 +506,7 @@ The condition is any valid Go boolean expression.
 
 Loop over collections:
 
-```gsx
+```t2
 for i, item := range s.items.Get() {
     <span>{fmt.Sprintf("%d. %s", i+1, item)}</span>
 }
@@ -514,7 +514,7 @@ for i, item := range s.items.Get() {
 
 Supports all standard Go range patterns:
 
-```gsx
+```t2
 for _, v := range items {       // index ignored
 for i := range items {           // value ignored
 for i, v := range items {       // both used
@@ -524,7 +524,7 @@ for i, v := range items {       // both used
 
 Bind an element to a local variable for reuse:
 
-```gsx
+```t2
 badge := <span class="text-cyan font-bold">{fmt.Sprintf("%d", s.count.Get())}</span>
 <div class="flex gap-2">
     {badge}
@@ -743,20 +743,20 @@ Thumb: `scrollbar-thumb-red`, `scrollbar-thumb-green`, etc. (all 16 standard and
 ### Commands
 
 ```bash
-tui generate [path...]    # generate _gsx.go from .gsx files
-tui check [path...]       # validate .gsx without generating
-tui fmt [path...]         # format .gsx files
+tui generate [path...]    # generate _t2.go from .t2 files
+tui check [path...]       # validate .t2 without generating
+tui fmt [path...]         # format .t2 files
 tui fmt --check [path...] # check formatting without modifying
 ```
 
 ### How generation works
 
-1. The compiler lexes and parses each `.gsx` file into an AST.
+1. The compiler lexes and parses each `.t2` file into an AST.
 2. The analyzer validates element tags, attributes, ref usage, and Tailwind classes.
-3. The generator produces a `_gsx.go` file in the same directory with the same package name.
+3. The generator produces a `_t2.go` file in the same directory with the same package name.
 4. Each `templ` block becomes a Go function or method returning `*tui.Element`.
 5. Elements become calls to `tui.New(options...)` with `AddChild` calls for children.
 6. Tailwind classes become element option arguments at compile time (not at runtime).
 7. Control flow (`if`, `for`, `:=`) becomes standard Go control flow.
 
-Re-run `tui generate` after any `.gsx` change. The generated `_gsx.go` files should be committed to version control but never edited by hand.
+Re-run `tui generate` after any `.t2` change. The generated `_t2.go` files should be committed to version control but never edited by hand.

@@ -190,7 +190,7 @@ func TestDocumentLifecycle(t *testing.T) {
 		"valid document": {
 			content: `package main
 
-templ Hello() {
+t1 Hello() {
 	<span>Hello</span>
 }
 `,
@@ -206,7 +206,7 @@ templ Hello() {
 			wantErrors: 1, // Parser generates error for unexpected @expr at top level
 		},
 		"missing package": {
-			content: `templ Hello() {
+			content: `t1 Hello() {
 	<span>Hello</span>
 }
 `,
@@ -217,7 +217,7 @@ templ Hello() {
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
 			mock := newMockReadWriter()
-			uri := "file:///test.gsx"
+			uri := "file:///test.t2"
 
 			// Initialize
 			if err := mock.writeRequest(1, "initialize", InitializeParams{RootURI: "file:///"}); err != nil {
@@ -285,7 +285,7 @@ func TestDocumentUpdate(t *testing.T) {
 `,
 			updated: `package main
 
-templ Hello() {
+t1 Hello() {
 	<span>Hello</span>
 }
 `,
@@ -295,7 +295,7 @@ templ Hello() {
 		"introduce error": {
 			initial: `package main
 
-templ Hello() {
+t1 Hello() {
 	<span>Hello</span>
 }
 `,
@@ -313,7 +313,7 @@ templ Hello() {
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
 			mock := newMockReadWriter()
-			uri := "file:///test.gsx"
+			uri := "file:///test.t2"
 
 			// Initialize
 			if err := mock.writeRequest(1, "initialize", InitializeParams{RootURI: "file:///"}); err != nil {
@@ -379,10 +379,10 @@ templ Hello() {
 
 func TestDocumentClose(t *testing.T) {
 	mock := newMockReadWriter()
-	uri := "file:///test.gsx"
+	uri := "file:///test.t2"
 	content := `package main
 
-templ Hello() {
+t1 Hello() {
 	<span>Hello</span>
 }
 `

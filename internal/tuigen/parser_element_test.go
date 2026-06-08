@@ -6,11 +6,11 @@ import (
 
 func TestParser_SelfClosingElement(t *testing.T) {
 	input := `package x
-templ Test() {
+t1 Test() {
 	<input />
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -38,14 +38,14 @@ templ Test() {
 
 func TestParser_ElementWithChildren(t *testing.T) {
 	input := `package x
-templ Test() {
+t1 Test() {
 	<div>
 		<span>Hello</span>
 		<span>World</span>
 	</div>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -91,42 +91,42 @@ func TestParser_ElementWithAttributes(t *testing.T) {
 	tests := map[string]tc{
 		"no attributes": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<div></div>
 }`,
 			wantAttrs: 0,
 		},
 		"string attribute": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<span textAlign="center"></span>
 }`,
 			wantAttrs: 1,
 		},
 		"int attribute": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<div width=100></div>
 }`,
 			wantAttrs: 1,
 		},
 		"expression attribute": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<div direction={tui.Column}></div>
 }`,
 			wantAttrs: 1,
 		},
 		"multiple attributes": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<div width=100 height=50 direction={tui.Row}></div>
 }`,
 			wantAttrs: 3,
 		},
 		"boolean shorthand": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<input disabled></input>
 }`,
 			wantAttrs: 1,
@@ -135,7 +135,7 @@ templ Test() {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			l := NewLexer("test.gsx", tt.input)
+			l := NewLexer("test.t2", tt.input)
 			p := NewParser(l)
 			file, err := p.ParseFile()
 			if err != nil {
@@ -152,7 +152,7 @@ templ Test() {
 
 func TestParser_AttributeValues(t *testing.T) {
 	input := `package x
-templ Test() {
+t1 Test() {
 	<div
 		strAttr="hello"
 		intAttr=42
@@ -163,7 +163,7 @@ templ Test() {
 	></div>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -235,7 +235,7 @@ templ Test() {
 
 func TestParser_NestedElements(t *testing.T) {
 	input := `package x
-templ Test() {
+t1 Test() {
 	<div>
 		<div>
 			<span>Deep</span>
@@ -243,7 +243,7 @@ templ Test() {
 	</div>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -285,7 +285,7 @@ func TestParser_RefAttribute(t *testing.T) {
 	tests := map[string]tc{
 		"simple ref attribute": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<div ref={content}></div>
 }`,
 			wantRef:   "content",
@@ -294,7 +294,7 @@ templ Test() {
 		},
 		"ref attribute with attributes": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<span ref={title} class="bold">hello</span>
 }`,
 			wantRef:   "title",
@@ -303,7 +303,7 @@ templ Test() {
 		},
 		"ref attribute self-closing": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<div ref={spacer} />
 }`,
 			wantRef:   "spacer",
@@ -312,7 +312,7 @@ templ Test() {
 		},
 		"ref attribute with multiple attributes": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<div ref={content} width=100 height=50></div>
 }`,
 			wantRef:   "content",
@@ -323,7 +323,7 @@ templ Test() {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			l := NewLexer("test.gsx", tt.input)
+			l := NewLexer("test.t2", tt.input)
 			p := NewParser(l)
 			file, err := p.ParseFile()
 			if err != nil {
@@ -369,7 +369,7 @@ templ Test() {
 
 func TestParser_RefAttributeWithKey(t *testing.T) {
 	input := `package x
-templ Test(items []Item) {
+t1 Test(items []Item) {
 	<ul>
 		for _, item := range items {
 			<li ref={items} key={item.ID}>{item.Name}</li>
@@ -377,7 +377,7 @@ templ Test(items []Item) {
 	</ul>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -418,7 +418,7 @@ templ Test(items []Item) {
 
 func TestParser_MultipleRefAttributes(t *testing.T) {
 	input := `package x
-templ Test() {
+t1 Test() {
 	<div>
 		<div ref={header} height=3></div>
 		<div ref={content}></div>
@@ -426,7 +426,7 @@ templ Test() {
 	</div>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {

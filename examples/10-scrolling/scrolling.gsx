@@ -98,7 +98,7 @@ func (f *fileList) HandleMouse(me tui.MouseEvent) bool {
 	return false
 }
 
-templ (f *fileList) Render() {
+t1 (f *fileList) Render() {
 	<div class="flex-col p-1 border-rounded border-cyan">
 		<span class="text-gradient-cyan-magenta font-bold">Files</span>
 		<div

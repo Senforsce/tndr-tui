@@ -19,7 +19,7 @@ func TestCommentSemanticTokens(t *testing.T) {
 			content: `package main
 
 // This is a comment
-templ Hello() {
+t1 Hello() {
 	<span>Hello</span>
 }
 `,
@@ -29,7 +29,7 @@ templ Hello() {
 		"trailing comment on component": {
 			content: `package main
 
-templ Hello() {  // trailing comment
+t1 Hello() {  // trailing comment
 	<span>Hello</span>
 }
 `,
@@ -40,7 +40,7 @@ templ Hello() {  // trailing comment
 			content: `package main
 
 /* Block comment */
-templ Hello() {
+t1 Hello() {
 	<span>Hello</span>
 }
 `,
@@ -50,7 +50,7 @@ templ Hello() {
 		"comment inside element": {
 			content: `package main
 
-templ Hello() {
+t1 Hello() {
 	// comment inside body
 	<span>Hello</span>
 }
@@ -63,7 +63,7 @@ templ Hello() {
 
 // Comment 1
 // Comment 2
-templ Hello() {
+t1 Hello() {
 	// Comment 3
 	<span>Hello</span>  // Comment 4
 }
@@ -74,7 +74,7 @@ templ Hello() {
 		"comment in if statement": {
 			content: `package main
 
-templ Hello(show bool) {
+t1 Hello(show bool) {
 	// comment before if
 	if show {
 		<span>Hello</span>
@@ -87,7 +87,7 @@ templ Hello(show bool) {
 		"comment in for loop": {
 			content: `package main
 
-templ List(items []string) {
+t1 List(items []string) {
 	// comment before for
 	for _, item := range items {
 		<span>{item}</span>
@@ -100,7 +100,7 @@ templ List(items []string) {
 		"orphan comment in component body": {
 			content: `package main
 
-templ Hello() {
+t1 Hello() {
 	// orphan comment with no following node
 }
 `,
@@ -113,11 +113,11 @@ templ Hello() {
 		t.Run(name, func(t *testing.T) {
 			server := NewServer(nil, nil)
 
-			doc := server.docs.Open("file:///test.gsx", tt.content, 1)
-			server.index.IndexDocument("file:///test.gsx", doc.AST)
+			doc := server.docs.Open("file:///test.t2", tt.content, 1)
+			server.index.IndexDocument("file:///test.t2", doc.AST)
 
 			params, _ := json.Marshal(SemanticTokensParams{
-				TextDocument: TextDocumentIdentifier{URI: "file:///test.gsx"},
+				TextDocument: TextDocumentIdentifier{URI: "file:///test.t2"},
 			})
 
 			result, rpcErr := server.router.Route(Request{
@@ -157,7 +157,7 @@ func TestCommentTokenPositions(t *testing.T) {
 			content: `package main
 
 // Hello
-templ Hello() {
+t1 Hello() {
 	<span>Hello</span>
 }
 `,
@@ -168,7 +168,7 @@ templ Hello() {
 		"indented comment position": {
 			content: `package main
 
-templ Hello() {
+t1 Hello() {
 	// indented comment
 	<span>Hello</span>
 }
@@ -183,11 +183,11 @@ templ Hello() {
 		t.Run(name, func(t *testing.T) {
 			server := NewServer(nil, nil)
 
-			doc := server.docs.Open("file:///test.gsx", tt.content, 1)
-			server.index.IndexDocument("file:///test.gsx", doc.AST)
+			doc := server.docs.Open("file:///test.t2", tt.content, 1)
+			server.index.IndexDocument("file:///test.t2", doc.AST)
 
 			params, _ := json.Marshal(SemanticTokensParams{
-				TextDocument: TextDocumentIdentifier{URI: "file:///test.gsx"},
+				TextDocument: TextDocumentIdentifier{URI: "file:///test.t2"},
 			})
 
 			result, rpcErr := server.router.Route(Request{
@@ -244,7 +244,7 @@ func TestBlockCommentTokens(t *testing.T) {
 			content: `package main
 
 /* single line */
-templ Hello() {
+t1 Hello() {
 	<span>Hello</span>
 }
 `,
@@ -256,7 +256,7 @@ templ Hello() {
 /* line 1
    line 2
    line 3 */
-templ Hello() {
+t1 Hello() {
 	<span>Hello</span>
 }
 `,
@@ -268,11 +268,11 @@ templ Hello() {
 		t.Run(name, func(t *testing.T) {
 			server := NewServer(nil, nil)
 
-			doc := server.docs.Open("file:///test.gsx", tt.content, 1)
-			server.index.IndexDocument("file:///test.gsx", doc.AST)
+			doc := server.docs.Open("file:///test.t2", tt.content, 1)
+			server.index.IndexDocument("file:///test.t2", doc.AST)
 
 			params, _ := json.Marshal(SemanticTokensParams{
-				TextDocument: TextDocumentIdentifier{URI: "file:///test.gsx"},
+				TextDocument: TextDocumentIdentifier{URI: "file:///test.t2"},
 			})
 
 			result, rpcErr := server.router.Route(Request{
@@ -310,7 +310,7 @@ func TestInlineBlockCommentInGoExpr(t *testing.T) {
 
 import "fmt"
 
-templ Hello(item string) {
+t1 Hello(item string) {
 	<span>{fmt.Sprintf("> %s", /* ItemList item */ item)}</span>
 }
 `,
@@ -318,7 +318,7 @@ templ Hello(item string) {
 		"inline block comment in simple expression": {
 			content: `package main
 
-templ Hello(x int) {
+t1 Hello(x int) {
 	<span>{/* test */ x}</span>
 }
 `,
@@ -329,11 +329,11 @@ templ Hello(x int) {
 		t.Run(name, func(t *testing.T) {
 			server := NewServer(nil, nil)
 
-			doc := server.docs.Open("file:///test.gsx", tt.content, 1)
-			server.index.IndexDocument("file:///test.gsx", doc.AST)
+			doc := server.docs.Open("file:///test.t2", tt.content, 1)
+			server.index.IndexDocument("file:///test.t2", doc.AST)
 
 			params, _ := json.Marshal(SemanticTokensParams{
-				TextDocument: TextDocumentIdentifier{URI: "file:///test.gsx"},
+				TextDocument: TextDocumentIdentifier{URI: "file:///test.t2"},
 			})
 
 			result, rpcErr := server.router.Route(Request{
@@ -378,7 +378,7 @@ func TestCommentsInVariousPositions(t *testing.T) {
 // File leading comment
 
 // Component doc comment
-templ Hello(name string) {  // Component trailing
+t1 Hello(name string) {  // Component trailing
 	// Element leading
 	<div>  // Element trailing
 		// Nested comment
@@ -393,11 +393,11 @@ func helper() string {
 `
 	server := NewServer(nil, nil)
 
-	doc := server.docs.Open("file:///test.gsx", content, 1)
-	server.index.IndexDocument("file:///test.gsx", doc.AST)
+	doc := server.docs.Open("file:///test.t2", content, 1)
+	server.index.IndexDocument("file:///test.t2", doc.AST)
 
 	params, _ := json.Marshal(SemanticTokensParams{
-		TextDocument: TextDocumentIdentifier{URI: "file:///test.gsx"},
+		TextDocument: TextDocumentIdentifier{URI: "file:///test.t2"},
 	})
 
 	result, rpcErr := server.router.Route(Request{

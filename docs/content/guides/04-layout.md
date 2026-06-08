@@ -10,8 +10,8 @@ If you've used CSS flexbox, the mental model is the same: a container has a main
 
 Every flex container lays out its children along a main axis. The default is `Row` (horizontal, left to right). Use `flex-col` to switch to `Column` (vertical, top to bottom).
 
-```gsx
-templ DirectionDemo() {
+```t2
+t1 DirectionDemo() {
     <div class="flex-col items-center w-full gap-2 p-1">
         <span class="font-bold">Row (default):</span>
         <div class="flex gap-1">
@@ -43,8 +43,8 @@ You can also set direction via the attribute: `direction={tui.Column}`.
 
 Justify controls how children are distributed along the **main axis** (horizontal for rows, vertical for columns).
 
-```gsx
-templ JustifyDemo() {
+```t2
+t1 JustifyDemo() {
     <div class="flex-col items-center w-full gap-1 p-1">
         <span class="font-dim">justify-start (default):</span>
         <div class="flex justify-start border-single w-40">
@@ -106,8 +106,8 @@ You can also use the attribute form: `justify={tui.JustifyCenter}`.
 
 Align controls how children are positioned along the **cross axis** (vertical for rows, horizontal for columns).
 
-```gsx
-templ AlignDemo() {
+```t2
+t1 AlignDemo() {
     <div class="flex-col items-center w-full gap-1 p-1">
         <span class="font-dim">items-start:</span>
         <div class="flex items-start gap-1 border-single h-5 w-40">
@@ -149,8 +149,8 @@ Individual children can override the container's alignment with `self-start`, `s
 
 Gap adds uniform spacing between children along the main axis. It does not add space before the first child or after the last.
 
-```gsx
-templ GapDemo() {
+```t2
+t1 GapDemo() {
     <div class="flex-col items-center w-full gap-1 p-1">
         <span class="font-dim">gap-0 (no gap):</span>
         <div class="flex gap-0">
@@ -186,8 +186,8 @@ Grow and shrink control how children claim extra space or give it up when the co
 
 `grow` (or `flex-grow-1`) tells an element to expand and fill available space. The grow value is relative to siblings: if two siblings both have `grow`, they split the extra space equally. If one has `flex-grow-2` and another has `flex-grow-1`, the first gets twice as much extra space.
 
-```gsx
-templ GrowDemo() {
+```t2
+t1 GrowDemo() {
     <div class="flex-col items-center w-full gap-1 p-1">
         <span class="font-dim">Fixed sidebar + growing content:</span>
         <div class="flex gap-1 w-50 border-single">
@@ -237,8 +237,8 @@ You can also use attributes: `flexGrow={1.5}`, `flexShrink={0}`.
 
 By default, children stay on a single line even if they overflow the container. Add `flex-wrap` to let items break onto new lines when they run out of room.
 
-```gsx
-templ WrapDemo() {
+```t2
+t1 WrapDemo() {
     <div class="flex flex-wrap gap-1 w-40 border-single p-1">
         <span class="bg-cyan text-black px-2 shrink-0">Alpha</span>
         <span class="bg-cyan text-black px-2 shrink-0">Bravo</span>
@@ -263,8 +263,8 @@ You can also use the attribute form: `flexWrap={tui.Wrap}`.
 
 When wrapping produces multiple lines, `align-content` controls how the lines are spaced along the cross axis. It requires at least two lines and some free cross-axis space to have a visible effect.
 
-```gsx
-templ AlignContentDemo() {
+```t2
+t1 AlignContentDemo() {
     <div class="flex flex-wrap gap-1 h-20 w-40 border-single content-center">
         <span class="bg-cyan text-black px-2 shrink-0">A</span>
         <span class="bg-cyan text-black px-2 shrink-0">B</span>
@@ -291,7 +291,7 @@ By default, elements size to their content (`Auto`). You can set explicit sizes 
 
 ### Fixed Sizes
 
-```gsx
+```t2
 <div class="w-30 h-10 border-rounded p-1">
     <span>30 characters wide, 10 rows tall</span>
 </div>
@@ -299,7 +299,7 @@ By default, elements size to their content (`Auto`). You can set explicit sizes 
 
 ### Percentage Sizes
 
-```gsx
+```t2
 <div class="flex gap-1 w-full">
     <div class="w-1/3 bg-cyan text-black p-1">
         <span>1/3 width</span>
@@ -312,7 +312,7 @@ By default, elements size to their content (`Auto`). You can set explicit sizes 
 
 ### Full and Auto
 
-```gsx
+```t2
 <div class="w-full h-full">
     // Takes all available width and height
     <div class="w-auto h-auto">
@@ -323,7 +323,7 @@ By default, elements size to their content (`Auto`). You can set explicit sizes 
 
 ### Min and Max Constraints
 
-```gsx
+```t2
 <div class="grow min-w-20 max-w-60 p-1 border-single">
     <span>Grows with available space, but stays between 20 and 60 characters wide</span>
 </div>
@@ -356,8 +356,8 @@ For attributes, use `width={30}`, `widthPercent={50}`, `height={10}`, `heightPer
 
 Padding adds space inside an element's border. Margin adds space outside it. Both are measured in character cells.
 
-```gsx
-templ SpacingDemo() {
+```t2
+t1 SpacingDemo() {
     <div class="flex justify-center w-full gap-2 p-1">
         <div class="border-single p-2">
             <span>2 cells of padding inside the border</span>
@@ -396,8 +396,8 @@ For more control via attributes, use `padding={2}` for uniform or set each side 
 
 ### Sidebar and Main Content
 
-```gsx
-templ SidebarLayout() {
+```t2
+t1 SidebarLayout() {
     <div class="flex h-full">
         <div class="w-20 border-single flex-col p-1">
             <span class="font-bold">Sidebar</span>
@@ -416,8 +416,8 @@ The sidebar has a fixed width of 20 characters. The content area grows to fill t
 
 ### Centered Card
 
-```gsx
-templ CenteredCard() {
+```t2
+t1 CenteredCard() {
     <div class="flex items-center justify-center h-full">
         <div class="border-rounded p-2 flex-col gap-1 w-40">
             <span class="font-bold text-cyan">Welcome</span>
@@ -432,8 +432,8 @@ The outer container fills the terminal (`h-full`) and centers its child on both 
 
 ### Dashboard Grid
 
-```gsx
-templ Dashboard() {
+```t2
+t1 Dashboard() {
     <div class="flex-col h-full gap-1 p-1">
         <div class="flex gap-1 grow">
             <div class="grow border-rounded p-1 flex-col">
@@ -467,8 +467,8 @@ The top row has three equally-sized panels (each with `grow`). The bottom row us
 
 ### Stacked Form Fields
 
-```gsx
-templ FormLayout() {
+```t2
+t1 FormLayout() {
     <div class="flex-col gap-1 p-2 w-40">
         <div class="flex-col">
             <span class="font-bold">Username</span>
@@ -489,8 +489,8 @@ Each field is a vertical stack of label and input. The button row uses `justify-
 
 ### Wrapping Tag Grid
 
-```gsx
-templ FlexWrapGrid() {
+```t2
+t1 FlexWrapGrid() {
     <div class="flex flex-wrap gap-1 grow content-center">
         for _, label := range labels {
             <div class="border-rounded p-1 w-16 flex-col items-center shrink-0">

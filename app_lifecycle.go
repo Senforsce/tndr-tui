@@ -205,7 +205,7 @@ func (a *App) printAboveStyledRaw(content string) {
 // PrintAboveElement renders a Viewable and inserts the resulting rows into
 // the inline scrollback. The element is rendered at the terminal's current width
 // and baked into static ANSI text. This is useful for inserting structured
-// content (tables, styled cards, templ component output) into the scrollback.
+// content (tables, styled cards, tndr component output) into the scrollback.
 // No-op if not in inline mode.
 // Must be called from the app's main event loop.
 func (a *App) PrintAboveElement(v Viewable) {

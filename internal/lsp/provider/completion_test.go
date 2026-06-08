@@ -18,7 +18,7 @@ func newTestCompletionProvider(index ComponentIndex) *completionProvider {
 func TestCompletion_ElementTag(t *testing.T) {
 	src := `package test
 
-templ Page() {
+t1 Page() {
 	<
 }
 `
@@ -58,7 +58,7 @@ templ Page() {
 func TestCompletion_DSLKeywords(t *testing.T) {
 	src := `package test
 
-templ Page() {
+t1 Page() {
 	@
 }
 `
@@ -96,7 +96,7 @@ templ Page() {
 func TestCompletion_ComponentCall(t *testing.T) {
 	src := `package test
 
-templ Page() {
+t1 Page() {
 	@
 }
 `
@@ -135,7 +135,7 @@ templ Page() {
 func TestCompletion_Attributes(t *testing.T) {
 	src := `package test
 
-templ Page() {
+t1 Page() {
 	<div >
 	</div>
 }
@@ -181,7 +181,7 @@ templ Page() {
 func TestCompletion_TailwindClasses(t *testing.T) {
 	src := `package test
 
-templ Page() {
+t1 Page() {
 	<div class="flex-">
 	</div>
 }
@@ -223,7 +223,7 @@ templ Page() {
 func TestCompletion_TailwindPrefixFilter(t *testing.T) {
 	src := `package test
 
-templ Page() {
+t1 Page() {
 	<div class="bord">
 	</div>
 }
@@ -260,7 +260,7 @@ templ Page() {
 func TestCompletion_EventHandlerAttributes(t *testing.T) {
 	src := `package test
 
-templ Page() {
+t1 Page() {
 	<div >
 	</div>
 }
@@ -297,7 +297,7 @@ func TestCompletion_StateMethodCompletions(t *testing.T) {
 	// Component with a state variable; cursor is after "count." inside a Go expression
 	src := `package test
 
-templ Counter() {
+t1 Counter() {
 	count := tui.NewState(0)
 	<span>{count.}</span>
 }
@@ -354,7 +354,7 @@ func TestCompletion_StateMethodCompletions_NonStateVar(t *testing.T) {
 	// Verify that non-state variables don't trigger state method completions
 	src := `package test
 
-templ Counter() {
+t1 Counter() {
 	count := tui.NewState(0)
 	<span>{other.}</span>
 }
@@ -390,7 +390,7 @@ templ Counter() {
 func TestCompletion_GoplsFallback(t *testing.T) {
 	src := `package test
 
-templ Page() {
+t1 Page() {
 	<span>{fmt.Sprintf("hello")}</span>
 }
 `

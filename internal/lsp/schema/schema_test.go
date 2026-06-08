@@ -261,7 +261,7 @@ func TestGetKeyword(t *testing.T) {
 	}
 
 	tests := map[string]tc{
-		"templ keyword":   {name: "templ"},
+		"t1 keyword":      {name: "t1"},
 		"for keyword":     {name: "for"},
 		"if keyword":      {name: "if"},
 		"else keyword":    {name: "else"},

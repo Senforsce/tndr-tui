@@ -1,4 +1,4 @@
-module github.com/tree-sitter/tree-sitter-gsx
+module github.com/tree-sitter/tree-sitter-t2
 
 go 1.22
 

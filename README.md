@@ -18,7 +18,7 @@
 </p>
 
 <p align="center">
-  Define terminal interfaces in <code>.gsx</code> templates with HTML-like syntax and Tailwind-style classes. <br>
+  Define terminal interfaces in <code>.t2</code> templates with HTML-like syntax and Tailwind-style classes. <br>
   The compiler generates type-safe Go. The runtime handles flexbox layout, reactive state, and rendering.
 </p>
 
@@ -43,7 +43,7 @@ go install github.com/grindlemire/go-tui/cmd/tui@latest
 
 ## Quick look
 
-**counter.gsx**
+**counter.t2**
 
 ```go
 package main
@@ -69,7 +69,7 @@ func (c *counter) KeyMap() tui.KeyMap {
     }
 }
 
-templ (c *counter) Render() {
+t1 (c *counter) Render() {
     <div class="flex-col items-center justify-center h-full gap-1">
         <span class="font-bold text-cyan">{fmt.Sprintf("Count: %d", c.count.Get())}</span>
         <span class="font-dim">+/- to change, q to quit</span>
@@ -103,15 +103,15 @@ func main() {
 ```
 
 ```bash
-tui generate counter.gsx
+tui generate counter.t2
 go run .
 ```
 
-The `generate` command compiles `.gsx` files into plain Go source (`*_gsx.go`) that you can read, debug, and commit.
+The `generate` command compiles `.t2` files into plain Go source (`*_t2.go`) that you can read, debug, and commit.
 
 ## What's in the box
 
-- `.gsx` templates with HTML-like elements and Tailwind-style utility classes, compiled to type-safe Go
+- `.t2` templates with HTML-like elements and Tailwind-style utility classes, compiled to type-safe Go
 - Pure Go flexbox layout without CGO: row, column, justify, align, gap, padding, margin, percentage widths, min/max constraints
 - Generic `State[T]` with automatic re-rendering, batched updates, and bindings
 - Struct components with keyboard/mouse handlers, watchers for timers and channels, refs, and a `{children...}` slot
@@ -122,10 +122,10 @@ The `generate` command compiles `.gsx` files into plain Go source (`*_gsx.go`) t
 ## How it works
 
 ```
-.gsx files
+.t2 files
     │  tui generate
     ▼
-Go source (*_gsx.go)
+Go source (*_t2.go)
     │  go build
     ▼
 Widget tree + flexbox layout engine
@@ -137,7 +137,7 @@ Double-buffered character grid
 Terminal (ANSI escape sequences)
 ```
 
-The `.gsx` compiler runs at build time and produces regular Go files. At runtime, the program builds a tree of `*tui.Element` nodes. The layout engine positions them with flexbox, and a double-buffered renderer diffs the output to minimize terminal writes.
+The `.t2` compiler runs at build time and produces regular Go files. At runtime, the program builds a tree of `*tui.Element` nodes. The layout engine positions them with flexbox, and a double-buffered renderer diffs the output to minimize terminal writes.
 
 ## Examples
 
@@ -146,7 +146,7 @@ The [`examples/`](examples/) directory has runnable programs for each feature ar
 | Example | What it covers |
 |---------|----------------|
 | [01-getting-started](examples/01-getting-started) | Minimal component, gradient text, quit handling |
-| [02-gsx-syntax](examples/02-gsx-syntax) | GSX file structure, templ syntax, control flow |
+| [02-t2-syntax](examples/02-t2-syntax) | GSX file structure, tndr syntax, control flow |
 | [03-styling](examples/03-styling) | Colors, text styles, borders, conditional styling |
 | [04-layout](examples/04-layout) | Flexbox row/column, justify, align, reusable layouts |
 | [05-elements](examples/05-elements) | Built-in elements, disabled state, progress bars |
@@ -178,15 +178,15 @@ cd examples/01-getting-started && go run .
 ## CLI
 
 ```
-tui generate [path...]       Compile .gsx files to Go source
+tui generate [path...]       Compile .t2 files to Go source
 tui check [path...]          Validate without generating
-tui fmt [path...]            Format .gsx files in place
+tui fmt [path...]            Format .t2 files in place
 tui fmt --check [path...]    Check formatting without modifying
 tui lsp                      Start the language server (stdio)
 tui version                  Print version
 ```
 
-`tui generate ./...` compiles all `.gsx` files under the current directory.
+`tui generate ./...` compiles all `.t2` files under the current directory.
 
 ## Editor support
 
@@ -194,9 +194,9 @@ tui version                  Print version
 
 **Neovim**: Install the plugin from [`editor/nvim/`](editor/nvim/). Syntax highlighting via tree-sitter, LSP integration, and filetype detection. See the [Neovim README](editor/nvim/README.md) for setup instructions.
 
-**Helix**: Tree-sitter grammar at [`editor/tree-sitter-gsx/`](editor/tree-sitter-gsx/).
+**Helix**: Tree-sitter grammar at [`editor/tree-sitter-t2/`](editor/tree-sitter-t2/).
 
-The `tui lsp` language server works with any editor that speaks JSON-RPC over stdio. It proxies Go-specific features through gopls with `.gsx` to `.go` source mapping.
+The `tui lsp` language server works with any editor that speaks JSON-RPC over stdio. It proxies Go-specific features through gopls with `.t2` to `.go` source mapping.
 
 ## Documentation
 

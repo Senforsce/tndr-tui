@@ -2,7 +2,7 @@
 
 ## Overview
 
-go-tui's visual styling system covers text decoration, colors, gradients, and borders. You can apply styles through Tailwind-like CSS classes in `.gsx` files or programmatically with Go types. Both approaches produce the same result. Classes compile to the same `Style`, `Color`, and `Gradient` types described here.
+go-tui's visual styling system covers text decoration, colors, gradients, and borders. You can apply styles through Tailwind-like CSS classes in `.t2` files or programmatically with Go types. Both approaches produce the same result. Classes compile to the same `Style`, `Color`, and `Gradient` types described here.
 
 ```go
 import tui "github.com/grindlemire/go-tui"
@@ -75,9 +75,9 @@ if style.HasAttr(tui.AttrBold) {
 
 ### Applying Styles to Elements
 
-In `.gsx` files, use the `textStyle`, `borderStyle`, and `background` attributes:
+In `.t2` files, use the `textStyle`, `borderStyle`, and `background` attributes:
 
-```gsx
+```t2
 <span textStyle={tui.NewStyle().Bold().Foreground(tui.ANSIColor(tui.Red))}>
     Error message
 </span>
@@ -136,7 +136,7 @@ attrs := tui.AttrBold | tui.AttrUnderline
 | `AttrReverse` | `reverse` |
 | `AttrStrikethrough` | `strikethrough` |
 
-```gsx
+```t2
 <span class="font-bold underline text-cyan">Styled text</span>
 ```
 
@@ -207,7 +207,7 @@ style := tui.NewStyle().Foreground(tui.ANSIColor(tui.Cyan))
 
 ### Tailwind Color Classes
 
-In `.gsx` files, apply colors with class names. Text and background colors use the same set of color names:
+In `.t2` files, apply colors with class names. Text and background colors use the same set of color names:
 
 **Text colors:** `text-red`, `text-green`, `text-blue`, `text-cyan`, `text-magenta`, `text-yellow`, `text-white`, `text-black`, `text-bright-red`, `text-bright-green`, `text-bright-blue`, `text-bright-cyan`, `text-bright-magenta`, `text-bright-yellow`, `text-bright-white`, `text-bright-black`
 
@@ -215,7 +215,7 @@ In `.gsx` files, apply colors with class names. Text and background colors use t
 
 **Hex colors in classes:** `text-#FF7F50`, `bg-#2A2A2A`, `border-#00FF88`
 
-```gsx
+```t2
 <div class="bg-black">
     <span class="text-cyan font-bold">Cyan on black</span>
     <span class="text-#FF7F50">Coral via hex</span>
@@ -335,7 +335,7 @@ const (
 
 ### Applying Gradients to Elements
 
-Use the gradient `Option` functions or `.gsx` attributes:
+Use the gradient `Option` functions or `.t2` attributes:
 
 | Function | Signature | Description |
 |----------|-----------|-------------|
@@ -355,7 +355,7 @@ el := tui.New(
 
 ### Tailwind Gradient Classes
 
-In `.gsx` files, gradients follow the pattern `{target}-gradient-{start}-{end}[-{direction}]`:
+In `.t2` files, gradients follow the pattern `{target}-gradient-{start}-{end}[-{direction}]`:
 
 **Targets:** `text`, `bg`, `border`
 
@@ -363,7 +363,7 @@ In `.gsx` files, gradients follow the pattern `{target}-gradient-{start}-{end}[-
 
 **Directions:** `-h` (horizontal, default), `-v` (vertical), `-dd` (diagonal down), `-du` (diagonal up)
 
-```gsx
+```t2
 <span class="text-gradient-cyan-magenta">Horizontal gradient text</span>
 <span class="text-gradient-red-yellow-v">Vertical gradient text</span>
 <div class="bg-gradient-blue-cyan-dd border-rounded p-1">
@@ -414,7 +414,7 @@ type BorderStyle int
 
 Border color classes: `border-red`, `border-cyan`, etc. apply a `Style` to the border characters.
 
-```gsx
+```t2
 <div class="border-rounded border-cyan p-1">
     Rounded cyan border
 </div>
@@ -564,5 +564,5 @@ if caps.SupportsColor(coral) {
 ## See Also
 
 - [Element Reference](element.md) — Element option functions for styling
-- [GSX Syntax Reference](gsx-syntax.md) — Complete Tailwind class listing
+- [GSX Syntax Reference](t2-syntax.md) — Complete Tailwind class listing
 - [Layout Reference](layout.md) — Layout-related element options

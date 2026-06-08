@@ -13,19 +13,19 @@ func TestGetLineText(t *testing.T) {
 
 	tests := map[string]tc{
 		"first line": {
-			content: "package test\n\ntempl Foo() {\n}\n",
+			content: "package test\n\nt1 Foo() {\n}\n",
 			line:    0,
 			want:    "package test",
 		},
 		"empty line": {
-			content: "package test\n\ntempl Foo() {\n}\n",
+			content: "package test\n\nt1 Foo() {\n}\n",
 			line:    1,
 			want:    "",
 		},
 		"third line": {
-			content: "package test\n\ntempl Foo() {\n}\n",
+			content: "package test\n\nt1 Foo() {\n}\n",
 			line:    2,
-			want:    "templ Foo() {",
+			want:    "t1 Foo() {",
 		},
 		"last line no newline": {
 			content: "line1\nline2",

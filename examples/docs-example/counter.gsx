@@ -50,14 +50,14 @@ func formatTime(seconds int) string {
 	return fmt.Sprintf("%d:%02d", seconds/60, seconds%60)
 }
 
-templ Badge(label string, value string, color string) {
+t1 Badge(label string, value string, color string) {
 	<div class="flex gap-1">
 		<span class="font-dim">{label}</span>
 		<span class={"font-bold " + color}>{value}</span>
 	</div>
 }
 
-templ Card(title string) {
+t1 Card(title string) {
 	<div class="flex-col border-rounded border-cyan p-1 gap-1" flexGrow={1.0}>
 		<span class="font-bold text-gradient-cyan-blue">{title}</span>
 		<hr />
@@ -65,7 +65,7 @@ templ Card(title string) {
 	</div>
 }
 
-templ (c *counterApp) Render() {
+t1 (c *counterApp) Render() {
 	<div class="flex-col border-double border-gradient-cyan-magenta p-1 gap-1">
 		<div class="flex justify-between items-center">
 			<span class="text-gradient-cyan-magenta font-bold">Counter</span>

@@ -120,7 +120,7 @@ func progressBar(value, width int) string {
 	return bar
 }
 
-templ (e *elementsApp) Render() {
+t1 (e *elementsApp) Render() {
 	<div
 		ref={e.content}
 		class="flex-col gap-1 h-full"

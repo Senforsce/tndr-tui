@@ -4,7 +4,7 @@ import (
 	"unicode/utf8"
 )
 
-// Lexer tokenizes .gsx source files.
+// Lexer tokenizes .t2 source files.
 type Lexer struct {
 	filename string
 	source   string

@@ -1,4 +1,4 @@
-// Package lsp implements a Language Server Protocol server for .gsx files.
+// Package lsp implements a Language Server Protocol server for .t2 files.
 //
 // It provides diagnostics, completion, hover, go-to-definition, references,
 // semantic tokens, and formatting. The server communicates over stdio using

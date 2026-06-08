@@ -22,13 +22,13 @@ type Component interface {
 }
 ```
 
-The only required interface. Every struct component must have a `Render` method that returns an element tree. In `.gsx` files, the `templ (s *myStruct) Render()` syntax generates this method.
+The only required interface. Every struct component must have a `Render` method that returns an element tree. In `.t2` files, the `templ (s *myStruct) Render()` syntax generates this method.
 
 `Render` is called on every frame where the UI is dirty. It should be a pure function of the component's state: read state, build elements, return. Side effects belong in `Init`, `Watchers`, or event handlers.
 
 **When to implement:** Always. This is what makes a struct a component.
 
-```gsx
+```t2
 type counter struct {
     count *tui.State[int]
 }
@@ -37,7 +37,7 @@ func Counter() *counter {
     return &counter{count: tui.NewState(0)}
 }
 
-templ (c *counter) Render() {
+t1 (c *counter) Render() {
     <div class="p-1">
         <span class="text-cyan font-bold">{fmt.Sprintf("Count: %d", c.count.Get())}</span>
     </div>
@@ -167,11 +167,11 @@ type AppBinder interface {
 }
 ```
 
-Called by the framework to wire up `State` and `Events` fields to the app. Generated code from `.gsx` files emits `BindApp` methods automatically for each `State` and `Events` field gets its `BindApp` called in turn.
+Called by the framework to wire up `State` and `Events` fields to the app. Generated code from `.t2` files emits `BindApp` methods automatically for each `State` and `Events` field gets its `BindApp` called in turn.
 
 Users never call `BindApp` directly. The mount system calls it before `Init` on first mount, and again after `UpdateProps` on subsequent renders (to bind any fresh `Events` fields from the props update).
 
-**When to implement:** Almost never manually. The `.gsx` code generator handles this. Only implement it if you're building a component without `.gsx` and it contains `State` or `Events` fields.
+**When to implement:** Almost never manually. The `.t2` code generator handles this. Only implement it if you're building a component without `.t2` and it contains `State` or `Events` fields.
 
 ```go
 func (c *counter) BindApp(app *tui.App) {
@@ -189,7 +189,7 @@ type AppUnbinder interface {
 
 Called by the framework when a component leaves the tree: on unmount during sweep, or when the root is replaced via `SetRootComponent`, `SetRoot`, or `SetRootView`. This detaches app-bound resources such as topic-based `Events[T]` subscriptions.
 
-You usually don't implement this manually. Generated code handles it for `.gsx` components that contain `Events` fields.
+You usually don't implement this manually. Generated code handles it for `.t2` components that contain `Events` fields.
 
 ## PropsUpdater
 

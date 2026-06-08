@@ -11,7 +11,7 @@ import (
 )
 
 // runGenerate implements the generate subcommand.
-// It processes .gsx files and generates corresponding Go source files.
+// It processes .t2 files and generates corresponding Go source files.
 func runGenerate(args []string) error {
 	verbose := false
 	var paths []string
@@ -30,18 +30,18 @@ func runGenerate(args []string) error {
 		paths = []string{"."}
 	}
 
-	// Collect all .gsx files
-	files, err := collectGsxFiles(paths)
+	// Collect all .t2 files
+	files, err := collectT2Files(paths)
 	if err != nil {
 		return err
 	}
 
 	if len(files) == 0 {
-		return fmt.Errorf("no .gsx files found")
+		return fmt.Errorf("no .t2 files found")
 	}
 
 	if verbose {
-		fmt.Printf("Found %d .gsx file(s)\n", len(files))
+		fmt.Printf("Found %d .t2 file(s)\n", len(files))
 	}
 
 	// Process each file
@@ -71,12 +71,12 @@ func runGenerate(args []string) error {
 	return nil
 }
 
-// collectGsxFiles finds all .gsx files from the given paths.
+// collectT2Files finds all .t2 files from the given paths.
 // Supports:
-//   - Direct file paths: "header.gsx"
+//   - Direct file paths: "header.t2"
 //   - Directory paths: "./components"
 //   - Recursive pattern: "./..."
-func collectGsxFiles(paths []string) ([]string, error) {
+func collectT2Files(paths []string) ([]string, error) {
 	var files []string
 
 	for _, path := range paths {
@@ -91,7 +91,7 @@ func collectGsxFiles(paths []string) ([]string, error) {
 				if err != nil {
 					return err
 				}
-				if !d.IsDir() && strings.HasSuffix(p, ".gsx") {
+				if !d.IsDir() && strings.HasSuffix(p, ".t2") {
 					files = append(files, p)
 				}
 				return nil
@@ -109,17 +109,17 @@ func collectGsxFiles(paths []string) ([]string, error) {
 		}
 
 		if info.IsDir() {
-			// Collect all .gsx files in directory (non-recursive)
+			// Collect all .t2 files in directory (non-recursive)
 			entries, err := os.ReadDir(path)
 			if err != nil {
 				return nil, fmt.Errorf("reading directory %s: %w", path, err)
 			}
 			for _, entry := range entries {
-				if !entry.IsDir() && strings.HasSuffix(entry.Name(), ".gsx") {
+				if !entry.IsDir() && strings.HasSuffix(entry.Name(), ".t2") {
 					files = append(files, filepath.Join(path, entry.Name()))
 				}
 			}
-		} else if strings.HasSuffix(path, ".gsx") {
+		} else if strings.HasSuffix(path, ".t2") {
 			files = append(files, path)
 		}
 	}
@@ -127,29 +127,29 @@ func collectGsxFiles(paths []string) ([]string, error) {
 	return files, nil
 }
 
-// outputFileName converts a .gsx filename to its output .go filename.
+// outputFileName converts a .t2 filename to its output .go filename.
 // Examples:
 //
-//	header.gsx     -> header_gsx.go
-//	my-app.gsx     -> my_app_gsx.go
-//	components.gsx -> components_gsx.go
+//	header.t2     -> header_t2.go
+//	my-app.t2     -> my_app_t2.go
+//	components.t2 -> components_t2.go
 func outputFileName(inputPath string) string {
 	dir := filepath.Dir(inputPath)
 	base := filepath.Base(inputPath)
 
-	// Remove .gsx extension
-	name := strings.TrimSuffix(base, ".gsx")
+	// Remove .t2 extension
+	name := strings.TrimSuffix(base, ".t2")
 
 	// Replace hyphens with underscores (Go doesn't like hyphens in filenames)
 	name = strings.ReplaceAll(name, "-", "_")
 
-	// Add _gsx.go suffix
-	output := name + "_gsx.go"
+	// Add _t2.go suffix
+	output := name + "_t2.go"
 
 	return filepath.Join(dir, output)
 }
 
-// generateFile parses a .gsx file and generates the corresponding Go file.
+// generateFile parses a .t2 file and generates the corresponding Go file.
 func generateFile(inputPath, outputPath string) error {
 	// Read source file
 	source, err := os.ReadFile(inputPath)

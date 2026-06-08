@@ -191,7 +191,7 @@ func TestHover_Parameter(t *testing.T) {
 
 	src := `package test
 
-templ Header(title string) {
+t1 Header(title string) {
 	<div>{title}</div>
 }
 `
@@ -241,7 +241,7 @@ func TestHover_TailwindInClass(t *testing.T) {
 	hp := newTestHoverProvider(index)
 
 	content := `<div class="flex-col p-2">`
-	doc := &Document{URI: "file:///test.gsx", Content: content, Version: 1}
+	doc := &Document{URI: "file:///test.t2", Content: content, Version: 1}
 
 	// Position cursor inside class value, on "flex-col"
 	classIdx := strings.Index(content, "flex-col")
@@ -270,7 +270,7 @@ func TestHover_TailwindInClass(t *testing.T) {
 func TestHover_RefAttr(t *testing.T) {
 	src := `package test
 
-templ Layout() {
+t1 Layout() {
 	<div ref={header} class="p-1">content</div>
 }
 `

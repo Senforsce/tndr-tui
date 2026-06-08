@@ -1,6 +1,6 @@
 package tuigen
 
-// Parser parses .gsx source files into an AST.
+// Parser parses .t2 source files into an AST.
 type Parser struct {
 	lexer           *Lexer
 	current         Token
@@ -111,7 +111,7 @@ func (p *Parser) synchronize() {
 	for p.current.Type != TokenEOF {
 		// Sync points: top-level declarations
 		switch p.current.Type {
-		case TokenFunc, TokenTempl, TokenTypeKw, TokenConst, TokenVar:
+		case TokenFunc, TokenT1, TokenTypeKw, TokenConst, TokenVar:
 			return
 		}
 		p.advance()
@@ -213,7 +213,7 @@ func (p *Parser) getTrailingCommentOnLine(line int) *CommentGroup {
 	return nil
 }
 
-// ParseFile parses a complete .gsx file into a File AST node.
+// ParseFile parses a complete .t2 file into a File AST node.
 func (p *Parser) ParseFile() (*File, error) {
 	file := &File{
 		Position: p.position(),
@@ -250,7 +250,7 @@ func (p *Parser) ParseFile() (*File, error) {
 		leadingComments := p.getLeadingCommentGroup()
 
 		switch p.current.Type {
-		case TokenTempl:
+		case TokenT1:
 			// Parse templ - always a component, no return type
 			comp := p.parseTempl()
 			if comp != nil {

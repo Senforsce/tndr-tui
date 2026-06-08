@@ -7,14 +7,14 @@ import (
 func TestParser_CommentAttachment_InForLoop(t *testing.T) {
 	input := `package x
 
-templ List(items []string) {
+t1 List(items []string) {
 	for _, item := range items { // loop comment
 		// comment before span
 		<span>{item}</span>
 	}
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -58,14 +58,14 @@ templ List(items []string) {
 func TestParser_CommentAttachment_InIfStmt(t *testing.T) {
 	input := `package x
 
-templ Cond(show bool) {
+t1 Cond(show bool) {
 	if show { // if comment
 		// comment before visible
 		<span>Visible</span>
 	}
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -105,13 +105,13 @@ templ Cond(show bool) {
 func TestParser_CommentAttachment_EmptyForLoopBody(t *testing.T) {
 	input := `package x
 
-templ Empty() {
+t1 Empty() {
 	for _, item := range items {
 		// only a comment, no elements
 	}
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -137,11 +137,11 @@ templ Empty() {
 func TestParser_CommentAttachment_TrailingOnElement(t *testing.T) {
 	input := `package x
 
-templ Test() {
+t1 Test() {
 	<span>Hello</span>  // trailing on span
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -166,11 +166,11 @@ templ Test() {
 func TestParser_CommentAttachment_SelfClosingElement(t *testing.T) {
 	input := `package x
 
-templ Test() {
+t1 Test() {
 	<input />  // trailing on self-closing
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -204,7 +204,7 @@ func helper() string {
 	return "hello"
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -230,11 +230,11 @@ func TestParser_CommentAttachment_BlockComment(t *testing.T) {
 
 /* Block comment
    spanning multiple lines */
-templ Header() {
+t1 Header() {
 	<span>Hello</span>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -259,14 +259,14 @@ templ Header() {
 func TestParser_CommentAttachment_NestedElements(t *testing.T) {
 	input := `package x
 
-templ Nested() {
+t1 Nested() {
 	<div>
 		// comment before inner span
 		<span>Hello</span>
 	</div>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {

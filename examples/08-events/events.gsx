@@ -48,7 +48,7 @@ func (e *explorer) KeyMap() tui.KeyMap {
 	}
 }
 
-templ (e *explorer) Render() {
+t1 (e *explorer) Render() {
 	<div class="flex-col gap-1 p-2 border-rounded border-cyan">
 		<span class="text-gradient-cyan-magenta font-bold">Keyboard Explorer</span>
 		<hr class="border-single" />

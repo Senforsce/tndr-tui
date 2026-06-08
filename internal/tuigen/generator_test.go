@@ -15,7 +15,7 @@ func TestGenerator_SimpleComponent(t *testing.T) {
 	tests := map[string]tc{
 		"empty component": {
 			input: `package x
-templ Empty() {
+t1 Empty() {
 }`,
 			wantContains: []string{
 				"type EmptyView struct",
@@ -31,7 +31,7 @@ templ Empty() {
 		},
 		"component with single element": {
 			input: `package x
-templ Header() {
+t1 Header() {
 	<div></div>
 }`,
 			wantContains: []string{
@@ -43,7 +43,7 @@ templ Header() {
 		},
 		"component with params": {
 			input: `package x
-templ Greeting(name string, count int) {
+t1 Greeting(name string, count int) {
 	<span>Hello</span>
 }`,
 			wantContains: []string{
@@ -55,7 +55,7 @@ templ Greeting(name string, count int) {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			output, err := parseAndGenerateSkipImports("test.gsx", tt.input)
+			output, err := parseAndGenerateSkipImports("test.t2", tt.input)
 			if err != nil {
 				t.Fatalf("generation failed: %v", err)
 			}
@@ -77,7 +77,7 @@ templ Greeting(name string, count int) {
 
 func TestGenerator_NestedElements(t *testing.T) {
 	input := `package x
-templ Layout() {
+t1 Layout() {
 	<div>
 		<div>
 			<span>nested</span>
@@ -85,7 +85,7 @@ templ Layout() {
 	</div>
 }`
 
-	output, err := parseAndGenerateSkipImports("test.gsx", input)
+	output, err := parseAndGenerateSkipImports("test.t2", input)
 	if err != nil {
 		t.Fatalf("generation failed: %v", err)
 	}
@@ -119,11 +119,11 @@ func helper(x int) int {
 	return x * 2
 }
 
-templ Test() {
+t1 Test() {
 	<span>hello</span>
 }`
 
-	output, err := parseAndGenerateSkipImports("test.gsx", input)
+	output, err := parseAndGenerateSkipImports("test.t2", input)
 	if err != nil {
 		t.Fatalf("generation failed: %v", err)
 	}
@@ -146,13 +146,13 @@ import (
 	tui "github.com/grindlemire/go-tui"
 )
 
-templ Test() {
+t1 Test() {
 	<div direction={tui.Column}>
 		<span>{fmt.Sprintf("hello")}</span>
 	</div>
 }`
 
-	output, err := parseAndGenerateSkipImports("test.gsx", input)
+	output, err := parseAndGenerateSkipImports("test.t2", input)
 	if err != nil {
 		t.Fatalf("generation failed: %v", err)
 	}
@@ -171,11 +171,11 @@ templ Test() {
 
 func TestGenerator_Header(t *testing.T) {
 	input := `package x
-templ Test() {
+t1 Test() {
 	<span>hello</span>
 }`
 
-	output, err := parseAndGenerateSkipImports("test.gsx", input)
+	output, err := parseAndGenerateSkipImports("test.t2", input)
 	if err != nil {
 		t.Fatalf("generation failed: %v", err)
 	}
@@ -186,7 +186,7 @@ templ Test() {
 		t.Error("missing DO NOT EDIT header")
 	}
 
-	if !strings.Contains(code, "Source: test.gsx") {
+	if !strings.Contains(code, "Source: test.t2") {
 		t.Error("missing source file comment")
 	}
 }
@@ -204,7 +204,7 @@ func TestGenerator_MethodComponent(t *testing.T) {
 
 type sidebar struct{}
 
-templ (s *sidebar) Render() {
+t1 (s *sidebar) Render() {
 	<div></div>
 }`,
 			wantContains: []string{
@@ -224,7 +224,7 @@ templ (s *sidebar) Render() {
 
 type panel struct{}
 
-templ (p *panel) Render() {
+t1 (p *panel) Render() {
 	<div class="flex-col">
 		<span>hello</span>
 	</div>
@@ -244,7 +244,7 @@ templ (p *panel) Render() {
 
 type myApp struct{}
 
-templ (a *myApp) Render() {
+t1 (a *myApp) Render() {
 	<div>
 		@Sidebar()
 	</div>
@@ -267,7 +267,7 @@ templ (a *myApp) Render() {
 
 type myApp struct{}
 
-templ (a *myApp) Render() {
+t1 (a *myApp) Render() {
 	<div>
 		@First()
 		@Second()
@@ -288,7 +288,7 @@ templ (a *myApp) Render() {
 
 type myApp struct{}
 
-templ (a *myApp) Render() {
+t1 (a *myApp) Render() {
 	<div>
 		@Sidebar(a.query)
 		@SearchInput(a.active, a.query)
@@ -306,7 +306,7 @@ templ (a *myApp) Render() {
 
 type sidebar struct{}
 
-templ (s *sidebar) Render() {
+t1 (s *sidebar) Render() {
 	if true {
 		<div><span>visible</span></div>
 	}
@@ -321,7 +321,7 @@ templ (s *sidebar) Render() {
 
 type empty struct{}
 
-templ (e *empty) Render() {
+t1 (e *empty) Render() {
 }`,
 			wantContains: []string{
 				"func (e *empty) Render(app *tui.App) *tui.Element {",
@@ -333,7 +333,7 @@ templ (e *empty) Render() {
 
 type app struct{}
 
-templ (a *app) Render() {
+t1 (a *app) Render() {
 	@Sidebar()
 }`,
 			wantContains: []string{
@@ -349,11 +349,11 @@ templ (a *app) Render() {
 
 type app struct{}
 
-templ Dashboard() {
+t1 Dashboard() {
 	<div></div>
 }
 
-templ (a *app) Render() {
+t1 (a *app) Render() {
 	@Dashboard()
 }`,
 			wantContains: []string{
@@ -372,7 +372,7 @@ type card struct {
 	children []*tui.Element
 }
 
-templ (c *card) Render() {
+t1 (c *card) Render() {
 	<div>
 		<span>{c.title}</span>
 		{children...}
@@ -389,7 +389,7 @@ templ (c *card) Render() {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			output, err := parseAndGenerateSkipImports("test.gsx", tt.input)
+			output, err := parseAndGenerateSkipImports("test.t2", tt.input)
 			if err != nil {
 				t.Fatalf("generation failed: %v", err)
 			}
@@ -412,14 +412,14 @@ templ (c *card) Render() {
 func TestGenerator_FunctionTemplChildrenSlotUsesBareChildren(t *testing.T) {
 	input := `package x
 
-templ Card(title string) {
+t1 Card(title string) {
 	<div>
 		<span>{title}</span>
 		{children...}
 	</div>
 }`
 
-	output, err := parseAndGenerateSkipImports("test.gsx", input)
+	output, err := parseAndGenerateSkipImports("test.t2", input)
 	if err != nil {
 		t.Fatalf("generation failed: %v", err)
 	}
@@ -441,7 +441,7 @@ func TestGenerator_FunctionComponentCallUnchanged(t *testing.T) {
 		"function templ with component call uses view struct pattern": {
 			input: `package x
 
-templ Parent() {
+t1 Parent() {
 	<div>
 		@Header("title")
 	</div>
@@ -462,7 +462,7 @@ templ Parent() {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			output, err := parseAndGenerateSkipImports("test.gsx", tt.input)
+			output, err := parseAndGenerateSkipImports("test.t2", tt.input)
 			if err != nil {
 				t.Fatalf("generation failed: %v", err)
 			}
@@ -498,7 +498,7 @@ type sidebar struct {
 	expanded bool
 }
 
-templ Header() {
+t1 Header() {
 	<span>hello</span>
 }`,
 			wantContains: []string{
@@ -515,7 +515,7 @@ func (s *sidebar) toggle() {
 	s.expanded = !s.expanded
 }
 
-templ Header() {
+t1 Header() {
 	<span>hello</span>
 }`,
 			wantContains: []string{
@@ -528,7 +528,7 @@ templ Header() {
 
 var defaultName = "hello"
 
-templ Header() {
+t1 Header() {
 	<span>hello</span>
 }`,
 			wantContains: []string{
@@ -540,7 +540,7 @@ templ Header() {
 
 const maxItems = 10
 
-templ Header() {
+t1 Header() {
 	<span>hello</span>
 }`,
 			wantContains: []string{
@@ -562,7 +562,7 @@ func (s *sidebar) toggle() {
 	s.expanded = !s.expanded
 }
 
-templ (s *sidebar) Render() {
+t1 (s *sidebar) Render() {
 	<div><span>sidebar</span></div>
 }`,
 			wantContains: []string{
@@ -584,7 +584,7 @@ templ (s *sidebar) Render() {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			output, err := parseAndGenerateSkipImports("test.gsx", tt.input)
+			output, err := parseAndGenerateSkipImports("test.t2", tt.input)
 			if err != nil {
 				t.Fatalf("generation failed: %v", err)
 			}
@@ -614,7 +614,7 @@ func TestGenerator_ReactiveIf(t *testing.T) {
 	tests := map[string]tc{
 		"reactive if with single state var": {
 			input: `package x
-templ Toggle() {
+t1 Toggle() {
 	count := tui.NewState(0)
 	<div>
 		if count.Get() == 0 {
@@ -634,7 +634,7 @@ templ Toggle() {
 		},
 		"reactive if/else": {
 			input: `package x
-templ Toggle() {
+t1 Toggle() {
 	count := tui.NewState(0)
 	<div>
 		if count.Get() >= 5 {
@@ -656,7 +656,7 @@ templ Toggle() {
 		},
 		"non-reactive if stays plain": {
 			input: `package x
-templ Static(show bool) {
+t1 Static(show bool) {
 	<div>
 		if show {
 			<span>{"visible"}</span>
@@ -673,7 +673,7 @@ templ Static(show bool) {
 		},
 		"for loop with state in body becomes reactive": {
 			input: `package x
-templ LoopCond(items []string) {
+t1 LoopCond(items []string) {
 	count := tui.NewState(0)
 	<div>
 		for _, item := range items {
@@ -697,7 +697,7 @@ templ LoopCond(items []string) {
 		},
 		"for loop without state stays plain": {
 			input: `package x
-templ PlainLoop(items []string) {
+t1 PlainLoop(items []string) {
 	<div>
 		for _, item := range items {
 			<span>{item}</span>
@@ -713,7 +713,7 @@ templ PlainLoop(items []string) {
 		"state in body also triggers binding": {
 			input: `package x
 import "fmt"
-templ Multi() {
+t1 Multi() {
 	count := tui.NewState(0)
 	name := tui.NewState("hello")
 	<div>
@@ -730,7 +730,7 @@ templ Multi() {
 		},
 		"reactive for loop with component call resets views slice": {
 			input: `package x
-templ List() {
+t1 List() {
 	count := tui.NewState(0)
 	items := []string{"a", "b"}
 	<div>
@@ -752,7 +752,7 @@ templ List() {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			output, err := parseAndGenerateSkipImports("test.gsx", tt.input)
+			output, err := parseAndGenerateSkipImports("test.t2", tt.input)
 			if err != nil {
 				t.Fatalf("generation failed: %v", err)
 			}
@@ -778,7 +778,7 @@ type panel struct {
 	show *tui.State[bool]
 }
 
-templ (p *panel) Render() {
+t1 (p *panel) Render() {
 	if p.show.Get() {
 		<span>{"on"}</span>
 	} else {
@@ -786,7 +786,7 @@ templ (p *panel) Render() {
 	}
 }`
 
-	output, err := parseAndGenerateSkipImports("test.gsx", input)
+	output, err := parseAndGenerateSkipImports("test.t2", input)
 	if err != nil {
 		t.Fatalf("generation failed: %v", err)
 	}
@@ -824,7 +824,7 @@ func TestGenerator_TextareaElement(t *testing.T) {
 
 type myComp struct{}
 
-templ (c *myComp) Render() {
+t1 (c *myComp) Render() {
 	<textarea placeholder="Type here..." width={40} />
 }`,
 			wantContains: []string{
@@ -839,7 +839,7 @@ templ (c *myComp) Render() {
 
 type myComp struct{}
 
-templ (c *myComp) Render() {
+t1 (c *myComp) Render() {
 	<textarea onSubmit={c.handleSubmit} />
 }`,
 			wantContains: []string{
@@ -852,7 +852,7 @@ templ (c *myComp) Render() {
 
 type myComp struct{}
 
-templ (c *myComp) Render() {
+t1 (c *myComp) Render() {
 	<textarea border={tui.BorderRounded} />
 }`,
 			wantContains: []string{
@@ -865,7 +865,7 @@ templ (c *myComp) Render() {
 
 type myComp struct{}
 
-templ (c *myComp) Render() {
+t1 (c *myComp) Render() {
 	<textarea />
 }`,
 			wantContains: []string{
@@ -877,7 +877,7 @@ templ (c *myComp) Render() {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			output, err := parseAndGenerateSkipImports("test.gsx", tt.input)
+			output, err := parseAndGenerateSkipImports("test.t2", tt.input)
 			if err != nil {
 				t.Fatalf("generation failed: %v", err)
 			}
@@ -904,7 +904,7 @@ func TestGenerator_MarkdownElement(t *testing.T) {
 
 type myComp struct{}
 
-templ (c *myComp) Render() {
+t1 (c *myComp) Render() {
 	<markdown source={c.readme} width={80} />
 }`,
 			wantContains: []string{
@@ -919,7 +919,7 @@ templ (c *myComp) Render() {
 
 type myComp struct{}
 
-templ (c *myComp) Render() {
+t1 (c *myComp) Render() {
 	<markdown state={c.md} />
 }`,
 			wantContains: []string{
@@ -931,7 +931,7 @@ templ (c *myComp) Render() {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			output, err := parseAndGenerateSkipImports("test.gsx", tt.input)
+			output, err := parseAndGenerateSkipImports("test.t2", tt.input)
 			if err != nil {
 				t.Fatalf("generation failed: %v", err)
 			}
@@ -959,7 +959,7 @@ func TestGenerator_InterfaceChecks(t *testing.T) {
 
 type counter struct{}
 
-templ (c *counter) Render() {
+t1 (c *counter) Render() {
 	<div>hello</div>
 }
 
@@ -975,7 +975,7 @@ func (c *counter) KeyMap() tui.KeyMap {
 
 type clicker struct{}
 
-templ (c *clicker) Render() {
+t1 (c *clicker) Render() {
 	<div>hello</div>
 }
 
@@ -991,7 +991,7 @@ func (c *clicker) HandleMouse(me tui.MouseEvent) bool {
 
 type loader struct{}
 
-templ (l *loader) Render() {
+t1 (l *loader) Render() {
 	<div>hello</div>
 }
 
@@ -1007,7 +1007,7 @@ func (l *loader) Init() func() {
 
 type ticker struct{}
 
-templ (t *ticker) Render() {
+t1 (t *ticker) Render() {
 	<div>hello</div>
 }
 
@@ -1023,7 +1023,7 @@ func (t *ticker) Watchers() []tui.Watcher {
 
 type app struct{}
 
-templ (a *app) Render() {
+t1 (a *app) Render() {
 	<div>hello</div>
 }
 
@@ -1042,7 +1042,7 @@ func (a *app) Init() func() {
 		"no checks for function components": {
 			input: `package x
 
-templ Header() {
+t1 Header() {
 	<div>hello</div>
 }
 
@@ -1056,7 +1056,7 @@ func helper() {}`,
 
 type helper struct{}
 
-templ Header() {
+t1 Header() {
 	<div>hello</div>
 }
 
@@ -1071,7 +1071,7 @@ func (h *helper) KeyMap() tui.KeyMap {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			output, err := parseAndGenerateSkipImports("test.gsx", tt.input)
+			output, err := parseAndGenerateSkipImports("test.t2", tt.input)
 			if err != nil {
 				t.Fatalf("generation failed: %v", err)
 			}
@@ -1102,7 +1102,7 @@ func TestGenerator_ConditionalComponentCallScoping(t *testing.T) {
 		"component call inside if block hoists var and nil-guards wiring": {
 			input: `package x
 
-templ ItemRow(hasBadge bool) {
+t1 ItemRow(hasBadge bool) {
 	<div>
 		<span>name</span>
 		if hasBadge {
@@ -1130,7 +1130,7 @@ templ ItemRow(hasBadge bool) {
 		"unconditional component call is unchanged": {
 			input: `package x
 
-templ Parent() {
+t1 Parent() {
 	<div>
 		@Header()
 	</div>
@@ -1147,7 +1147,7 @@ templ Parent() {
 		"mixed conditional and unconditional component calls": {
 			input: `package x
 
-templ Mixed(show bool) {
+t1 Mixed(show bool) {
 	<div>
 		@Header()
 		if show {
@@ -1170,7 +1170,7 @@ templ Mixed(show bool) {
 		"component calls in both if and else branches": {
 			input: `package x
 
-templ Row(a bool) {
+t1 Row(a bool) {
 	<div>
 		if a {
 			@Badge()
@@ -1195,7 +1195,7 @@ templ Row(a bool) {
 		"nested conditional component call": {
 			input: `package x
 
-templ Nested(a bool, b bool) {
+t1 Nested(a bool, b bool) {
 	<div>
 		if a {
 			if b {
@@ -1216,7 +1216,7 @@ templ Nested(a bool, b bool) {
 		"component call in children-building if block": {
 			input: `package x
 
-templ Outer(show bool) {
+t1 Outer(show bool) {
 	<div>
 		@Wrapper() {
 			if show {
@@ -1238,7 +1238,7 @@ templ Outer(show bool) {
 		"component call inside for loop collects views slice": {
 			input: `package x
 
-templ List(items []string) {
+t1 List(items []string) {
 	<div>
 		for _, item := range items {
 			@Badge(item)
@@ -1261,7 +1261,7 @@ templ List(items []string) {
 		"component call inside if inside for loop uses views slice": {
 			input: `package x
 
-templ List(items []string) {
+t1 List(items []string) {
 	<div>
 		for _, item := range items {
 			if item != "" {
@@ -1283,7 +1283,7 @@ templ List(items []string) {
 		"mixed: component call outside and inside for loop": {
 			input: `package x
 
-templ Mixed(items []string) {
+t1 Mixed(items []string) {
 	<div>
 		@Header()
 		for _, item := range items {
@@ -1313,11 +1313,11 @@ templ Mixed(items []string) {
 
 type sidebar struct{}
 
-templ Foo() {
+t1 Foo() {
 	<div></div>
 }
 
-templ (s *sidebar) Render() {
+t1 (s *sidebar) Render() {
 	<div>
 		if true {
 			@Foo()
@@ -1339,7 +1339,7 @@ templ (s *sidebar) Render() {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			output, err := parseAndGenerateSkipImports("test.gsx", tt.input)
+			output, err := parseAndGenerateSkipImports("test.t2", tt.input)
 			if err != nil {
 				t.Fatalf("generation failed: %v", err)
 			}
@@ -1379,12 +1379,12 @@ func (c *myRoot) BindApp(app *tui.App) {
 	c.bindAppFields(app)
 }
 
-templ (c *myRoot) Render() {
+t1 (c *myRoot) Render() {
 	<div></div>
 }
 `
 
-	output, err := parseAndGenerateSkipImports("test.gsx", input)
+	output, err := parseAndGenerateSkipImports("test.t2", input)
 	if err != nil {
 		t.Fatalf("generation failed: %v", err)
 	}

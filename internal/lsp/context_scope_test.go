@@ -7,7 +7,7 @@ import (
 func TestResolveCursorContext_ForLoop(t *testing.T) {
 	src := `package test
 
-templ List(items []string) {
+t1 List(items []string) {
 	<div>
 		for _, item := range items {
 			<span>{item}</span>
@@ -29,7 +29,7 @@ templ List(items []string) {
 func TestResolveCursorContext_IfStmt(t *testing.T) {
 	src := `package test
 
-templ Conditional(show bool) {
+t1 Conditional(show bool) {
 	<div>
 		if show {
 			<span>visible</span>
@@ -50,7 +50,7 @@ templ Conditional(show bool) {
 func TestResolveCursorContext_LetBinding(t *testing.T) {
 	src := `package test
 
-templ Example() {
+t1 Example() {
 	header := <div>title</div>
 	{header}
 }
@@ -68,11 +68,11 @@ templ Example() {
 func TestResolveCursorContext_ComponentCall(t *testing.T) {
 	src := `package test
 
-templ Page() {
+t1 Page() {
 	@Header("My Title")
 }
 
-templ Header(title string) {
+t1 Header(title string) {
 	<div>{title}</div>
 }
 `
@@ -106,7 +106,7 @@ func helper(s string) string {
 func TestResolveCursorContext_GoExpr(t *testing.T) {
 	src := `package test
 
-templ Display(count int) {
+t1 Display(count int) {
 	<span>{fmt.Sprintf("%d", count)}</span>
 }
 `
@@ -124,7 +124,7 @@ templ Display(count int) {
 func TestResolveCursorContext_TailwindClass(t *testing.T) {
 	src := `package test
 
-templ Box() {
+t1 Box() {
 	<div class="flex-col p-2">content</div>
 }
 `
@@ -154,7 +154,7 @@ templ Box() {
 func TestResolveCursorContext_InElement(t *testing.T) {
 	src := `package test
 
-templ Box() {
+t1 Box() {
 	<div class="p-1">content</div>
 }
 `
@@ -198,7 +198,7 @@ func TestResolveCursorContext_Keyword(t *testing.T) {
 func TestResolveCursorContext_ScopeCollectsRefs(t *testing.T) {
 	src := `package test
 
-templ Layout() {
+t1 Layout() {
 	<div ref={header} class="p-1">title</div>
 	<div ref={footer} class="p-1">footer</div>
 }
@@ -231,7 +231,7 @@ templ Layout() {
 func TestResolveCursorContext_ScopeCollectsLetBindings(t *testing.T) {
 	src := `package test
 
-templ Example() {
+t1 Example() {
 	title := <span>Hello</span>
 	{title}
 }
@@ -252,7 +252,7 @@ templ Example() {
 func TestResolveCursorContext_ScopeCollectsParams(t *testing.T) {
 	src := `package test
 
-templ Header(title string, subtitle string) {
+t1 Header(title string, subtitle string) {
 	<div>{title}</div>
 }
 `
@@ -269,8 +269,8 @@ templ Header(title string, subtitle string) {
 func TestResolveCursorContext_NilAST(t *testing.T) {
 	// Test graceful handling when AST is nil (unparseable file)
 	doc := &Document{
-		URI:     "file:///broken.gsx",
-		Content: "this is not valid gsx at all {{{{",
+		URI:     "file:///broken.t2",
+		Content: "this is not valid t2 at all {{{{",
 		Version: 1,
 		AST:     nil,
 	}
@@ -288,7 +288,7 @@ func TestResolveCursorContext_NilAST(t *testing.T) {
 
 func TestResolveCursorContext_EmptyDocument(t *testing.T) {
 	doc := &Document{
-		URI:     "file:///empty.gsx",
+		URI:     "file:///empty.t2",
 		Content: "",
 		Version: 1,
 		AST:     nil,
@@ -307,7 +307,7 @@ func TestResolveCursorContext_EmptyDocument(t *testing.T) {
 func TestResolveCursorContext_StateDecl(t *testing.T) {
 	src := `package test
 
-templ Counter() {
+t1 Counter() {
 	count := tui.NewState(0)
 	<span>{count.Get()}</span>
 }
@@ -325,7 +325,7 @@ templ Counter() {
 func TestResolveCursorContext_StateAccess(t *testing.T) {
 	src := `package test
 
-templ Counter() {
+t1 Counter() {
 	count := tui.NewState(0)
 	<span>{count.Get()}</span>
 }
@@ -344,7 +344,7 @@ templ Counter() {
 func TestResolveCursorContext_TextContent(t *testing.T) {
 	src := `package test
 
-templ Simple() {
+t1 Simple() {
 	<div>Hello World</div>
 }
 `

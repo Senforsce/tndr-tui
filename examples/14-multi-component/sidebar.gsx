@@ -66,7 +66,7 @@ func (s *sidebar) sidebarWidth() int {
 	return 5
 }
 
-templ (s *sidebar) Render() {
+t1 (s *sidebar) Render() {
 	<div class="flex-col border-single shrink-0" width={s.sidebarWidth()}>
 		if s.expanded.Get() {
 			<div class="flex-col px-1">

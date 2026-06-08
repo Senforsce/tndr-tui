@@ -6,7 +6,7 @@ on:
     paths:
       - "docs/content/**"
       - "docs/images/guides/**"
-      - "editor/vscode/syntaxes/gsx.tmLanguage.json"
+      - "editor/vscode/syntaxes/t2.tmLanguage.json"
 
 jobs:
   trigger:

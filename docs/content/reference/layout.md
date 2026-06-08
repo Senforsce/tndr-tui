@@ -4,9 +4,9 @@
 
 go-tui uses a CSS flexbox layout engine to position elements on screen. Every `<div>` acts as a flex container, arranging its children along a main axis (horizontal by default) with control over alignment, spacing, and sizing. The layout engine runs automatically when state changes, but you can also trigger it manually for testing or advanced use cases.
 
-All layout types live in the root `tui` package (re-exported from `internal/layout`). You interact with them through element options in `.gsx` files or programmatically via `tui.New()`.
+All layout types live in the root `tui` package (re-exported from `internal/layout`). You interact with them through element options in `.t2` files or programmatically via `tui.New()`.
 
-```gsx
+```t2
 // Flexbox in action: vertical layout with centered children
 <div class="flex-col items-center gap-1 p-1 border-rounded">
     <span class="font-bold">Title</span>
@@ -45,7 +45,7 @@ tui.New(tui.WithDirection(tui.Column)) // vertical stack
 tui.New(tui.WithDirection(tui.Row))    // horizontal row (default)
 ```
 
-In `.gsx`, use the Tailwind classes `flex-col` for column and `flex` or `flex-row` for row.
+In `.t2`, use the Tailwind classes `flex-col` for column and `flex` or `flex-row` for row.
 
 ## Justify
 
@@ -76,7 +76,7 @@ JustifySpaceAround:   [A]    [B]    [C]
 JustifySpaceEvenly:    [A]    [B]    [C]
 ```
 
-In `.gsx`, use `justify-start`, `justify-center`, `justify-end`, `justify-between`, `justify-around`, or `justify-evenly`.
+In `.t2`, use `justify-start`, `justify-center`, `justify-end`, `justify-between`, `justify-around`, or `justify-evenly`.
 
 ## Align
 
@@ -94,7 +94,7 @@ tui.New(tui.WithAlign(tui.AlignCenter))  // center children on cross axis
 tui.New(tui.WithAlign(tui.AlignStretch)) // stretch to fill (default)
 ```
 
-In `.gsx`, use `items-start`, `items-end`, `items-center`, or `items-stretch`.
+In `.t2`, use `items-start`, `items-end`, `items-center`, or `items-stretch`.
 
 Individual children can override the parent's alignment with `AlignSelf`:
 
@@ -102,7 +102,7 @@ Individual children can override the parent's alignment with `AlignSelf`:
 tui.New(tui.WithAlignSelf(tui.AlignCenter)) // this child centers itself
 ```
 
-In `.gsx`, use `self-start`, `self-center`, `self-end`, or `self-stretch`.
+In `.t2`, use `self-start`, `self-center`, `self-end`, or `self-stretch`.
 
 ## FlexWrap
 
@@ -118,7 +118,7 @@ In `.gsx`, use `self-start`, `self-center`, `self-end`, or `self-stretch`.
 tui.New(tui.WithFlexWrap(tui.Wrap)) // enable wrapping
 ```
 
-In `.gsx`, use `flex-wrap`, `flex-wrap-reverse`, or `flex-nowrap`.
+In `.t2`, use `flex-wrap`, `flex-wrap-reverse`, or `flex-nowrap`.
 
 With wrapping enabled, each line handles grow, shrink, and justify separately.
 
@@ -142,7 +142,7 @@ tui.New(
 )
 ```
 
-In `.gsx`, use `content-start`, `content-end`, `content-center`, `content-stretch`, `content-between`, or `content-around`.
+In `.t2`, use `content-start`, `content-end`, `content-center`, `content-stretch`, `content-between`, or `content-around`.
 
 ## Value
 

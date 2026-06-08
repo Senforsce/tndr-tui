@@ -46,7 +46,7 @@ import (
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			l := NewLexer("test.gsx", tt.input)
+			l := NewLexer("test.t2", tt.input)
 			p := NewParser(l)
 			file, err := p.ParseFile()
 
@@ -94,7 +94,7 @@ func TestParser_ImportDetails(t *testing.T) {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			l := NewLexer("test.gsx", tt.input)
+			l := NewLexer("test.t2", tt.input)
 			p := NewParser(l)
 			file, err := p.ParseFile()
 			if err != nil {
@@ -128,7 +128,7 @@ func NewSettingsApp(
 	return &SettingsApp{}
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -142,11 +142,11 @@ func NewSettingsApp(
 
 func TestParser_GoExpression(t *testing.T) {
 	input := `package x
-templ Test() {
+t1 Test() {
 	<span>{fmt.Sprintf("Count: %d", count)}</span>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -177,7 +177,7 @@ import (
 	tui "github.com/grindlemire/go-tui"
 )
 
-templ Dashboard(items []string, selectedIndex int) {
+t1 Dashboard(items []string, selectedIndex int) {
 	<div direction={tui.Column} padding=1>
 		<span>Dashboard</span>
 		for i, item := range items {
@@ -190,7 +190,7 @@ templ Dashboard(items []string, selectedIndex int) {
 	</div>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -246,14 +246,14 @@ func TestParser_ErrorRecovery(t *testing.T) {
 	tests := map[string]tc{
 		"missing component name": {
 			input: `package x
-templ() {
+t1() {
 	<span>Hello</span>
 }`,
 			errorContains: "expected component name",
 		},
 		"unclosed element": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<div>
 		<span>Hello</span>
 }`,
@@ -261,7 +261,7 @@ templ Test() {
 		},
 		"mismatched tags": {
 			input: `package x
-templ Test() {
+t1 Test() {
 	<div>Hello</span>
 }`,
 			errorContains: "mismatched closing tag",
@@ -270,7 +270,7 @@ templ Test() {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			l := NewLexer("test.gsx", tt.input)
+			l := NewLexer("test.t2", tt.input)
 			p := NewParser(l)
 			_, err := p.ParseFile()
 
@@ -288,11 +288,11 @@ templ Test() {
 func TestParser_Position(t *testing.T) {
 	input := `package x
 
-templ Test() {
+t1 Test() {
 	<span>Hello</span>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -315,15 +315,15 @@ templ Test() {
 func TestParser_MultipleComponents(t *testing.T) {
 	input := `package x
 
-templ Header() {
+t1 Header() {
 	<span>Header</span>
 }
 
-templ Footer() {
+t1 Footer() {
 	<span>Footer</span>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -345,11 +345,11 @@ templ Footer() {
 
 func TestParser_TextContent(t *testing.T) {
 	input := `package x
-templ Test() {
+t1 Test() {
 	<span>Hello World</span>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -369,11 +369,11 @@ templ Test() {
 
 func TestParser_TextContentCoalescing(t *testing.T) {
 	input := `package x
-templ Test() {
+t1 Test() {
 	<span>Hello World from component</span>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {
@@ -406,15 +406,15 @@ func TestParser_ErrorRecoveryMultipleComponents(t *testing.T) {
 	// and continue parsing subsequent components
 	input := `package x
 
-templ Broken(
+t1 Broken(
 	<span>Hello</span>
 }
 
-templ Working() {
+t1 Working() {
 	<span>World</span>
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 
@@ -436,7 +436,7 @@ templ Working() {
 func TestParser_RawSourcePreservation(t *testing.T) {
 	// Test that raw source is preserved correctly in conditions/iterables
 	input := `package x
-templ Test() {
+t1 Test() {
 	if user.Name != "" && user.Age >= 18 {
 		<span>Adult</span>
 	}
@@ -445,7 +445,7 @@ templ Test() {
 	}
 }`
 
-	l := NewLexer("test.gsx", input)
+	l := NewLexer("test.t2", input)
 	p := NewParser(l)
 	file, err := p.ParseFile()
 	if err != nil {

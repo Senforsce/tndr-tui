@@ -17,11 +17,11 @@ func newTestReferencesProvider(index ComponentIndex, docs DocumentAccessor) *ref
 func TestReferences_Component(t *testing.T) {
 	src := `package test
 
-templ Page() {
+t1 Page() {
 	@Header("title")
 }
 
-templ Header(title string) {
+t1 Header(title string) {
 	<div>{title}</div>
 }
 `
@@ -56,7 +56,7 @@ templ Header(title string) {
 func TestReferences_Function(t *testing.T) {
 	src := `package test
 
-templ Display() {
+t1 Display() {
 	<span>{helper("test")}</span>
 }
 
@@ -96,7 +96,7 @@ func helper(s string) string {
 func TestReferences_Parameter(t *testing.T) {
 	src := `package test
 
-templ Header(title string) {
+t1 Header(title string) {
 	<span>{title}</span>
 }
 `
@@ -135,7 +135,7 @@ templ Header(title string) {
 func TestReferences_LetBinding(t *testing.T) {
 	src := `package test
 
-templ Example() {
+t1 Example() {
 	header := <div>title</div>
 	{header}
 }
@@ -178,7 +178,7 @@ func TestReferences_EmptyWord(t *testing.T) {
 func TestReferences_RefAttr(t *testing.T) {
 	src := `package test
 
-templ Layout() {
+t1 Layout() {
 	<div ref={header} class="p-1">title</div>
 	<span>{header}</span>
 }
@@ -207,7 +207,7 @@ templ Layout() {
 func TestReferences_RefAttr_Multiline(t *testing.T) {
 	src := `package test
 
-templ Layout() {
+t1 Layout() {
 	<div
 		ref={header}
 		class="p-1">title</div>
@@ -249,7 +249,7 @@ templ Layout() {
 func TestReferences_StateVar(t *testing.T) {
 	src := `package test
 
-templ Counter() {
+t1 Counter() {
 	count := tui.NewState(0)
 	<span>{count.Get()}</span>
 }
@@ -279,7 +279,7 @@ func TestReferences_StateVarWordBoundary(t *testing.T) {
 	// Regression: "count" should not match "accountCount" as a state var reference.
 	src := `package test
 
-templ Counter() {
+t1 Counter() {
 	count := tui.NewState(0)
 	<span>{count.Get()}</span>
 }
@@ -348,7 +348,7 @@ func TestIndexWholeWord(t *testing.T) {
 func TestReferences_LoopVariable(t *testing.T) {
 	src := `package test
 
-templ List(items []string) {
+t1 List(items []string) {
 	<div>
 		for _, item := range items {
 			<span>{item}</span>

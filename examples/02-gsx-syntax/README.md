@@ -1,6 +1,6 @@
 # GSX Syntax
 
-Demonstrates `.gsx` file structure including the `templ` keyword, component definitions, control flow with `if`/`for`/`:=` bindings, and Go expressions inside templates.
+Demonstrates `.t2` file structure including the `t1` keyword, component definitions, control flow with `if`/`for`/`:=` bindings, and Go expressions inside templates.
 
 ## Screenshot
 
@@ -14,4 +14,4 @@ go run .
 
 ## Guide
 
-For a detailed walkthrough, see the [GSX Syntax guide](https://go-tui.dev/guide/gsx-syntax).
+For a detailed walkthrough, see the [GSX Syntax guide](https://go-tui.dev/guide/t2-syntax).

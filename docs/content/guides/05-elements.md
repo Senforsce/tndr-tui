@@ -8,7 +8,7 @@ go-tui provides HTML-like elements (`<div>`, `<span>`, `<p>`, `<ul>`, `<li>`, `<
 
 `<div>` is the primary layout container. It renders as a flexbox container with `Row` direction by default. Use Tailwind classes or attributes to configure direction, alignment, gaps, and sizing:
 
-```gsx
+```t2
 // Horizontal layout (default)
 <div class="flex gap-2">
     <span>Left</span>
@@ -40,7 +40,7 @@ Every visible element in go-tui is ultimately a `<div>` with different default o
 
 `<span>` displays inline text. Use it for styled text content within a layout:
 
-```gsx
+```t2
 <span>Plain text</span>
 <span class="text-cyan font-bold">Styled text</span>
 <span class="text-[#ff6600]">Hex-colored text</span>
@@ -50,7 +50,7 @@ Every visible element in go-tui is ultimately a `<div>` with different default o
 
 `<p>` renders paragraph text that wraps automatically when it exceeds the available width:
 
-```gsx
+```t2
 <p>{"This paragraph text wraps automatically when the content exceeds the available width. Use <p> for longer text blocks."}</p>
 ```
 
@@ -62,7 +62,7 @@ Use `<span>` for short inline labels and `<p>` for longer text that should word-
 
 `<hr>` draws a horizontal rule across the container width. It's self-closing:
 
-```gsx
+```t2
 <div class="flex-col gap-1">
     <span>Above the line</span>
     <hr />
@@ -74,7 +74,7 @@ Use `<span>` for short inline labels and `<p>` for longer text that should word-
 
 `<br>` inserts a blank line break. Also self-closing:
 
-```gsx
+```t2
 <div class="flex-col">
     <span>Line one</span>
     <br />
@@ -86,7 +86,7 @@ Use `<span>` for short inline labels and `<p>` for longer text that should word-
 
 `<ul>` creates a list container and `<li>` renders list items with bullet markers. Nest them together for bulleted lists:
 
-```gsx
+```t2
 <ul class="flex-col p-1">
     <li><span>First item</span></li>
     <li><span>Second item</span></li>
@@ -100,7 +100,7 @@ Each `<li>` automatically prepends a bullet character. Put any content inside th
 
 `<table>` acts as a flex container for tabular data. Build tables by composing `<div>` rows with fixed-width columns and an `<hr>` separator between the header and body:
 
-```gsx
+```t2
 <table class="flex-col p-1">
     // Header row
     <div class="flex gap-2">
@@ -129,7 +129,7 @@ The fixed widths on each column (`w-10`, `w-5`) keep columns aligned across rows
 
 `<button>` renders a clickable button. Combine it with refs for mouse handling (see the [Refs and Clicks guide](refs-and-clicks)):
 
-```gsx
+```t2
 <div class="flex gap-2">
     <button>{"Save"}</button>
     <button class="font-bold">{"Submit"}</button>
@@ -145,13 +145,13 @@ The `disabled` attribute visually dims the button. Wire up click handling throug
 
 Bind `value` to a `*State[string]` for two-way binding. Typing updates the state, and changing the state updates the display:
 
-```gsx
+```t2
 <input value={s.name} placeholder="Type your name..." width={30} border={tui.BorderRounded} />
 ```
 
 You can also set `focusColor` to change the border color when focused, or use `focusGradient` and `borderGradient` for gradient borders:
 
-```gsx
+```t2
 <input
     value={s.name}
     placeholder="Type here..."
@@ -178,7 +178,7 @@ Wire up `onSubmit` for Enter key handling and `onChange` to react to each keystr
 
 Bind `value` to a `*State[string]` for two-way binding. Set `maxHeight` to cap the visible rows, and use `submitKey` to control how Enter behaves:
 
-```gsx
+```t2
 <textarea
     value={s.note}
     placeholder="Write a note..."
@@ -215,7 +215,7 @@ func progressBar(value, width int) string {
 
 Then use it in your template with styling:
 
-```gsx
+```t2
 <div class="flex gap-2 items-center">
     <span class="font-dim w-10">Download:</span>
     <span class="text-cyan">{progressBar(e.progress.Get(), 25)}</span>
@@ -231,7 +231,7 @@ The `<modal>` element renders as a full-screen overlay. When open, it dims the b
 
 Bind the `open` attribute to a `*State[bool]` to control visibility. Use `onActivate` on buttons to handle Enter key activation:
 
-```gsx
+```t2
 <modal open={s.showDialog} class="justify-center items-center">
     <div class="border-rounded p-2 flex-col gap-1 w-40">
         <span class="font-bold text-yellow">Are you sure?</span>
@@ -260,7 +260,7 @@ Focusable elements with borders get an automatic cyan highlight when focused. Th
 
 This elements gallery demonstrates every built-in element type in a scrollable layout, including Input and TextArea with two-way value binding:
 
-```gsx
+```t2
 package main
 
 import (
@@ -382,7 +382,7 @@ func progressBar(value, width int) string {
     return bar
 }
 
-templ (e *elementsApp) Render() {
+t1 (e *elementsApp) Render() {
     <div
         ref={e.content}
         class="flex-col gap-1 h-full"

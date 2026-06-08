@@ -1,5 +1,5 @@
 vim.filetype.add({
 	extension = {
-		gsx = "gsx",
+		t2 = "t2",
 	},
 })

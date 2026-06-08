@@ -32,7 +32,7 @@ func TestMount_HeaderViewLayout(t *testing.T) {
 	defer cleanup()
 
 	// Simulate what the generated code does for Header:
-	//   templ Header(title string) {
+	//   t1 Header(title string) {
 	//     <div class="border-rounded p-1 flex justify-center">
 	//       <span class="font-bold">{title}</span>
 	//     </div>
@@ -277,7 +277,7 @@ func extractBufferText(buf *Buffer, width, height int) string {
 }
 
 // TestMount_ExactGeneratedCodePattern tests with the EXACT element options
-// from the generated components_gsx.go to match real-world conditions.
+// from the generated components_t2.go to match real-world conditions.
 func TestMount_ExactGeneratedCodePattern(t *testing.T) {
 	mockTerm := NewMockTerminal(120, 50)
 
@@ -338,7 +338,7 @@ func TestMount_ExactGeneratedCodePattern(t *testing.T) {
 	}
 }
 
-// exactGenRootComponent replicates the EXACT structure from generated components_gsx.go
+// exactGenRootComponent replicates the EXACT structure from generated components_t2.go
 type exactGenRootComponent struct{}
 
 func (c *exactGenRootComponent) Render(app *App) *Element {

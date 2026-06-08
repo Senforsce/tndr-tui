@@ -14,7 +14,7 @@ func TestCommentPreservationInElements(t *testing.T) {
 		"comments before closing tag stay inside element": {
 			source: `package main
 
-templ Foo() {
+t1 Foo() {
 	<div>
 		<span>Hello</span>
 		// comment before closing
@@ -25,7 +25,7 @@ templ Foo() {
 		"comments as only children stay inside element": {
 			source: `package main
 
-templ Foo() {
+t1 Foo() {
 	<div>
 		// only comments as children
 		// another comment
@@ -36,7 +36,7 @@ templ Foo() {
 		"comments at end of nested div stay inside": {
 			source: `package main
 
-templ Foo() {
+t1 Foo() {
 	<div>
 		<div>
 			<span>Text</span>
@@ -49,7 +49,7 @@ templ Foo() {
 		"comments between elements become leading comments": {
 			source: `package main
 
-templ Foo() {
+t1 Foo() {
 	<div>
 		<span>Before</span>
 		// comment 1
@@ -62,7 +62,7 @@ templ Foo() {
 		"orphan in inner div and outer div stay in place": {
 			source: `package main
 
-templ Foo() {
+t1 Foo() {
 	<div>
 		<div>
 			<span>Text</span>
@@ -77,7 +77,7 @@ templ Foo() {
 		"comments before closing nested divs stay in place": {
 			source: `package main
 
-templ Foo() {
+t1 Foo() {
 	<div>
 		<div>
 			// comment at end of inner
@@ -90,7 +90,7 @@ templ Foo() {
 		"commented out closing div preserves all comments": {
 			source: `package main
 
-templ Foo() {
+t1 Foo() {
 	<div class="flex-col">
 		<span>Bold text</span>
 		<span>Dim text</span>
@@ -109,7 +109,7 @@ templ Foo() {
 		"orphan comments in component body preserved": {
 			source: `package main
 
-templ Foo() {
+t1 Foo() {
 	// orphan at start
 	<div>
 		<span>Text</span>
@@ -127,7 +127,7 @@ templ Foo() {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			formatted, err := fmtr.Format("test.gsx", tt.source)
+			formatted, err := fmtr.Format("test.t2", tt.source)
 			if err != nil {
 				t.Fatalf("format error: %v", err)
 			}
@@ -149,7 +149,7 @@ templ Foo() {
 			}
 
 			// Verify idempotency
-			formatted2, err := fmtr.Format("test.gsx", formatted)
+			formatted2, err := fmtr.Format("test.t2", formatted)
 			if err != nil {
 				t.Fatalf("second format error: %v", err)
 			}

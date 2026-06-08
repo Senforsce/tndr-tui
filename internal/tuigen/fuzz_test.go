@@ -5,19 +5,19 @@ import (
 )
 
 func FuzzLexer(f *testing.F) {
-	// Seed with valid .gsx snippets
+	// Seed with valid .t2 snippets
 	f.Add([]byte(`package test
-templ Hello() {
+t1 Hello() {
 	<div>Hello</div>
 }
 `))
 	f.Add([]byte(`package test
-templ X(a int, b string) {
+t1 X(a int, b string) {
 	<span class="font-bold">{a}</span>
 }
 `))
 	f.Add([]byte(`package test
-templ Loop(items []string) {
+t1 Loop(items []string) {
 	for _, item := range items {
 		<span>{item}</span>
 	}
@@ -25,7 +25,7 @@ templ Loop(items []string) {
 `))
 
 	f.Fuzz(func(t *testing.T, data []byte) {
-		lexer := NewLexer("fuzz.gsx", string(data))
+		lexer := NewLexer("fuzz.t2", string(data))
 		// Should not panic
 		for {
 			tok := lexer.Next()
@@ -38,13 +38,13 @@ templ Loop(items []string) {
 
 func FuzzParser(f *testing.F) {
 	f.Add([]byte(`package test
-templ Hello() {
+t1 Hello() {
 	<div>Hello</div>
 }
 `))
 
 	f.Fuzz(func(t *testing.T, data []byte) {
-		lexer := NewLexer("fuzz.gsx", string(data))
+		lexer := NewLexer("fuzz.t2", string(data))
 		parser := NewParser(lexer)
 		// Should not panic — may return errors, that's fine
 		_, _ = parser.ParseFile()

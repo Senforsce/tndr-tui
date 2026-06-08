@@ -1,10 +1,10 @@
 {
   "grammars": [
     {
-      "name": "gsx",
+      "name": "t2",
       "path": ".",
-      "scope": "source.gsx",
-      "file-types": ["gsx"],
+      "scope": "source.t2",
+      "file-types": ["t2"],
       "highlights": "queries/highlights.scm",
       "injections": "queries/injections.scm"
     }

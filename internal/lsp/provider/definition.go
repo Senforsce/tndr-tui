@@ -32,7 +32,7 @@ func (d *definitionProvider) Definition(ctx *CursorContext) ([]Location, error) 
 	word := ctx.Word
 
 	// Check local function definitions first (prevents gopls from
-	// returning generated .go files instead of .gsx sources).
+	// returning generated .go files instead of .t2 sources).
 	// Skip this when inside a Go expression — gopls understands the full
 	// context (e.g., field access a.category vs a standalone function call).
 	if word != "" && !ctx.InGoExpr {
@@ -592,7 +592,7 @@ func (d *definitionProvider) getGoplsDefinition(ctx *CursorContext) ([]Location,
 
 	var locs []Location
 	for _, gl := range goplsLocs {
-		// Check if this is a virtual file — translate back to .gsx
+		// Check if this is a virtual file — translate back to .t2
 		if gopls.IsVirtualGoFile(gl.URI) {
 			tuiURI := gopls.GoURIToTuiURI(gl.URI)
 			cachedFile := d.virtualFiles.GetVirtualFile(tuiURI)
@@ -617,7 +617,7 @@ func (d *definitionProvider) getGoplsDefinition(ctx *CursorContext) ([]Location,
 			continue
 		}
 
-		// Real generated _gsx.go files have structural differences from
+		// Real generated _t2.go files have structural differences from
 		// the virtual Go file (different ordering, goimports blank lines),
 		// making source map reverse-translation unreliable. Skip these
 		// and let the word-based fallback handle them via AST lookup.

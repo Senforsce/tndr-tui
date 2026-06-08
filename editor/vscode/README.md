@@ -1,11 +1,11 @@
 # GSX Language Support for VS Code
 
-Syntax highlighting and language support for `.gsx` files used with the [go-tui](https://github.com/grindlemire/go-tui) framework.
+Syntax highlighting and language support for `.t2` files used with the [go-tui](https://github.com/grindlemire/go-tui) framework.
 
 ## Features
 
 - **Syntax Highlighting**: Full highlighting support for the GSX DSL
-  - Component declarations: `templ Name(params) { ... }` and `templ (c *Type) Render() { ... }`
+  - Component declarations: `t1 Name(params) { ... }` and `t1 (c *Type) Render() { ... }`
   - Keywords: `for`, `if`, `else`, `:=`
   - Element tags: `<div>`, `<span>`, `<p>`, `<button>`, `<input>`, `<textarea>`, `<table>`, `<progress>`, etc.
   - Ref bindings: `ref={myRef}` on elements
@@ -44,7 +44,7 @@ Syntax highlighting and language support for `.gsx` files used with the [go-tui]
 2. Copy the extension to your VS Code extensions folder:
 
    ```bash
-   cp -r go-tui/editor/vscode ~/.vscode/extensions/gsx-language
+   cp -r go-tui/editor/vscode ~/.vscode/extensions/t2-language
    ```
 
 3. Reload VS Code
@@ -67,11 +67,11 @@ Syntax highlighting and language support for `.gsx` files used with the [go-tui]
 
 ## Usage
 
-Simply open any `.gsx` file and the syntax highlighting will be applied automatically.
+Simply open any `.t2` file and the syntax highlighting will be applied automatically.
 
 ### Example
 
-```gsx
+```t2
 package main
 
 import (
@@ -108,7 +108,7 @@ func (c *counter) HandleMouse(me tui.MouseEvent) bool {
     )
 }
 
-templ (c *counter) Render() {
+t1 (c *counter) Render() {
     <div class="flex-col gap-2 p-2 border-rounded items-center">
         <span class="font-bold">{fmt.Sprintf("Count: %d", c.count.Get())}</span>
         <div class="flex gap-2">
@@ -140,13 +140,13 @@ templ (c *counter) Render() {
 
 ## LSP Configuration
 
-The extension automatically starts the GSX language server when you open a `.gsx` file. Configure via VS Code settings:
+The extension automatically starts the GSX language server when you open a `.t2` file. Configure via VS Code settings:
 
 | Setting | Default | Description |
 |---------|---------|-------------|
-| `gsx.lsp.enabled` | `true` | Enable/disable the language server |
-| `gsx.lsp.path` | `tui` | Path to the `tui` binary |
-| `gsx.lsp.logPath` | `""` | Path for LSP log file (empty = no logging) |
+| `t2.lsp.enabled` | `true` | Enable/disable the language server |
+| `t2.lsp.path` | `tui` | Path to the `tui` binary |
+| `t2.lsp.logPath` | `""` | Path for LSP log file (empty = no logging) |
 
 If the `tui` binary is not found, the extension will offer to install it automatically via `go install`.
 
