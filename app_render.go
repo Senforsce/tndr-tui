@@ -1,6 +1,6 @@
 package tui
 
-import "github.com/grindlemire/go-tui/internal/debug"
+import "github.com/senforsce/tndr-tui/internal/debug"
 
 // Render performs layout and renders to the terminal if the dirty flag is set.
 // No-op if nothing has changed since the last render. After rendering, the

@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"os/exec"
 	"syscall"
-	tui "github.com/grindlemire/go-tui"
-	"github.com/grindlemire/go-tui/examples/ai-chat/settings"
+	tui "github.com/senforsce/tndr-tui"
+	"github.com/senforsce/tndr-tui/examples/ai-chat/settings"
 )
 
 type chat struct {

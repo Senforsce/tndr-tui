@@ -1,8 +1,8 @@
 package lsp
 
 import (
-	"github.com/grindlemire/go-tui/internal/lsp/log"
-	"github.com/grindlemire/go-tui/internal/lsp/provider"
+	"github.com/senforsce/tndr-tui/internal/lsp/log"
+	"github.com/senforsce/tndr-tui/internal/lsp/provider"
 )
 
 // Diagnostic and DiagnosticSeverity are type aliases for the canonical definitions

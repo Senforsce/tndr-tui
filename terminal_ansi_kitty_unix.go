@@ -6,7 +6,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/grindlemire/go-tui/internal/debug"
+	"github.com/senforsce/tndr-tui/internal/debug"
 )
 
 // NegotiateKittyKeyboard attempts to enable Kitty keyboard protocol (flag 1 =

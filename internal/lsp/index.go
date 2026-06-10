@@ -5,7 +5,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/grindlemire/go-tui/internal/tuigen"
+	"github.com/senforsce/tndr-tui/internal/tuigen"
 )
 
 // ComponentInfo stores information about a component definition.

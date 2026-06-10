@@ -1,6 +1,6 @@
 package lsp
 
-import "github.com/grindlemire/go-tui/internal/lsp/provider"
+import "github.com/senforsce/tndr-tui/internal/lsp/provider"
 
 // DocumentFormattingParams represents textDocument/formatting parameters.
 type DocumentFormattingParams struct {

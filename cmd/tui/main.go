@@ -60,7 +60,7 @@ Examples:
   tui lsp                         Start LSP server on stdio
   tui lsp --log /tmp/tui-lsp.log  Start with debug logging
 
-For more information, see https://github.com/grindlemire/go-tui
+For more information, see https://github.com/senforsce/tndr-tui
 `
 
 func main() {

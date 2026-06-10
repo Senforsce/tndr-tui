@@ -40,7 +40,7 @@ import (
     "fmt"
     "time"
 
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 type stopwatch struct {
@@ -117,7 +117,7 @@ import (
     "fmt"
     "time"
 
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 type feedApp struct {
@@ -177,7 +177,7 @@ import (
     "os"
     "time"
 
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 func main() {
@@ -241,7 +241,7 @@ import (
     "fmt"
     "time"
 
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 // --- Producer: emits actions onto the bus ---
@@ -371,7 +371,7 @@ import (
     "fmt"
     "time"
 
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 type dashboard struct {
@@ -555,7 +555,7 @@ import (
     "fmt"
     "time"
 
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 type watcherApp struct {
@@ -719,7 +719,7 @@ import (
     "fmt"
     "os"
 
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 func main() {

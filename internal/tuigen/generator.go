@@ -113,7 +113,7 @@ func (g *Generator) Generate(file *File, sourceFile string) ([]byte, error) {
 	// Detect go-tui package alias and package name
 	g.tuiAlias = "tui"
 	for _, imp := range file.Imports {
-		if imp.Path == "github.com/grindlemire/go-tui" {
+		if imp.Path == "github.com/senforsce/tndr-tui" {
 			if imp.Alias != "" {
 				g.tuiAlias = imp.Alias
 			}
@@ -270,7 +270,7 @@ func (g *Generator) generateImports(imports []Import) {
 		// Always include root tui import for generated code
 		g.writeln("import (")
 		g.indent++
-		g.writeln(`tui "github.com/grindlemire/go-tui"`)
+		g.writeln(`tui "github.com/senforsce/tndr-tui"`)
 		g.indent--
 		g.writeln(")")
 		g.writeln("")
@@ -280,7 +280,7 @@ func (g *Generator) generateImports(imports []Import) {
 	// Check if root tui package is already imported
 	hasTui := false
 	for _, imp := range imports {
-		if imp.Path == "github.com/grindlemire/go-tui" {
+		if imp.Path == "github.com/senforsce/tndr-tui" {
 			hasTui = true
 		}
 	}
@@ -299,7 +299,7 @@ func (g *Generator) generateImports(imports []Import) {
 	// Add required import if not present
 	if !hasTui {
 		g.writeln("")
-		g.writeln(`tui "github.com/grindlemire/go-tui"`)
+		g.writeln(`tui "github.com/senforsce/tndr-tui"`)
 	}
 
 	g.indent--

@@ -18,7 +18,7 @@ Create a new directory and initialize the module:
 ```bash
 mkdir animation && cd animation
 go mod init animation
-go get github.com/grindlemire/go-tui
+go get github.com/senforsce/tndr-tui
 ```
 
 You'll create two files:
@@ -41,7 +41,7 @@ import (
     "strings"
     "time"
 
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 type animationApp struct {
@@ -107,7 +107,7 @@ import (
     "fmt"
     "os"
 
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 func main() {
@@ -300,7 +300,7 @@ import (
     "strings"
     "time"
 
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 var spinnerDots = []string{"⠋", "⠙", "⠚", "⠞", "⠖", "⠦", "⠴", "⠲", "⠳", "⠓"}
@@ -499,7 +499,7 @@ import (
     "fmt"
     "os"
 
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 func main() {

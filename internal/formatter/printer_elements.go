@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/grindlemire/go-tui/internal/tuigen"
+	"github.com/senforsce/tndr-tui/internal/tuigen"
 )
 
 // printElement outputs an element with its attributes and children.

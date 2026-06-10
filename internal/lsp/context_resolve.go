@@ -3,8 +3,8 @@ package lsp
 import (
 	"strings"
 
-	"github.com/grindlemire/go-tui/internal/lsp/schema"
-	"github.com/grindlemire/go-tui/internal/tuigen"
+	"github.com/senforsce/tndr-tui/internal/lsp/schema"
+	"github.com/senforsce/tndr-tui/internal/tuigen"
 )
 
 // resolveFromAST walks the parsed AST to find the node at the cursor position

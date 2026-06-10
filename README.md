@@ -11,10 +11,10 @@
 </p>
 
 <p align="center">
-  <a href="https://pkg.go.dev/github.com/grindlemire/go-tui"><img src="https://pkg.go.dev/badge/github.com/grindlemire/go-tui.svg" alt="Go Reference"></a>
-  <a href="https://github.com/grindlemire/go-tui/actions/workflows/ci.yml"><img src="https://github.com/grindlemire/go-tui/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
-  <a href="https://github.com/grindlemire/go-tui/blob/main/LICENSE"><img src="https://img.shields.io/github/license/grindlemire/go-tui" alt="License"></a>
-  <a href="https://goreportcard.com/report/github.com/grindlemire/go-tui"><img src="https://goreportcard.com/badge/github.com/grindlemire/go-tui" alt="Go Report Card"></a>
+  <a href="https://pkg.go.dev/github.com/senforsce/tndr-tui"><img src="https://pkg.go.dev/badge/github.com/senforsce/tndr-tui.svg" alt="Go Reference"></a>
+  <a href="https://github.com/senforsce/tndr-tui/actions/workflows/ci.yml"><img src="https://github.com/senforsce/tndr-tui/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://github.com/senforsce/tndr-tui/blob/main/LICENSE"><img src="https://img.shields.io/github/license/grindlemire/go-tui" alt="License"></a>
+  <a href="https://goreportcard.com/report/github.com/senforsce/tndr-tui"><img src="https://goreportcard.com/badge/github.com/senforsce/tndr-tui" alt="Go Report Card"></a>
 </p>
 
 <p align="center">
@@ -37,8 +37,8 @@
 ## Install
 
 ```bash
-go get github.com/grindlemire/go-tui
-go install github.com/grindlemire/go-tui/cmd/tui@latest
+go get github.com/senforsce/tndr-tui
+go install github.com/senforsce/tndr-tui/cmd/tui@latest
 ```
 
 ## Quick look
@@ -50,7 +50,7 @@ package main
 
 import (
     "fmt"
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 type counter struct {
@@ -85,7 +85,7 @@ package main
 import (
     "fmt"
     "os"
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 func main() {

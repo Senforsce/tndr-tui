@@ -143,7 +143,7 @@ func TestGenerator_ImportPropagation(t *testing.T) {
 	input := `package x
 import (
 	"fmt"
-	tui "github.com/grindlemire/go-tui"
+	tui "github.com/senforsce/tndr-tui"
 )
 
 t1 Test() {
@@ -164,7 +164,7 @@ t1 Test() {
 		t.Error("missing fmt import")
 	}
 
-	if !strings.Contains(code, `"github.com/grindlemire/go-tui"`) {
+	if !strings.Contains(code, `"github.com/senforsce/tndr-tui"`) {
 		t.Error("missing tui root import")
 	}
 }
@@ -1367,7 +1367,7 @@ t1 (s *sidebar) Render() {
 func TestGenerator_UserBindAppDoesNotSuppressUnbindApp(t *testing.T) {
 	input := `package x
 
-import tui "github.com/grindlemire/go-tui"
+import tui "github.com/senforsce/tndr-tui"
 
 type myRoot struct {
 	app    *tui.App

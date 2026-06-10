@@ -15,7 +15,7 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"github.com/grindlemire/go-tui/internal/lsp/log"
+	"github.com/senforsce/tndr-tui/internal/lsp/log"
 )
 
 // DiagnosticCallback is called when gopls publishes diagnostics.

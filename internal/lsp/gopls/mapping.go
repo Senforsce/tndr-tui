@@ -4,7 +4,7 @@ import (
 	"sort"
 	"sync"
 
-	"github.com/grindlemire/go-tui/internal/lsp/log"
+	"github.com/senforsce/tndr-tui/internal/lsp/log"
 )
 
 // SourceMap tracks position mappings between .t2 and generated .go files.

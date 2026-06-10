@@ -6,8 +6,8 @@
 ## Installation
 
 ```bash
-go get github.com/grindlemire/go-tui
-go install github.com/grindlemire/go-tui/cmd/tui@latest
+go get github.com/senforsce/tndr-tui
+go install github.com/senforsce/tndr-tui/cmd/tui@latest
 ```
 
 ## CLI Commands
@@ -37,7 +37,7 @@ At runtime: Event Loop → Layout Engine (flexbox) → Double-buffered Render �
 ```t2
 package main
 
-import tui "github.com/grindlemire/go-tui"
+import tui "github.com/senforsce/tndr-tui"
 
 t1 Greeting(name string) {
     <span class="text-cyan font-bold">{"Hello, " + name}</span>
@@ -144,7 +144,7 @@ package main
 import (
     "fmt"
     "os"
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 func main() {

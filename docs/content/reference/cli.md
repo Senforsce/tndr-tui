@@ -3,7 +3,7 @@
 ## Installation
 
 ```bash
-go install github.com/grindlemire/go-tui/cmd/tui@latest
+go install github.com/senforsce/tndr-tui/cmd/tui@latest
 ```
 
 This installs the `tui` binary, which compiles `.t2` files to Go, formats them, validates syntax, and runs the language server for editor integration.

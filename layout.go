@@ -2,7 +2,7 @@
 // Any changes to internal/layout types must be mirrored here.
 package tui
 
-import "github.com/grindlemire/go-tui/internal/layout"
+import "github.com/senforsce/tndr-tui/internal/layout"
 
 // Display specifies the layout mode for an element.
 type Display = layout.Display

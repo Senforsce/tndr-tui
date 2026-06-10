@@ -33,7 +33,7 @@ Here's the pattern. A root component creates a `category` state and hands it to 
 ```t2
 package main
 
-import tui "github.com/grindlemire/go-tui"
+import tui "github.com/senforsce/tndr-tui"
 
 type myApp struct {
     category *tui.State[string]
@@ -64,7 +64,7 @@ The sidebar receives the shared state and also creates its own local `selected` 
 ```t2
 package main
 
-import tui "github.com/grindlemire/go-tui"
+import tui "github.com/senforsce/tndr-tui"
 
 var categories = []string{"Documents", "Images", "Music", "Projects", "Downloads"}
 
@@ -126,7 +126,7 @@ package main
 import (
     "fmt"
 
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 var filesByCategory = map[string][]string{
@@ -178,7 +178,7 @@ Here's a search bar that returns `nil` (no bindings) when inactive, and captures
 ```t2
 package main
 
-import tui "github.com/grindlemire/go-tui"
+import tui "github.com/senforsce/tndr-tui"
 
 type searchBar struct {
     active *tui.State[bool]
@@ -387,7 +387,7 @@ Here's a full file explorer with three components: sidebar, content panel, and s
 ```t2
 package main
 
-import tui "github.com/grindlemire/go-tui"
+import tui "github.com/senforsce/tndr-tui"
 
 type myApp struct {
     searchActive *tui.State[bool]
@@ -442,7 +442,7 @@ t1 (a *myApp) Render() {
 ```t2
 package main
 
-import tui "github.com/grindlemire/go-tui"
+import tui "github.com/senforsce/tndr-tui"
 
 type sidebar struct {
     category *tui.State[string]
@@ -544,7 +544,7 @@ import (
     "fmt"
     "strings"
 
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 type searchBar struct {
@@ -669,7 +669,7 @@ import (
     "fmt"
     "os"
 
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 func main() {

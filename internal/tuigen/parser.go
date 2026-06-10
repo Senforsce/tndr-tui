@@ -105,7 +105,7 @@ func (p *Parser) expectSkipNewlines(typ TokenType) bool {
 }
 
 // synchronize skips tokens until a synchronization point is found.
-// Synchronization points are top-level declarations: func, templ, type, const, var.
+// Synchronization points are top-level declarations: func, t1, type, const, var.
 // This allows the parser to recover from errors and continue parsing.
 func (p *Parser) synchronize() {
 	for p.current.Type != TokenEOF {
@@ -238,7 +238,7 @@ func (p *Parser) ParseFile() (*File, error) {
 	p.skipNewlines()
 
 	// Parse components and top-level functions
-	// Components are defined with `templ`: templ Name(params) { ... }
+	// Components are defined with `t1`: t1 Name(params) { ... }
 	// Helper functions are all other func declarations
 	for p.current.Type != TokenEOF {
 		p.skipNewlines()
@@ -251,8 +251,8 @@ func (p *Parser) ParseFile() (*File, error) {
 
 		switch p.current.Type {
 		case TokenT1:
-			// Parse templ - always a component, no return type
-			comp := p.parseTempl()
+			// Parse tndr t1 component - always a component, no return type
+			comp := p.parseT1()
 			if comp != nil {
 				comp.LeadingComments = leadingComments
 				file.Components = append(file.Components, comp)
@@ -287,7 +287,7 @@ func (p *Parser) ParseFile() (*File, error) {
 				p.synchronize()
 			}
 		default:
-			p.errors.AddErrorf(p.position(), "unexpected token %s, expected func, templ, type, const, or var", p.current.Type)
+			p.errors.AddErrorf(p.position(), "unexpected token %s, expected func, t1, type, const, or var", p.current.Type)
 			// Error recovery: skip to next top-level declaration
 			p.synchronize()
 		}

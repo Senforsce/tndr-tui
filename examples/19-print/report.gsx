@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	tui "github.com/grindlemire/go-tui"
+	tui "github.com/senforsce/tndr-tui"
 )
 
 t1 BuildReport(project string, status string, duration string, tests int, passed int) {

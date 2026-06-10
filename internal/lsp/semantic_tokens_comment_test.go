@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/grindlemire/go-tui/internal/lsp/provider"
+	"github.com/senforsce/tndr-tui/internal/lsp/provider"
 )
 
 func TestCommentSemanticTokens(t *testing.T) {

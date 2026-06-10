@@ -10,7 +10,7 @@ import (
 	"fmt"
 	"os"
 
-	tui "github.com/grindlemire/go-tui"
+	tui "github.com/senforsce/tndr-tui"
 )
 
 //go:generate go run ../../cmd/tui generate app.t2 sidebar.t2 search.t2

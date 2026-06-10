@@ -3,7 +3,7 @@ package gopls
 import (
 	"testing"
 
-	"github.com/grindlemire/go-tui/internal/tuigen"
+	"github.com/senforsce/tndr-tui/internal/tuigen"
 )
 
 func TestGenerateVirtualGo(t *testing.T) {
@@ -119,7 +119,7 @@ func TestGenerateVirtualGo(t *testing.T) {
 				Package: "main",
 				Imports: []tuigen.Import{
 					{Path: "fmt"},
-					{Alias: "el", Path: "github.com/grindlemire/go-tui/internal/element"},
+					{Alias: "el", Path: "github.com/senforsce/tndr-tui/internal/element"},
 				},
 				Components: []*tuigen.Component{
 					{Name: "Test", Body: []tuigen.Node{}},
@@ -128,7 +128,7 @@ func TestGenerateVirtualGo(t *testing.T) {
 			wantContains: []string{
 				"package main",
 				`"fmt"`,
-				`el "github.com/grindlemire/go-tui/internal/element"`,
+				`el "github.com/senforsce/tndr-tui/internal/element"`,
 			},
 			wantMinMapLen: 0,
 		},

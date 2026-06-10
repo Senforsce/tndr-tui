@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"math/rand"
 	"time"
-	tui "github.com/grindlemire/go-tui"
+	tui "github.com/senforsce/tndr-tui"
 )
 
 type dashboardApp struct {

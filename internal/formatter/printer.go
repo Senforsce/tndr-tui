@@ -4,7 +4,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/grindlemire/go-tui/internal/tuigen"
+	"github.com/senforsce/tndr-tui/internal/tuigen"
 )
 
 // printer generates formatted .t2 source code from an AST.

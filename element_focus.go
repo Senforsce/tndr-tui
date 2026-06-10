@@ -1,7 +1,7 @@
 package tui
 
 import (
-	"github.com/grindlemire/go-tui/internal/debug"
+	"github.com/senforsce/tndr-tui/internal/debug"
 )
 
 // --- Focus API ---

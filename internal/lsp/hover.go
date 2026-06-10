@@ -1,8 +1,8 @@
 package lsp
 
 import (
-	"github.com/grindlemire/go-tui/internal/lsp/provider"
-	"github.com/grindlemire/go-tui/internal/lsp/schema"
+	"github.com/senforsce/tndr-tui/internal/lsp/provider"
+	"github.com/senforsce/tndr-tui/internal/lsp/schema"
 )
 
 // HoverParams represents textDocument/hover parameters.

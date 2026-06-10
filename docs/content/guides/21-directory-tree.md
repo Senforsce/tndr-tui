@@ -23,7 +23,7 @@ Create a new directory and initialize the module:
 ```bash
 mkdir directory-tree && cd directory-tree
 go mod init directory-tree
-go get github.com/grindlemire/go-tui
+go get github.com/senforsce/tndr-tui
 ```
 
 You'll create two files:
@@ -450,7 +450,7 @@ import (
     "path/filepath"
     "sort"
     "strings"
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 // Node represents a file or directory in the tree.
@@ -819,7 +819,7 @@ import (
     "os"
     "path/filepath"
 
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 func main() {

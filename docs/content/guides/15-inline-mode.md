@@ -19,7 +19,7 @@ import (
     "fmt"
     "os"
 
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 func main() {
@@ -59,7 +59,7 @@ package main
 
 import (
     "fmt"
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 type chatInput struct {
@@ -208,7 +208,7 @@ The key idea: track whether the overlay is showing with a `State[bool]`, and tog
 package main
 
 import (
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 type myApp struct {

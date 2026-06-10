@@ -6,8 +6,8 @@ package testdata
 import (
 	"fmt"
 
-	"github.com/grindlemire/go-tui"
-	gui "github.com/grindlemire/go-tui"
+	tui "github.com/grindlemire/go-tui"
+	gui "github.com/senforsce/tndr-tui"
 )
 
 type aliasHelper struct{}

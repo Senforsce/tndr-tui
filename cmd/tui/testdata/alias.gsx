@@ -3,7 +3,7 @@ package testdata
 import (
 	"fmt"
 
-	gui "github.com/grindlemire/go-tui"
+	gui "github.com/senforsce/tndr-tui"
 )
 
 type aliasHelper struct{}

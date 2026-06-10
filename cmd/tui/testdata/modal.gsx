@@ -1,6 +1,6 @@
 package testdata
 
-import tui "github.com/grindlemire/go-tui"
+import tui "github.com/senforsce/tndr-tui"
 
 type myModal struct {
 	app        *tui.App

@@ -1,6 +1,6 @@
 # GSX Language Support for VS Code
 
-Syntax highlighting and language support for `.t2` files used with the [go-tui](https://github.com/grindlemire/go-tui) framework.
+Syntax highlighting and language support for `.t2` files used with the [go-tui](https://github.com/senforsce/tndr-tui) framework.
 
 ## Features
 
@@ -38,7 +38,7 @@ Syntax highlighting and language support for `.t2` files used with the [go-tui](
 1. Clone the go-tui repository:
 
    ```bash
-   git clone https://github.com/grindlemire/go-tui.git
+   git clone https://github.com/senforsce/tndr-tui.git
    ```
 
 2. Copy the extension to your VS Code extensions folder:
@@ -76,7 +76,7 @@ package main
 
 import (
     "fmt"
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 type counter struct {
@@ -152,8 +152,8 @@ If the `tui` binary is not found, the extension will offer to install it automat
 
 ## Contributing
 
-Contributions are welcome! Please see the [go-tui repository](https://github.com/grindlemire/go-tui) for contribution guidelines.
+Contributions are welcome! Please see the [go-tui repository](https://github.com/senforsce/tndr-tui) for contribution guidelines.
 
 ## License
 
-MIT License. See the [LICENSE](https://github.com/grindlemire/go-tui/blob/main/LICENSE) file for details.
+MIT License. See the [LICENSE](https://github.com/senforsce/tndr-tui/blob/main/LICENSE) file for details.

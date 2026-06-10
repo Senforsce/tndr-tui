@@ -7,7 +7,7 @@ go-tui ships two test doubles that let you verify component behavior without a r
 `MockTerminal` implements the full `Terminal` interface. It keeps an in-memory cell grid you can inspect after rendering. `MockEventReader` implements both `EventReader` and `InterruptibleReader`, returning pre-queued events one at a time so your tests can simulate any input sequence deterministically.
 
 ```go
-import tui "github.com/grindlemire/go-tui"
+import tui "github.com/senforsce/tndr-tui"
 
 term := tui.NewMockTerminal(80, 24)
 reader := tui.NewMockEventReader(

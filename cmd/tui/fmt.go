@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"sync"
 
-	"github.com/grindlemire/go-tui/internal/formatter"
+	"github.com/senforsce/tndr-tui/internal/formatter"
 )
 
 // runFmt implements the fmt subcommand.

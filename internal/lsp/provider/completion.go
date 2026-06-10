@@ -3,7 +3,7 @@ package provider
 import (
 	"strings"
 
-	"github.com/grindlemire/go-tui/internal/lsp/log"
+	"github.com/senforsce/tndr-tui/internal/lsp/log"
 )
 
 // --- Completion types ---

@@ -11,13 +11,13 @@ go-tui is a declarative terminal UI framework for Go. You write UI layouts in `.
 First, add go-tui to your Go module:
 
 ```bash
-go get github.com/grindlemire/go-tui
+go get github.com/senforsce/tndr-tui
 ```
 
 Then install the `tui` CLI tool, which compiles `.t2` files into Go code:
 
 ```bash
-go install github.com/grindlemire/go-tui/cmd/tui@latest
+go install github.com/senforsce/tndr-tui/cmd/tui@latest
 ```
 
 Make sure `$GOPATH/bin` (or `$GOBIN`) is in your `PATH` so the `tui` command is available.
@@ -40,7 +40,7 @@ This walks through building a "Hello, Terminal!" app from scratch.
 ```bash
 mkdir hello-tui && cd hello-tui
 go mod init hello-tui
-go get github.com/grindlemire/go-tui
+go get github.com/senforsce/tndr-tui
 ```
 
 ### 2. Write hello.t2
@@ -50,7 +50,7 @@ Create a file called `hello.t2`:
 ```t2
 package main
 
-import tui "github.com/grindlemire/go-tui"
+import tui "github.com/senforsce/tndr-tui"
 
 type helloApp struct{}
 
@@ -93,7 +93,7 @@ import (
 	"fmt"
 	"os"
 
-	tui "github.com/grindlemire/go-tui"
+	tui "github.com/senforsce/tndr-tui"
 )
 
 func main() {

@@ -2,7 +2,9 @@
 // The DSL provides a templ-inspired syntax for building go-tui element trees.
 package tuigen
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // TokenType represents the type of a lexical token.
 type TokenType int
@@ -84,7 +86,7 @@ var tokenNames = map[TokenType]string{
 	TokenPackage:      "package",
 	TokenImport:       "import",
 	TokenFunc:         "func",
-	TokenT1:           "templ",
+	TokenT1:           "t1",
 	TokenReturn:       "return",
 	TokenIf:           "if",
 	TokenElse:         "else",
@@ -181,7 +183,7 @@ var keywords = map[string]TokenType{
 	"package": TokenPackage,
 	"import":  TokenImport,
 	"func":    TokenFunc,
-	"templ":   TokenT1,
+	"t1":      TokenT1,
 	"return":  TokenReturn,
 	"if":      TokenIf,
 	"else":    TokenElse,
@@ -195,6 +197,7 @@ var keywords = map[string]TokenType{
 // LookupIdent returns the token type for an identifier,
 // checking if it's a keyword first.
 func LookupIdent(ident string) TokenType {
+	//log.Println("lookup", ident)
 	if tok, ok := keywords[ident]; ok {
 		return tok
 	}

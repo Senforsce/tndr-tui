@@ -3,8 +3,8 @@ package provider
 import (
 	"strings"
 
-	"github.com/grindlemire/go-tui/internal/formatter"
-	"github.com/grindlemire/go-tui/internal/lsp/log"
+	"github.com/senforsce/tndr-tui/internal/formatter"
+	"github.com/senforsce/tndr-tui/internal/lsp/log"
 )
 
 // FormattingOptions represents formatting options.

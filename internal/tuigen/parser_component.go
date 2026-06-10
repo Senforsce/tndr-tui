@@ -219,21 +219,21 @@ func (p *Parser) captureRawGoFunc(startPos int, pos Position) *GoFunc {
 	return &GoFunc{Code: code, Position: pos}
 }
 
-// parseTempl parses a templ definition which is always a component.
+// parseT1 parses a templ definition which is always a component.
 // Supports two forms:
 //
-//	templ Name(params) { body }           — function component (existing)
-//	templ (s *sidebar) Render() { body }  — method component (new)
+//	t1 Name(params) { body }           — function component (existing)
+//	t1 (s *sidebar) Render() { body }  — method component (new)
 //
-// After 'templ', '(' means a method receiver; an identifier means a function name.
-func (p *Parser) parseTempl() *Component {
+// After 't1', '(' means a method receiver; an identifier means a function name.
+func (p *Parser) parseT1() *Component {
 	pos := p.position()
 
 	if !p.expect(TokenT1) {
 		return nil
 	}
 
-	// Disambiguation: '(' after templ means method receiver, identifier means function name
+	// Disambiguation: '(' after t1 means method receiver, identifier means function name
 	if p.current.Type == TokenLParen {
 		return p.parseMethodTempl(pos)
 	}

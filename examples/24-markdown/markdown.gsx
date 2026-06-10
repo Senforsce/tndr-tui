@@ -1,7 +1,7 @@
 package main
 
 import (
-	tui "github.com/grindlemire/go-tui"
+	tui "github.com/senforsce/tndr-tui"
 )
 
 type viewer struct {

@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"strings"
 
-	tui "github.com/grindlemire/go-tui"
+	tui "github.com/senforsce/tndr-tui"
 )
 
 type searchBar struct {

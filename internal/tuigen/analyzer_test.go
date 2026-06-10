@@ -162,7 +162,7 @@ t1 Test() {
 	<div></div>
 }`,
 			wantImports: []string{
-				"github.com/grindlemire/go-tui",
+				"github.com/senforsce/tndr-tui",
 			},
 		},
 		"adds root import when layout used": {
@@ -171,7 +171,7 @@ t1 Test() {
 	<div direction={tui.Column}></div>
 }`,
 			wantImports: []string{
-				"github.com/grindlemire/go-tui",
+				"github.com/senforsce/tndr-tui",
 			},
 		},
 		"adds root import when tui used": {
@@ -180,7 +180,7 @@ t1 Test() {
 	<div border={tui.BorderSingle}></div>
 }`,
 			wantImports: []string{
-				"github.com/grindlemire/go-tui",
+				"github.com/senforsce/tndr-tui",
 			},
 		},
 		"preserves existing imports": {
@@ -191,17 +191,17 @@ t1 Test() {
 }`,
 			wantImports: []string{
 				"fmt",
-				"github.com/grindlemire/go-tui",
+				"github.com/senforsce/tndr-tui",
 			},
 		},
 		"does not duplicate existing root import": {
 			input: `package x
-import tui "github.com/grindlemire/go-tui"
+import tui "github.com/senforsce/tndr-tui"
 t1 Test() {
 	<div></div>
 }`,
 			wantImports: []string{
-				"github.com/grindlemire/go-tui",
+				"github.com/senforsce/tndr-tui",
 			},
 		},
 	}

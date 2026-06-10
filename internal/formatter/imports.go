@@ -5,7 +5,7 @@ import (
 	"go/token"
 	"strings"
 
-	"github.com/grindlemire/go-tui/internal/tuigen"
+	"github.com/senforsce/tndr-tui/internal/tuigen"
 )
 
 // fixImports generates Go code from the AST, runs goimports to resolve

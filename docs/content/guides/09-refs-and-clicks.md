@@ -221,7 +221,7 @@ package main
 
 import (
     "fmt"
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 type colorMixer struct {
@@ -475,7 +475,7 @@ import (
     "fmt"
     "os"
 
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 func main() {

@@ -137,7 +137,7 @@ Creates a terminal with auto-detected capabilities. The `out` parameter is typic
 ```go
 import (
     "os"
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 term, err := tui.NewANSITerminal(os.Stdout, os.Stdin)
@@ -290,7 +290,7 @@ Creates an `EventReader` for the given input file (typically `os.Stdin`). The te
 ```go
 import (
     "os"
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 reader, err := tui.NewEventReader(os.Stdin)

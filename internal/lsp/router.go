@@ -3,7 +3,7 @@ package lsp
 import (
 	"encoding/json"
 
-	"github.com/grindlemire/go-tui/internal/lsp/log"
+	"github.com/senforsce/tndr-tui/internal/lsp/log"
 )
 
 // Router dispatches LSP method requests to the appropriate handler.

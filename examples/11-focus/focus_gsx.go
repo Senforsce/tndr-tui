@@ -6,7 +6,7 @@ package main
 import (
 	"fmt"
 
-	tui "github.com/grindlemire/go-tui"
+	tui "github.com/senforsce/tndr-tui"
 )
 
 type panelForm struct {

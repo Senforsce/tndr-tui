@@ -2,7 +2,7 @@
 package formatter
 
 import (
-	"github.com/grindlemire/go-tui/internal/tuigen"
+	"github.com/senforsce/tndr-tui/internal/tuigen"
 )
 
 // Formatter formats .t2 source code.

@@ -81,7 +81,7 @@ t1 Hello() {
 			input: `package main
 
 import (
-tui "github.com/grindlemire/go-tui"
+tui "github.com/senforsce/tndr-tui"
 )
 
 t1 Hello() {
@@ -90,7 +90,7 @@ t1 Hello() {
 `,
 			want: `package main
 
-import tui "github.com/grindlemire/go-tui"
+import tui "github.com/senforsce/tndr-tui"
 
 t1 Hello() {
 	<div border={tui.BorderSingle}></div>
@@ -474,7 +474,7 @@ t1 Hello() {
 		"interleaved type func and method templ": {
 			input: `package main
 
-import tui "github.com/grindlemire/go-tui"
+import tui "github.com/senforsce/tndr-tui"
 
 type myApp struct {
 	query *tui.State[string]
@@ -498,7 +498,7 @@ t1 (a *myApp) Render() {
 `,
 			want: `package main
 
-import tui "github.com/grindlemire/go-tui"
+import tui "github.com/senforsce/tndr-tui"
 
 type myApp struct {
 	query *tui.State[string]
@@ -1056,7 +1056,7 @@ t1 Hello() {
 }
 `,
 			want: []string{
-				"github.com/grindlemire/go-tui",
+				"github.com/senforsce/tndr-tui",
 			},
 		},
 		"adds fmt import when used": {
@@ -1068,7 +1068,7 @@ t1 Hello() {
 `,
 			want: []string{
 				"fmt",
-				"github.com/grindlemire/go-tui",
+				"github.com/senforsce/tndr-tui",
 			},
 		},
 		"preserves existing imports": {

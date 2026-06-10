@@ -13,7 +13,7 @@ import (
 	"os"
 	"path/filepath"
 
-	tui "github.com/grindlemire/go-tui"
+	tui "github.com/senforsce/tndr-tui"
 )
 
 //go:generate go run ../../cmd/tui generate tree.t2

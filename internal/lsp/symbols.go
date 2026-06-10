@@ -1,6 +1,6 @@
 package lsp
 
-import "github.com/grindlemire/go-tui/internal/lsp/provider"
+import "github.com/senforsce/tndr-tui/internal/lsp/provider"
 
 // DocumentSymbolParams represents textDocument/documentSymbol parameters.
 type DocumentSymbolParams struct {

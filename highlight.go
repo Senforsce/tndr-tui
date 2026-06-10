@@ -1,6 +1,6 @@
 package tui
 
-import "github.com/grindlemire/go-tui/internal/highlight"
+import "github.com/senforsce/tndr-tui/internal/highlight"
 
 // TokenKind is the syntax category of a highlighted code run. It mirrors the
 // internal lexer taxonomy.

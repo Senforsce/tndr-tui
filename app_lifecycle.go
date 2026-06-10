@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/grindlemire/go-tui/internal/debug"
+	"github.com/senforsce/tndr-tui/internal/debug"
 )
 
 // SnapshotFrame returns the current frame as a string for debugging.

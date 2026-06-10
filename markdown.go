@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/grindlemire/go-tui/internal/markdown"
+	"github.com/senforsce/tndr-tui/internal/markdown"
 )
 
 // Markdown renders a markdown string into the widget tree. It is a pure content

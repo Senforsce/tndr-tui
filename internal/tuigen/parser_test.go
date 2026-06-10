@@ -174,7 +174,7 @@ func TestParser_CompleteExample(t *testing.T) {
 
 import (
 	"fmt"
-	tui "github.com/grindlemire/go-tui"
+	tui "github.com/senforsce/tndr-tui"
 )
 
 t1 Dashboard(items []string, selectedIndex int) {

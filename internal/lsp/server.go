@@ -12,9 +12,9 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/grindlemire/go-tui/internal/lsp/gopls"
-	"github.com/grindlemire/go-tui/internal/lsp/log"
-	"github.com/grindlemire/go-tui/internal/tuigen"
+	"github.com/senforsce/tndr-tui/internal/lsp/gopls"
+	"github.com/senforsce/tndr-tui/internal/lsp/log"
+	"github.com/senforsce/tndr-tui/internal/tuigen"
 )
 
 // Server represents the TUI LSP server.

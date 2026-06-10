@@ -8,7 +8,7 @@ import {
 
 let client: LanguageClient | undefined;
 
-const INSTALL_COMMAND = 'go install github.com/grindlemire/go-tui/cmd/tui@latest';
+const INSTALL_COMMAND = 'go install github.com/senforsce/tndr-tui/cmd/tui@latest';
 
 function binaryExists(command: string): boolean {
     try {

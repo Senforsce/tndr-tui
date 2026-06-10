@@ -3,9 +3,9 @@ package lsp
 import (
 	"maps"
 
-	"github.com/grindlemire/go-tui/internal/lsp/gopls"
-	"github.com/grindlemire/go-tui/internal/lsp/provider"
-	"github.com/grindlemire/go-tui/internal/tuigen"
+	"github.com/senforsce/tndr-tui/internal/lsp/gopls"
+	"github.com/senforsce/tndr-tui/internal/lsp/provider"
+	"github.com/senforsce/tndr-tui/internal/tuigen"
 )
 
 // --- Adapters that implement provider.* interfaces using lsp.Server internals ---

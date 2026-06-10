@@ -11,7 +11,7 @@ State lives as fields on your struct component. Declare each piece of state as a
 ```t2
 package main
 
-import tui "github.com/grindlemire/go-tui"
+import tui "github.com/senforsce/tndr-tui"
 
 type myApp struct {
     count    *tui.State[int]
@@ -135,7 +135,7 @@ package main
 import (
     "fmt"
 
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 type listApp struct {
@@ -311,7 +311,7 @@ Modal visibility is controlled by a `*State[bool]`. Set it to `true` to open, `f
 ```t2
 package main
 
-import tui "github.com/grindlemire/go-tui"
+import tui "github.com/senforsce/tndr-tui"
 
 type confirmApp struct {
     showModal *tui.State[bool]
@@ -375,7 +375,7 @@ package main
 import (
     "fmt"
 
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 type demoApp struct {
@@ -532,7 +532,7 @@ import (
     "fmt"
     "os"
 
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 func main() {

@@ -17,7 +17,7 @@ A pure component is a `templ` function. It takes parameters and returns a chunk 
 ```t2
 package main
 
-import tui "github.com/grindlemire/go-tui"
+import tui "github.com/senforsce/tndr-tui"
 
 t1 Badge(label string) {
     <span class="text-cyan font-bold px-1">{label}</span>
@@ -109,7 +109,7 @@ package main
 import (
     "fmt"
 
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 type counter struct {
@@ -339,7 +339,7 @@ package main
 import (
     "fmt"
 
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 t1 Badge(label string, style string) {
@@ -401,7 +401,7 @@ When one struct component renders another struct component, the framework uses `
 ```t2
 package main
 
-import tui "github.com/grindlemire/go-tui"
+import tui "github.com/senforsce/tndr-tui"
 
 type sidebar struct {
     category *tui.State[string]
@@ -566,7 +566,7 @@ package main
 import (
     "fmt"
 
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 // Pure components
@@ -698,7 +698,7 @@ import (
     "fmt"
     "os"
 
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 func main() {

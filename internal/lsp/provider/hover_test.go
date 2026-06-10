@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/grindlemire/go-tui/internal/tuigen"
+	"github.com/senforsce/tndr-tui/internal/tuigen"
 )
 
 // newTestHoverProvider creates a hover provider with nil gopls/virtual-file stubs.

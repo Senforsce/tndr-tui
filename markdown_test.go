@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/grindlemire/go-tui/internal/markdown"
+	"github.com/senforsce/tndr-tui/internal/markdown"
 )
 
 func TestMarkdown_InterfaceAssertions(t *testing.T) {

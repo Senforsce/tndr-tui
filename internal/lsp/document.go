@@ -3,8 +3,8 @@ package lsp
 import (
 	"sync"
 
-	"github.com/grindlemire/go-tui/internal/lsp/provider"
-	"github.com/grindlemire/go-tui/internal/tuigen"
+	"github.com/senforsce/tndr-tui/internal/lsp/provider"
+	"github.com/senforsce/tndr-tui/internal/tuigen"
 )
 
 // Document represents an open .t2 file with its parsed state.

@@ -5,8 +5,8 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/grindlemire/go-tui/internal/lsp/log"
-	"github.com/grindlemire/go-tui/internal/tuigen"
+	"github.com/senforsce/tndr-tui/internal/lsp/log"
+	"github.com/senforsce/tndr-tui/internal/tuigen"
 )
 
 // stateNewStateRegex matches state declarations like: count := tui.NewState(0)

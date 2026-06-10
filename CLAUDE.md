@@ -90,7 +90,7 @@ go-tui allows defining UIs in `.t2` files that compile to type-safe Go code. The
         │ tui generate (internal/tuigen)
         ▼
 Generated Go code (*_t2.go)
-        │ imports tui "github.com/grindlemire/go-tui"
+        │ imports tui "github.com/senforsce/tndr-tui"
         ▼
 Widget Tree + Layout Engine (internal/layout)
         │

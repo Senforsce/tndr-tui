@@ -3,7 +3,7 @@ package lsp
 import (
 	"testing"
 
-	"github.com/grindlemire/go-tui/internal/tuigen"
+	"github.com/senforsce/tndr-tui/internal/tuigen"
 )
 
 // parseTestDoc parses a .t2 source string into a Document for testing.

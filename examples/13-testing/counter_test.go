@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	tui "github.com/grindlemire/go-tui"
+	tui "github.com/senforsce/tndr-tui"
 )
 
 func TestCounter_KeyMap(t *testing.T) {

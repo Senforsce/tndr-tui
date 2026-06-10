@@ -5,7 +5,7 @@
 go-tui's visual styling system covers text decoration, colors, gradients, and borders. You can apply styles through Tailwind-like CSS classes in `.t2` files or programmatically with Go types. Both approaches produce the same result. Classes compile to the same `Style`, `Color`, and `Gradient` types described here.
 
 ```go
-import tui "github.com/grindlemire/go-tui"
+import tui "github.com/senforsce/tndr-tui"
 ```
 
 ## Style

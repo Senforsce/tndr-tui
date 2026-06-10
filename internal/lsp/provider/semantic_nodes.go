@@ -5,9 +5,9 @@ import (
 	"strings"
 	"unicode/utf8"
 
-	"github.com/grindlemire/go-tui/internal/lsp/log"
-	"github.com/grindlemire/go-tui/internal/lsp/schema"
-	"github.com/grindlemire/go-tui/internal/tuigen"
+	"github.com/senforsce/tndr-tui/internal/lsp/log"
+	"github.com/senforsce/tndr-tui/internal/lsp/schema"
+	"github.com/senforsce/tndr-tui/internal/tuigen"
 )
 
 // collectTokensFromNodes collects semantic tokens from AST nodes.

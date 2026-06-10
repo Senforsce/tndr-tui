@@ -4,8 +4,8 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/grindlemire/go-tui/internal/lsp/provider"
-	"github.com/grindlemire/go-tui/internal/tuigen"
+	"github.com/senforsce/tndr-tui/internal/lsp/provider"
+	"github.com/senforsce/tndr-tui/internal/tuigen"
 )
 
 // CompletionParams represents textDocument/completion parameters.

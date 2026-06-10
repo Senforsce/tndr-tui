@@ -121,7 +121,7 @@ The `tui lsp` language server provides:
 Make sure the `tui` binary is installed and on your `$PATH`:
 
 ```bash
-go install github.com/grindlemire/go-tui/cmd/tui@latest
+go install github.com/senforsce/tndr-tui/cmd/tui@latest
 ```
 
 ## Troubleshooting

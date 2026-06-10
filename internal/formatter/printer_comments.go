@@ -3,7 +3,7 @@ package formatter
 import (
 	"strings"
 
-	"github.com/grindlemire/go-tui/internal/tuigen"
+	"github.com/senforsce/tndr-tui/internal/tuigen"
 )
 
 // escapeString escapes special characters in a string for output.

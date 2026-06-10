@@ -1,6 +1,6 @@
 package main
 
-import tui "github.com/grindlemire/go-tui"
+import tui "github.com/senforsce/tndr-tui"
 
 type myApp struct {
 	searchActive *tui.State[bool]

@@ -1,6 +1,6 @@
 package tui
 
-import "github.com/grindlemire/go-tui/internal/debug"
+import "github.com/senforsce/tndr-tui/internal/debug"
 
 // mountKey identifies a component instance by its parent and position.
 // Components at the same (parent, index) are considered the same instance

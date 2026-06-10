@@ -21,7 +21,7 @@ Create a new directory and initialize the module:
 ```bash
 mkdir dashboard && cd dashboard
 go mod init dashboard
-go get github.com/grindlemire/go-tui
+go get github.com/senforsce/tndr-tui
 ```
 
 You'll create two files:
@@ -40,7 +40,7 @@ package main
 
 import (
     "fmt"
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 type dashboardApp struct {
@@ -83,7 +83,7 @@ import (
     "fmt"
     "os"
 
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 func main() {
@@ -206,7 +206,7 @@ import (
     "fmt"
     "math/rand"
     "time"
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 ```
 
@@ -499,7 +499,7 @@ import (
     "fmt"
     "os"
 
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 func main() {
@@ -584,7 +584,7 @@ import (
     "fmt"
     "math/rand"
     "time"
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 type dashboardApp struct {
@@ -855,7 +855,7 @@ import (
     "fmt"
     "os"
 
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 func main() {

@@ -6,8 +6,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/grindlemire/go-tui/internal/lsp/log"
-	"github.com/grindlemire/go-tui/internal/tuigen"
+	"github.com/senforsce/tndr-tui/internal/lsp/log"
+	"github.com/senforsce/tndr-tui/internal/tuigen"
 )
 
 // InitializeParams represents the parameters for the initialize request.

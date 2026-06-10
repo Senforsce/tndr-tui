@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/grindlemire/go-tui/internal/tuigen"
+	"github.com/senforsce/tndr-tui/internal/tuigen"
 )
 
 func TestSemanticTokens_ComponentCalls(t *testing.T) {

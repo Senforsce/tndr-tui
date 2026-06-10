@@ -1,6 +1,6 @@
 package testdata
 
-import tui "github.com/grindlemire/go-tui"
+import tui "github.com/senforsce/tndr-tui"
 
 t1 Header(title string) {
 	<div border={tui.BorderSingle} padding={1}>

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"math/rand/v2"
 	"time"
-	tui "github.com/grindlemire/go-tui"
+	tui "github.com/senforsce/tndr-tui"
 )
 
 var gradient = tui.NewGradient(tui.BrightCyan, tui.BrightMagenta)

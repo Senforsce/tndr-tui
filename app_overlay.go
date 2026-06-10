@@ -1,6 +1,6 @@
 package tui
 
-import "github.com/grindlemire/go-tui/internal/debug"
+import "github.com/senforsce/tndr-tui/internal/debug"
 
 // overlayEntry tracks a registered overlay for modal rendering.
 type overlayEntry struct {

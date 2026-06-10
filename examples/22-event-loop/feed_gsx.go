@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"math"
 
-	tui "github.com/grindlemire/go-tui"
+	tui "github.com/senforsce/tndr-tui"
 )
 
 type feedApp struct {

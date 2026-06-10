@@ -1,8 +1,10 @@
 package tui
 
-import "slices"
+import (
+	"slices"
 
-import "github.com/grindlemire/go-tui/internal/debug"
+	"github.com/senforsce/tndr-tui/internal/debug"
+)
 
 // Focusable is implemented by elements that can receive keyboard focus.
 // Element implements this interface directly. For custom focus handling,

@@ -1,4 +1,4 @@
-module github.com/grindlemire/go-tui
+module github.com/senforsce/tndr-tui
 
 go 1.25.1
 

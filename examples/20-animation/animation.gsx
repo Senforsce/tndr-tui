@@ -5,7 +5,7 @@ import (
 	"math"
 	"strings"
 	"time"
-	tui "github.com/grindlemire/go-tui"
+	tui "github.com/senforsce/tndr-tui"
 )
 
 // Spinner frame sets. Each spinner cycles through its frames on a timer.

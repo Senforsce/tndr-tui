@@ -6,7 +6,7 @@ package example
 import (
 	"fmt"
 
-	tui "github.com/grindlemire/go-tui"
+	tui "github.com/senforsce/tndr-tui"
 )
 
 type HeaderView struct {

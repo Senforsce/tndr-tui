@@ -41,7 +41,7 @@ Then call `tui.Print` from your `main()`:
 ```go
 package main
 
-import tui "github.com/grindlemire/go-tui"
+import tui "github.com/senforsce/tndr-tui"
 
 //go:generate go run ../../cmd/tui generate report.t2
 

@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	tui "github.com/grindlemire/go-tui"
+	tui "github.com/senforsce/tndr-tui"
 )
 
 // maxEventLog is intentionally generous: with a small cap the log becomes a

@@ -549,7 +549,7 @@ func (a *Analyzer) addMissingImports() {
 	hasTUI := false
 
 	for _, imp := range a.file.Imports {
-		if imp.Path == "github.com/grindlemire/go-tui" {
+		if imp.Path == "github.com/senforsce/tndr-tui" {
 			hasTUI = true
 		}
 	}
@@ -558,18 +558,18 @@ func (a *Analyzer) addMissingImports() {
 	if (a.usesElement || a.usesLayout || a.usesTUI) && !hasTUI {
 		a.file.Imports = append(a.file.Imports, Import{
 			Alias: "tui",
-			Path:  "github.com/grindlemire/go-tui",
+			Path:  "github.com/senforsce/tndr-tui",
 		})
 	}
 }
 
-// getTUIAlias returns the import alias for github.com/grindlemire/go-tui in the current file.
+// getTUIAlias returns the import alias for github.com/senforsce/tndr-tui in the current file.
 func (a *Analyzer) getTUIAlias() string {
 	if a.file == nil {
 		return "tui"
 	}
 	for _, imp := range a.file.Imports {
-		if imp.Path == "github.com/grindlemire/go-tui" {
+		if imp.Path == "github.com/senforsce/tndr-tui" {
 			if imp.Alias != "" {
 				return imp.Alias
 			}

@@ -11,7 +11,7 @@ All three implement `Component`, `KeyListener`, and `AppBinder`. Use them standa
 A single-line text input with cursor management, horizontal scrolling, and placeholder support.
 
 ```go
-import tui "github.com/grindlemire/go-tui"
+import tui "github.com/senforsce/tndr-tui"
 
 inp := tui.NewInput(
     tui.WithInputWidth(30),
@@ -155,7 +155,7 @@ In `.t2`:
 A multi-line text input with word wrapping and a blinking cursor.
 
 ```go
-import tui "github.com/grindlemire/go-tui"
+import tui "github.com/senforsce/tndr-tui"
 
 ta := tui.NewTextArea(
     tui.WithTextAreaWidth(60),
@@ -527,7 +527,7 @@ import (
     "fmt"
     "os"
 
-    tui "github.com/grindlemire/go-tui"
+    tui "github.com/senforsce/tndr-tui"
 )
 
 func main() {

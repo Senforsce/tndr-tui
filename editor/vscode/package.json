@@ -7,7 +7,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/grindlemire/go-tui"
+    "url": "https://github.com/senforsce/tndr-tui"
   },
   "engines": {
     "vscode": "^1.75.0"

@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/grindlemire/go-tui/internal/tuigen"
+	"github.com/senforsce/tndr-tui/internal/tuigen"
 )
 
 func TestGenerateVirtualGo_StateVarDeclarations(t *testing.T) {
@@ -140,7 +140,7 @@ func TestGenerateVirtualGo_GoDecl(t *testing.T) {
 	file := &tuigen.File{
 		Package: "main",
 		Imports: []tuigen.Import{
-			{Path: "github.com/grindlemire/go-tui", Alias: "tui"},
+			{Path: "github.com/senforsce/tndr-tui", Alias: "tui"},
 		},
 		Decls: []*tuigen.GoDecl{
 			{
@@ -172,7 +172,7 @@ func TestGenerateVirtualGo_GoDecl(t *testing.T) {
 	}
 
 	// The GoDecl should appear after imports
-	importIdx := strings.Index(source, `tui "github.com/grindlemire/go-tui"`)
+	importIdx := strings.Index(source, `tui "github.com/senforsce/tndr-tui"`)
 	declIdx := strings.Index(source, "var _ tui.Component")
 	funcIdx := strings.Index(source, "func Test(")
 

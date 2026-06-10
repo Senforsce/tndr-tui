@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"sort"
 	"strings"
-	tui "github.com/grindlemire/go-tui"
+	tui "github.com/senforsce/tndr-tui"
 )
 
 // Node represents a file or directory in the tree.

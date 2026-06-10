@@ -16,7 +16,7 @@ import (
 	"os"
 	"time"
 
-	tui "github.com/grindlemire/go-tui"
+	tui "github.com/senforsce/tndr-tui"
 )
 
 //go:generate go run ../../cmd/tui generate feed.t2

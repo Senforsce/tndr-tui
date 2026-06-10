@@ -3,7 +3,7 @@ package provider
 import (
 	"testing"
 
-	"github.com/grindlemire/go-tui/internal/tuigen"
+	"github.com/senforsce/tndr-tui/internal/tuigen"
 )
 
 func newTestReferencesProvider(index ComponentIndex, docs DocumentAccessor) *referencesProvider {
